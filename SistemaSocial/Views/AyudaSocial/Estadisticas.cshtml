@@ -1,0 +1,500 @@
+﻿@model SistemaSocial.ViewModel.AyudaSocialView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Listado Por Tipo de Ayuda. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/font-awesome/" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="course">
+            <div class="course-info">
+                <h2 style="font-size: 23px; text-align:center">
+                    Estadísticas de Ayudas Sociales y Prestaciones. <br />
+                    Por Cada Mes
+                </h2>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <p>
+                Las estadísticas las cuales a continuación se muestran son los datos objetivos que permiten cuantificar información, los cuales,
+                podrán ser utilizadas para dimensionar la magnitud de las ayudas sociales las cuales fueron otorgadas, junto a sus respectivas prestaciones.
+                Además servirá para realizar modificaciones de las acciones anteriormente mencionadas según se estime conveniente.
+            </p>
+            <br />
+        </div>
+        <div class="EstadisticasMes">
+            <div class="barra1">
+                <div class="card-header">
+                    <h4>
+                        Total de Ayudas Entregadas. <br />
+                        Durante el último mes
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="AyudaMes"></canvas>
+                </div>
+            </div>
+
+            <div class="pie1">
+                <div class="card-header">
+                    <h4>
+                        Mayores 5 Prestaciones Entregadas. <br />
+                        Durante el último mes
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="PrestacionesMes"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @*------------------------------------------------------------------------------------*@
+    <div style="margin-left: 75px; margin-right: 75px;">
+        <hr />
+    </div>
+    @*------------------------------------------------------------------------------------*@
+    <div class="container">
+        <div class="course">
+            <div class="course-info">
+                <h2 style="font-size: 23px; text-align:center">
+                    Estadísticas de Ayudas Sociales y Prestaciones. <br />
+                    Cada 3 Meses
+                </h2>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <p>
+                Las estadísticas que se muestran a continuación cumplirán la misma función anterior de
+                dimensionar la magnitud de las ayudas sociales las cuales fueron otorgadas, junto a sus respectivas prestaciones.
+                Con la diferencia en este caso, que estas serán mostradas en un rango de los 3 últimos meses. <br />
+                (Ejemplo: (ENERO, FEBRERO, MARZO)...(FEBRERO, MARZO, ABRIL)...(MARZO, ABRIL, MAYO)... Y así sucesivamente).
+            </p>
+            <br />
+        </div>
+        <div class="Estadisticas">
+            <div class="circulo">
+                <div class="card-header">
+                    <h4>
+                        Total de Ayudas Entregadas. <br />
+                        Durante los Últimos 3 Meses
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="Ayudas"></canvas>
+                </div>
+            </div>
+
+            <div class="barra">
+                <div class="card-header">
+                    <h4>
+                        Mayores 5 Prestaciones Entregadas. <br />
+                        Durante los Últimos 3 Meses
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="Prestaciones"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*------------------------------------------------------------------------------------*@
+    <div style="margin-left: 75px; margin-right: 75px;">
+        <hr />
+    </div>
+    @*------------------------------------------------------------------------------------*@
+    <div class="container">
+        <div class="course_abajo">
+            <div class="course-info_abajo">
+                <h2 style="font-size: 23px; text-align:center">
+                    Estadísticas de Ayudas Sociales y Prestaciones. <br />
+                    Anuales.
+                </h2>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <p>
+                Las estadísticas que se muestran a continuación cumplirán la misma función anterior de
+                dimensionar la magnitud de las ayudas sociales las cuales fueron otorgadas, junto a sus respectivas prestaciones.
+                Con la diferencia en este caso, que estas serán mostradas en un rango de los 12 últimos meses. (1 año). <br />
+                (Ejemplo: ENERO, FEBRERO, MARZO, ABRIL, MAYO, JUNIO, JULIO, AGOSTO, SEPTIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE)...
+                (FEBRERO, MARZO, ABRIL, MAYO, JUNIO, JULIO, AGOSTO, SEPTIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE, ENERO)... Y así sucesivamente).
+            </p>
+            <br />
+        </div>
+        <div class="Estadisticas_Anual">
+            <div class="bar">
+                <div class="card-header">
+                    <h4>
+                        Total de Ayudas Entregadas. <br />
+                        Durante los Últimos 12 Meses
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="AyudaAnual"></canvas>
+                </div>
+            </div>
+
+            <div class="polarArea">
+                <div class="card-header">
+                    <h4>
+                        Mayores 5 Prestaciones Entregadas. <br />
+                        Durante los Últimos 12 Meses
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="PrestacionesAnual"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        /* ----- Estadisticas Por Mes ----- */
+        jQuery.ajax({
+            url: "@Url.Action("ReporteAyudasMes", "AyudaSocial")",
+            type: "GET",
+            dataType: "Json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var meses = [];
+                var cantidad = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    meses.push(data[i].mes)
+                    cantidad.push(data[i].cantidad)
+                }
+
+                /* REPORTE PRESTACIONES*/
+                var controlPie = document.getElementById('AyudaMes');
+                var graficoPie = new Chart(controlPie, {
+                    type: 'bar',
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            label: 'cantidad entregada',
+                            data: cantidad,
+                            borderWidth: "1",
+                            backgroundColor: [
+                                'rgb(34, 187, 157, 0.4)'
+                            ],
+                            borderColor: [
+                                'rgb(34, 187, 157)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                })
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+
+        jQuery.ajax({
+            url: "@Url.Action("ReportePrestacionesMes", "AyudaSocial")",
+            type: "GET",
+            dataType: "Json",
+            contentType: "application/json; charset=utf-8",
+             success: function (data) {
+                var prestacion = [];
+                var cantidad = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    prestacion.push(data[i].prestacion)
+                    cantidad.push(data[i].cantidad)
+                }
+
+                 /* REPORTE AYUDAS */
+                 var controlBar = document.getElementById('PrestacionesMes');
+                 var graficoBar = new Chart(controlBar, {
+                     type: 'pie',
+                     data: {
+                         labels: prestacion,
+                         datasets: [{
+                             data: cantidad,
+                             borderWidth: "1",
+                             backgroundColor: [
+                                 'rgba(187, 34, 34, 0.3)',
+                                 'rgba(113, 34, 187, 0.3)',
+                                 'rgba(34, 113, 187, 0.3)',
+                                 'rgba(34, 187, 99, 0.3)',
+                                 'rgb(187, 162, 34, 0.3)'
+                             ],
+                             borderColor: [
+                                 'rgb(187, 34, 34)',
+                                 'rgb(113, 34, 187)',
+                                 'rgb(34, 113, 187)',
+                                 'rgb(34, 187, 99)',
+                                 'rgb(187, 162, 34)'
+                             ],
+                             borderWidth: 1
+                         }]
+                     },
+                     options: {
+                         scales: {
+                             y: {
+                                 beginAtZero: true
+                             }
+                         }
+                     }
+                 })
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+    </script>
+
+    <script>
+        /* ----- Estadisticas 3 Meses ----- */
+        jQuery.ajax({
+            url: "@Url.Action("ReporteAyudas3Meses", "AyudaSocial")",
+            type: "GET",
+            dataType: "Json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var meses = [];
+                var cantidad = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    meses.push(data[i].mes)
+                    cantidad.push(data[i].cantidad)
+                }
+
+                /* REPORTE PRESTACIONES*/
+                var controlPie = document.getElementById('Ayudas');
+                var graficoPie = new Chart(controlPie, {
+                    type: 'pie',
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            data: cantidad,
+                            borderWidth: "1",
+                            backgroundColor: [
+                                'rgb(34, 113, 187, 0.4)',
+                                'rgb(34, 173, 187, 0.4)',
+                                'rgb(34, 187, 157, 0.4)'
+                            ],
+                            borderColor: [
+                                'rgb(34, 113, 187)',
+                                'rgb(34, 173, 187)',
+                                'rgb(34, 187, 157)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    }
+                })
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+
+        jQuery.ajax({
+            url: "@Url.Action("ReportePrestaciones3Meses", "AyudaSocial")",
+            type: "GET",
+            dataType: "Json",
+            contentType: "application/json; charset=utf-8",
+             success: function (data) {
+                var prestacion = [];
+                var cantidad = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    prestacion.push(data[i].prestacion)
+                    cantidad.push(data[i].cantidad)
+                }
+
+                 /* REPORTE AYUDAS */
+                 var controlBar = document.getElementById('Prestaciones');
+                 var graficoBar = new Chart(controlBar, {
+                     type: 'polarArea',
+                     data: {
+                         labels: prestacion,
+                         datasets: [{
+                             label: 'cantidad entregada',
+                             data: cantidad,
+                             borderWidth: "1",
+                             backgroundColor: [
+                                 'rgba(255, 159, 64, 0.3)',
+                                 'rgba(255, 205, 86, 0.3)',
+                                 'rgba(75, 192, 192, 0.3)',
+                                 'rgba(54, 162, 235, 0.3)',
+                                 'rgba(153, 102, 255, 0.3)'
+                             ],
+                             borderColor: [
+                                 'rgb(255, 159, 64)',
+                                 'rgb(255, 205, 86)',
+                                 'rgb(75, 192, 192)',
+                                 'rgb(54, 162, 235)',
+                                 'rgb(153, 102, 255)'
+                             ],
+                             borderWidth: 1
+                         }]
+                     },
+                     options: {
+                         scales: {
+                             y: {
+                                 beginAtZero: true
+                             }
+                         }
+                     }
+                 })
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+    </script>
+
+    <script>
+        /* ----- Estadisticas 12 Meses ----- */
+        jQuery.ajax({
+            url: "@Url.Action("ReporteAyudasAnual", "AyudaSocial")",
+            type: "GET",
+            dataType: "Json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var meses = [];
+                var cantidad = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    meses.push(data[i].mes)
+                    cantidad.push(data[i].cantidad)
+                }
+
+                /* REPORTE PRESTACIONES*/
+                var controlPie = document.getElementById('AyudaAnual');
+                var graficoPie = new Chart(controlPie, {
+                    type: 'bar',
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            label: 'cantidad entregada',
+                            data: cantidad,
+                            borderWidth: "1",
+                            backgroundColor: [
+                                'rgb(187, 34, 34, 0.4)',
+                                'rgb(187, 34, 92, 0.4)',
+                                'rgb(173, 34, 187, 0.4)',
+                                'rgb(113, 34, 187, 0.4)',
+                                'rgb(34, 113, 187, 0.4)',
+                                'rgb(34, 173, 187, 0.4)',
+                                'rgb(34, 187, 157, 0.4)',
+                                'rgb(34, 187, 99, 0.4)',
+                                'rgb(52, 187, 34, 0.4)',
+                                'rgb(171, 187, 34, 0.4)',
+                                'rgb(187, 162, 34, 0.4)',
+                                'rgb(187, 129, 34, 0.4)'
+                            ],
+                            borderColor: [
+                                'rgb(187, 34, 34)',
+                                'rgb(187, 34, 92)',
+                                'rgb(173, 34, 187)',
+                                'rgb(113, 34, 187)',
+                                'rgb(34, 113, 187)',
+                                'rgb(34, 173, 187)',
+                                'rgb(34, 187, 157)',
+                                'rgb(34, 187, 99)',
+                                'rgb(52, 187, 34)',
+                                'rgb(171, 187, 34)',
+                                'rgb(187, 162, 34)',
+                                'rgb(187, 129, 34)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                })
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+
+        jQuery.ajax({
+            url: "@Url.Action("ReportePrestacionesAnual", "AyudaSocial")",
+            type: "GET",
+            dataType: "Json",
+            contentType: "application/json; charset=utf-8",
+             success: function (data) {
+                var prestacion = [];
+                var cantidad = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    prestacion.push(data[i].prestacion)
+                    cantidad.push(data[i].cantidad)
+                }
+
+                 /* REPORTE AYUDAS */
+                 var controlBar = document.getElementById('PrestacionesAnual');
+                 var graficoBar = new Chart(controlBar, {
+                     type: 'pie',
+                     data: {
+                         labels: prestacion,
+                         datasets: [{
+                             data: cantidad,
+                             borderWidth: "1",
+                             backgroundColor: [
+                                 'rgba(187, 34, 34, 0.3)',
+                                 'rgba(113, 34, 187, 0.3)',
+                                 'rgba(34, 113, 187, 0.3)',
+                                 'rgba(34, 187, 99, 0.3)',
+                                 'rgb(187, 162, 34, 0.3)'
+                             ],
+                             borderColor: [
+                                 'rgb(187, 34, 34)',
+                                 'rgb(113, 34, 187)',
+                                 'rgb(34, 113, 187)',
+                                 'rgb(34, 187, 99)',
+                                 'rgb(187, 162, 34)'
+                             ],
+                             borderWidth: 1
+                         }]
+                     },
+                     options: {
+                         scales: {
+                             y: {
+                                 beginAtZero: true
+                             }
+                         }
+                     }
+                 })
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+    </script>
+}

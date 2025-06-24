@@ -1,0 +1,37 @@
+﻿@model SistemaSocial.Models.Peticion
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Petición </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <section class="formulario-registro">
+            <form asp-action="EditarPeticion">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PeticionID" />
+                <div class="user-details">
+                    <div class="block-a1">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <textarea rows="6" asp-for="Nombre"></textarea>
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar Cambios" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-controller="Clientes"
+                       asp-action="IndexClientes">
+                        Volver al Listado.
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

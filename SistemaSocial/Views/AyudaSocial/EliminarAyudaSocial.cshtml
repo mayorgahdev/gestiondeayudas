@@ -1,0 +1,78 @@
+﻿@model SistemaSocial.Models.AyudaSocial
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Eliminar Ayuda Social </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            <h3 style="font-size: 21px; font-family: Arial; text-align: center;">
+                Eliminar Ayuda Social de: <br />
+                @Html.ViewData.Model.Clientes.Nombres
+                @Html.ViewData.Model.Clientes.ApellidoPaterno
+                @Html.ViewData.Model.Clientes.ApellidoMaterno
+            </h3>
+            <h3 style="font-size: 18px; font-family: Arial; text-align: left;">
+                Para poder hacer de forma efectiva la eliminación de la siguiente ayuda,
+                debe verificar que el o los informes sociales correspondientes también hayan sido eliminado.
+                De lo contrario, saldrá un error al intentar eliminarla.
+            </h3>
+        </div>
+        <section class="formulario-registro">
+            <form asp-action="EliminarAyudaSocial" readonly onmousedown="return false;">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AyudaSocialID" />
+                <div class="user-details">
+                    <div class="input-box">
+                        <label class="control-label"> Seleccione Run o Pasaporte del Usuario a Entregar la Ayuda Social. </label><br />
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID"></select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="TipoPeticionID" class="control-label"></label>
+                        <select asp-for="TipoPeticionID" asp-items="ViewBag.TipoPeticionID">
+                            <option> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TipoPeticionID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="FechaElaboracion" class="control-label"></label>
+                        <input asp-for="FechaElaboracion" />
+                        <span asp-validation-for="FechaElaboracion" class="details"></span>
+                    </div>
+                    <div class="block-a">
+                        <label asp-for="DetalleRequerimiento" class="control-label"></label>
+                        <textarea autocomplete="on" rows="2" asp-for="DetalleRequerimiento"> </textarea>
+                        <span asp-validation-for="DetalleRequerimiento" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="PrestacionesID" class="control-label"></label>
+                        <select asp-for="PrestacionesID" asp-items="ViewBag.PrestacionesID" id="cboPrestaciones">
+                            <option> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="PrestacionesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="CantidadEntregada" class="control-label"></label>
+                        <input asp-for="CantidadEntregada" />
+                        <span asp-validation-for="CantidadEntregada" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Eliminar Ayuda Social Entregada" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-action="TipoDeAyuda">
+                        Volver al Listado...
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿@model SistemaSocial.Models.Ingresos
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Declaración de Ingresos </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Declaración de Ingresos </div>
+        <section class="formulario-registro">
+            <div class="controlador-btn-index1" style="border:1px;">
+                <a class="GastosFamiliares"
+                   asp-action="CrearGastosFamiliares"
+                   asp-controller="GastosFamiliares"
+                   asp-route-Grupo="@ViewBag.Grupoingresos">
+                    Añadir Declaración de Gastos Mensuales.
+                </a>
+            </div>
+            <form asp-action="CrearIngresos">
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID"></select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <textarea name="GrupoFamiliar" class="GruposFamiliares">@ViewBag.Grupoingresos</textarea>
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="IngresosMensuales" class="control-label"></label>
+                        <input type="number" asp-for="IngresosMensuales" value="0" oninput="validarGASTOS(event)" />
+                        <span asp-validation-for="IngresosMensuales" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="FechaElaboracion" class="control-label"></label>
+                        <input asp-for="FechaElaboracion" />
+                        <span asp-validation-for="FechaElaboracion" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Descripcion" class="control-label"></label>
+                        <textarea rows="4" asp-for="Descripcion"> </textarea>
+                        <span asp-validation-for="Descripcion" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" id="Submit" value="Guardar" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+
+@section scripts{
+    <script>
+        function validarGASTOS(event) {
+            const input = event.target;
+            const valor = input.value.trim();
+
+            if (/^[0-9]\d*$/.test(valor)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Ingrese únicamente valores enteros. Ejemplo: 0123');
+            }
+            input.reportValidity();
+        }
+    </script>
+}

@@ -1,0 +1,143 @@
+﻿@model SistemaSocial.Models.Salud
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Añadir Datos de Salud </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Añadir Datos de Salud </div>
+        <section class="formulario-registro">
+            <form asp-action="CrearSalud">
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID"></select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <textarea name="GrupoFamiliar" class="GruposFamiliares">@ViewBag.GrupoSalud</textarea>
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+
+                    <div class="input-box">
+                        <label asp-for="ProcedenciaID" class="control-label"></label>
+                        <select asp-for="ProcedenciaID" asp-items="ViewBag.ProcedenciaID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="ProcedenciaID" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Diagnostico" class="control-label"></label>
+                        <textarea rows="4" asp-for="Diagnostico"> </textarea>
+                        <span asp-validation-for="Diagnostico" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="DiscapacidadID" class="control-label"></label>
+                        <select asp-for="DiscapacidadID" id="cboDiscapacidad" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="DiscapacidadID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="AcreditacionID" class="control-label"></label>
+                        <select asp-for="AcreditacionID" disabled="disabled" id="cboAcreditacion" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="AcreditacionID" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Observacion" class="control-label"></label>
+                        <textarea rows="4" asp-for="Observacion"> </textarea>
+                        <span asp-validation-for="Observacion" class="details"></span>
+                    </div>
+                </div>
+               <div class="boton">
+                   <input type="submit" id="Submit" value="Guardar" />
+               </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            CargarDiscapacidad();
+            CargarAcreditacion();
+
+            $("#Submit").click(function () {
+                var Acreditacion = parseInt($("#cboAcreditacion").val());
+                var data = {
+                    Acreditacion: Acreditacion,
+                };
+
+                $.ajax({
+                    url: '../Salud/CrearSalud',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (d) {
+                        /* - */
+                    },
+                    error: function () {
+                        /* - */
+                    }
+                });
+            });
+        });
+
+        function CargarDiscapacidad() {
+            $.ajax({
+                type: 'Get',
+                url: '../Salud/DiscapacidadLoad',
+                dataType: 'Json',
+                contentType: 'application/json; charset=uft-8',
+                cache: false,
+                success: function (e) {
+                    $('#cboDiscapacidad').empty();
+                    $('#cboDiscapacidad').append($("<option></option>").val('').html('Seleccione.'));
+                    $.each(e, function (i, P) {
+                        $('#cboDiscapacidad').append($("<option></option>").val(P.discapacidadID).html(P.nombre));
+                    });
+                },
+                error: function (ex) {
+                    alert("Error al cargar los programas");
+                }
+            });
+        };
+        function CargarAcreditacion() {
+            $('#cboDiscapacidad').change(function () {
+                const DiscapacidadID = $(this).val();
+                $('#cboAcreditacion').prop('disabled', false);
+                if (!isNaN(DiscapacidadID)) {
+                    $.ajax({
+                        type: 'Get',
+                        url: '../Salud/GetAcreditacion',
+                        dataType: 'Json',
+                        data: { DiscapacidadID: DiscapacidadID },
+                        contentType: 'application/json; charset=uft-8',
+                        cache: false,
+                        success: function (e) {
+                            $('#cboAcreditacion').empty();
+                            $.each(e, function (i, C) {
+                                $('#cboAcreditacion').append($("<option></option>").val(C.discapacidadID).html(C.nombre));
+                            });
+                        },
+                        error: function (ex) {
+                            alert("Error al cargar las cantidades");
+                        }
+                    });
+                }
+            });
+        };
+    </script>
+}

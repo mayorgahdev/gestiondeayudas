@@ -1,0 +1,103 @@
+﻿@model SistemaSocial.ViewModel.PrestacionesView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+@inject AppDbContext _context
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Prestaciones. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+    <link href="~/css/dark.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="course">
+            <div class="course-preview">
+                <a asp-action="CrearPrestaciones"><i class="fas fa-plus-circle"></i> Crear Nueva Prestación</a>
+            </div>
+            <div class="course-info">
+                <h2> Prestaciones. </h2>
+                <form asp-controller="Prestaciones" asp-action="IndexPrestaciones" method="get">
+                    <h7>Buscar Prestación por Nombre: </h7>
+                    <div class="input-info">
+                        <input type="text" asp-for="Busqueda" class="details-info1" />
+                        <input type="submit" value="Buscar" class="details-info2" />
+                    </div>
+                </form>
+                <a asp-action="IndexPrestaciones"> Listado de Datos. </a>
+            </div>
+        </div>
+
+        <div style=" overflow-x: auto;">
+            <div class="table-container1">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"> Prestación. </th>
+                            @if (SignInManager.IsSignedIn(User)) {
+                                var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                if (Claims != null) {
+                                    <th scope="col"></th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var P in Model.listaPrestaciones) {
+                            <tr>
+                                <td data-label="Nombre"> @P.Nombre </td>
+                                @if (SignInManager.IsSignedIn(User)) {
+                                    var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                    var Permiso = User.Claims.Where(C => C.Type == "Admin" && C.Value == "10" || C.Type == "Editor").FirstOrDefault();
+                                    if (Claims != null) {
+                                        <td data-label="">
+                                            <div class="Drop">
+                                                <div class="dropdown">
+                                                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Administración.
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item"
+                                                           asp-action="EditarPrestaciones"
+                                                           asp-route-PrestacionesID="@P.PrestacionesID">
+                                                            Modificar
+                                                        </a>
+                                                        @if (Permiso != null) {
+                                                            <a class="dropdown-item"
+                                                               asp-action="EliminarPrestaciones"
+                                                               asp-route-PrestacionesID="@P.PrestacionesID">
+                                                                Eliminar
+                                                            </a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-6 row justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-circle">
+                    @for (int i = 1; i <= Model.CantidadPaginas; i++) {
+                        <li class="page-item" aria-current="page">
+                            <a class="page-link" asp-action="IndexPrestaciones" asp-route-Pagina="@i">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

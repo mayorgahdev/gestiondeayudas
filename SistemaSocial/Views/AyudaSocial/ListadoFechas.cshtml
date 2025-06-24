@@ -1,0 +1,130 @@
+﻿@model SistemaSocial.ViewModel.AyudaSocialView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Listado Por Tipo de Ayuda. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/font-awesome/" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="container">
+        <div class="FiltroFecha">
+            <form asp-controller="AyudaSocial" asp-action="ListadoFechas" method="get">
+                <h5 class="titulo"><b> Filtrar Ayudas por Fechas de Elaboración </b></h5>
+                <div class="input-info">
+                    <input type="date" asp-for="FechaInicio" class="details-info1" id="Fecha1" />
+                    <input type="date" asp-for="FechaFin" class="details-info1" id="Fecha2" />
+                    <input type="submit" value="Filtrar" class="details-info2" />
+                </div>
+                <div class="input-info2">
+                    <h7> Filtro de Ayudas de las siguientes fechas: </h7> <br />
+                    <h6 class="desde">
+                        Desde:
+                        <input type="date" asp-for="FechaInicio" class="result" 
+                               readonly onmousedown="return false;" id="resultado" />
+                    </h6>
+                    <h6 class="hasta">
+                        Hasta:
+                        <input type="date" asp-for="FechaFin" class="result" 
+                               readonly onmousedown="return false;" id="resultado" />
+                    </h6>
+                </div>
+                <div class="impresiones_btn">
+                    <div class="Impresiones1">
+                       @using (Html.BeginForm("ListadoFechas", "AyudaSocial", FormMethod.Post)) {
+                            var validar = true;
+                           @foreach (var A in Model.listaAyudas) {
+                                if (validar) {
+                                    <a class="imprimir"
+                                       target="_blank"
+                                       asp-controller="AyudaSocial"
+                                       asp-action="Imprimir_Filtro"
+                                       asp-route-FechaInicio="@Html.ValueFor(a => a.FechaInicio)"
+                                       asp-route-FechaFin="@Html.ValueFor(a => a.FechaFin)">
+                                        <i class="fas fa-file-pdf"></i> Generar Reporte.
+                                    </a>
+                                    validar = false;
+                                }
+                            }
+                        }
+                    </div>
+
+                   @if (SignInManager.IsSignedIn(User)) {
+                        var Claims = User.Claims.Where(x => x.Type == "Admin" && x.Value == "10").FirstOrDefault();
+                        if (Claims != null) {
+                            <div class="Impresiones2">
+                               @using (Html.BeginForm("ListadoFechas", "AyudaSocial", FormMethod.Get)) {
+                                    var validar2 = true;
+                                   @foreach (var A in Model.listaAyudas) {
+                                        if (validar2) {
+                                            <a class="imprimir2"
+                                               target="_blank"
+                                               asp-controller="AyudaSocial"
+                                               asp-action="Estadisticas2"
+                                               asp-route-FechaInicio="@Html.ValueFor(a => a.FechaInicio)"
+                                               asp-route-FechaFin="@Html.ValueFor(a => a.FechaFin)">
+                                                <i class="fas fa-chart-bar"></i> Mostrar Estadísticas.
+                                            </a>
+                                            validar2 = false;
+                                        }
+                                    }
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </form>
+        </div>
+
+        <div class="table-container1">
+            <h5 class="text-center"> Ayudas Sociales Entregadas. </h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"> Nombre del Usuario. </th>
+                        <th scope="col"> Nombre Ayuda. </th>
+                        <th scope="col"> Cantidad. </th>
+                        <th scope="col"> Tipo Petición. </th>
+                        <th scope="col"> Fecha de Elaboración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach (var A in Model.listaAyudas) {
+                        <tr>
+                            <td data-label="Nombre">
+                                @Html.DisplayFor(modelItem => A.Clientes.Nombres)
+                                @Html.DisplayFor(modelItem => A.Clientes.ApellidoPaterno)
+                                @Html.DisplayFor(modelItem => A.Clientes.ApellidoMaterno)
+                            </td>
+                            <td data-label="Prestacion"> @Html.DisplayFor(modelItem => A.Prestaciones.Nombre)</td>
+                            <td data-label="Cantidad"> @Html.DisplayFor(modelItem => A.CantidadEntregada)</td>
+                            <td data-label="Petición"> @Html.DisplayFor(modelItem => A.TipoPeticion.Nombre)</td>
+                            <td data-label="Fecha"> @Html.DisplayFor(modelItem => A.FechaElaboracion)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
+@section scripts{
+    <script>
+        var date = new Date();
+        document.getElementById('Fecha1').value = new Date(date.getFullYear(), date.getMonth(), 1);
+        document.getElementById('Fecha2').value = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+        $('#resultado').datepicker({ dateFormat: 'dd/MM/yyyy' }).val();
+    </script>
+}

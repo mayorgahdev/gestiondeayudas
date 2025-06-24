@@ -1,0 +1,227 @@
+﻿.Drop {
+    display: grid;
+    grid-gap: 3px;
+    border-radius: 10px;
+}
+
+.Drop1 {
+    display: grid;
+    grid-gap: 3px;
+    border-radius: 10px;
+}
+
+.Drop4 {
+    display: grid;
+    grid-gap: 3px;
+    grid-template-columns: repeat(2, 1fr);
+    border-radius: 10px;
+}
+
+.drop-1 {
+    display: grid;
+    grid-gap: 3px;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 3px;
+}
+
+ul.drop-2 {
+    display: grid;
+    grid-gap: 3px;
+    grid-template-columns: repeat(2, 1fr);
+    height: 57px;
+}
+    ul.drop-2 a {
+        margin-bottom: 4px;
+    }
+
+ul.drop-3 {
+    display: grid;
+    grid-gap: 3px;
+    grid-template-columns: repeat(2, 1fr);
+    height: 80px;
+}
+    ul.drop-3 a {
+        margin-bottom: 4px;
+    }
+
+.full-width {
+    grid-column: 1 / span 2;
+}
+
+.Drop button {
+    width: 100%;
+    height: 100%;
+    margin-top: 0px;
+    margin-right: 4px;
+    margin-bottom: 5px;
+    padding: 5px;
+    color: #fff;
+    font-size: 15px;
+    border: 10px;
+    border-radius: 7px;
+    background-color: #286223;
+}
+
+    .Drop button:hover {
+        background-color: #3b822c;
+    }
+
+.Drop .dropdown-menu {
+    padding: 6px;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #a5a0a0;
+}
+
+.Drop a,
+.Drop1 a{
+    width: 100%;
+    height: 100%;
+    margin-top: 0px;
+    margin-right: 4px;
+    margin-bottom: 5px;
+    padding: 5px;
+    text-align: center;
+    color: #fff;
+    font-size: 15px;
+    border-radius: 6px;
+    background-color: #286223;
+}
+
+    .Drop a.Drop123,
+    .Drop1 a.Drop123{
+        font-size: 16px;
+        text-decoration: none;
+        text-align: center;
+    }
+        .Drop a:hover,
+        .Drop1 a.Drop123:hover {
+            background-color: #3b822c;
+            color: #fff;
+        }
+
+button#dropdownMenu3.btn.btn-secondary.dropdown-toggle {
+    background-color: #286223;
+}
+    button#dropdownMenu3.btn.btn-secondary.dropdown-toggle:hover {
+        background-color: #3b822c;
+    }
+
+button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle {
+    background-color: #286223;
+}
+    button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle:hover {
+        background-color: #3b822c;
+    }
+
+
+li {
+    list-style-type: none;
+}
+
+/*SUB MENU 1*/
+
+.dropdown-submenu {
+    position: relative;
+}
+
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        /*left: 100%;*/
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 10px;
+    }
+
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 4px;
+        margin-top: 40px;
+        background-color: #f5fae5;
+    }
+
+        .dropdown-submenu:hover > .dropdown-menu a.dropdown-item {
+            background-color: #1b4625;
+        }
+            .dropdown-submenu:hover > .dropdown-menu a.dropdown-item:hover {
+                background-color: #286223;
+            }
+
+
+/*SUB MENU 2*/
+.dropdown-submenu-sub {
+    position: relative;
+}
+
+    .dropdown-submenu-sub .dropdown-submenu {
+        top: 0;
+        /*left: 100%;*/
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .dropdown-submenu-sub:hover > .dropdown-submenu {
+        display: block;
+    }
+
+
+.dropdown-submenu > a:after {
+    display: block;
+    content: " ";
+    float: left; /*right*/
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover > a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+    .dropdown-submenu.pull-left > .dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+
+#dropdownMenuButton2 {
+    display: inline;
+}
+
+@media (max-width: 992px) {
+    .Drop {
+        display: grid;
+        grid-gap: 4px;
+        border-radius: 10px;
+    }
+
+        .Drop .dropdown-menu div li {
+            position: relative;
+            width: 100%;
+        }
+
+    .dropdown-submenu::outside > .dropdown-menu {
+        position: static !important;
+    }
+
+    #dropdownMenuButton2 {
+        display: inline;
+    }
+}

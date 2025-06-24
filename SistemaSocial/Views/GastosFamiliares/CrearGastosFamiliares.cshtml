@@ -1,0 +1,167 @@
+﻿@model SistemaSocial.Models.GastosFamiliares
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Añadir Gastos Familiares </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Añadir Declaración de Gastos Familiares. </div>
+        <section class="formulario-registro">
+            <div class="controlador-btn-index" style="border:1px">
+                <a class="IndexGrupo"
+                   asp-controller="Clientes"
+                   asp-action="IndexGrupoFamiliar"
+                   asp-route-GrupoFamiliar="@ViewBag.GrupoG">
+                    Volver al Listado del Grupo Familiar
+                </a>
+                <a class="Cronicos"
+                   asp-action="CrearIngresos"
+                   asp-controller="GastosFamiliares"
+                   asp-route-Grupo="@ViewBag.GrupoG">
+                    Declaración de Ingresos.
+                </a>
+            </div>
+            <form asp-action="CrearGastosFamiliares">
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID"></select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <textarea name="GrupoFamiliar" class="GruposFamiliares">@ViewBag.GrupoG</textarea>
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+
+                    <div class="input-box">
+                        <label asp-for="Alimentacion" class="control-label"></label>
+                        <input type="number" asp-for="Alimentacion" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Alimentacion" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Aseo" class="control-label"></label>
+                        <input type="number" asp-for="Aseo" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Aseo" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Arriendo" class="control-label"></label>
+                        <input type="number" asp-for="Arriendo" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Arriendo" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Dividendo" class="control-label"></label>
+                        <input type="number" asp-for="Dividendo" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Dividendo" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Servicios" class="control-label"></label>
+                        <input type="number" asp-for="Servicios" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Servicios" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Combustible" class="control-label"></label>
+                        <input type="number" asp-for="Combustible" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Combustible" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GastosTelefono" class="control-label"></label>
+                        <input type="number" asp-for="GastosTelefono" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="GastosTelefono" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Movilizacion" class="control-label"></label>
+                        <input type="number" asp-for="Movilizacion" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Movilizacion" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Educacion" class="control-label"></label>
+                        <input type="number" asp-for="Educacion" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Educacion" class="details" ></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Creditos" class="control-label"></label>
+                        <input type="number" asp-for="Creditos" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Creditos" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Salud" class="control-label"></label>
+                        <input type="number" asp-for="Salud" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Salud" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Varios" class="control-label"></label>
+                        <input type="number" asp-for="Varios" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="Varios" class="details"></span>
+                    </div>
+
+                    <div class="input-box">
+                        <label asp-for="TotalGastosMensuales" class="control-label"></label>
+                        <label class="control-label"></label><b id="spTotal"></b>
+                        <input type="number" asp-for="TotalGastosMensuales" value="0"
+                               min="0" id="spTotal" />
+                        <span asp-validation-for="TotalGastosMensuales" class="details"></span>
+                        <h6 style="font-size:13px" font-family="Arial">
+                            Completar recuadro con el resultado mostrado.
+                        </h6>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Observaciones" class="control-label"></label>
+                        <textarea rows="4" asp-for="Observaciones"></textarea>
+                        <span asp-validation-for="Observaciones" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function sumar() {
+            var total = 0;
+            $(".monto").each(function () {
+                if (isNaN(parseFloat($(this).val()))) {
+                    total += 0;
+                } else {
+                    total += parseFloat($(this).val());
+                }
+            });
+            document.getElementById('spTotal').innerHTML = total;
+        }
+    </script>
+    <script>
+        function validarGASTOS(event) {
+            const input = event.target;
+            const valor = input.value.trim();
+
+            if (/^[0-9]\d*$/.test(valor)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Ingrese únicamente valores enteros. Ejemplo: 0123');
+            }
+            input.reportValidity();
+        }
+    </script>
+}

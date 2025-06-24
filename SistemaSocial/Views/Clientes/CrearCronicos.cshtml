@@ -1,0 +1,163 @@
+﻿@model SistemaSocial.Models.Cronicos
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Añadir Antecedentes Crónicos del Grupo </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Añadir Antecedentes Crónicos del Grupo </div>
+        <section class="formulario-registro">
+            <div class="controlador-btn-index" style="border:1px">
+                <a class="IndexGrupo"
+                   asp-controller="Clientes"
+                   asp-action="IndexGrupoFamiliar"
+                   asp-route-GrupoFamiliar="@ViewBag.GrupoCro">
+                    Volver al Listado del Grupo Familiar
+                </a>
+            </div>
+            <form asp-action="CrearCronicos">
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <textarea name="GrupoFamiliar" class="GruposFamiliares">@ViewBag.GrupoCro</textarea>
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+                    <div class="input-box"></div>
+                    <div class="input-box">
+                        <label asp-for="NCronicos" class="control-label"></label>
+                        <input type="text" asp-for="NCronicos" value="0"
+                               oninput="validarGASTOS(event)" />
+                        <span asp-validation-for="NCronicos" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="NEmbarazadas" class="control-label"></label>
+                        <input type="text" asp-for="NEmbarazadas" value="0" oninput="validarGASTOS(event)" />
+                        <span asp-validation-for="NEmbarazadas" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="RSHID" class="control-label"></label>
+                        <select asp-for="RSHID" id="cboRSH" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="RSHID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="TramoID" class="control-label"></label>
+                        <select asp-for="TramoID" disabled="disabled" id="cboTramo" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TramoID" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="ObservacionGrupo" class="control-label"></label>
+                        <textarea rows="4" asp-for="ObservacionGrupo"> </textarea>
+                        <span asp-validation-for="ObservacionGrupo" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" id="Submit" value="Guardar" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            CargarRSH();
+            CargarTramos();
+
+            $("#Submit").click(function () {
+                var tramo = parseInt($("#cboTramo").val());
+
+                var data = {
+                    tramo: tramo,
+                };
+
+                $.ajax({
+                    url: '../Clientes/CrearCronicos',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (d) {
+                        /* - */
+                    },
+                    error: function () {
+                        /* - */
+                    }
+                });
+            });
+        });
+
+        function CargarRSH() {
+            $.ajax({
+                type: 'Get',
+                url: '../Clientes/RSHLoad',
+                dataType: 'Json',
+                contentType: 'application/json; charset=uft-8',
+                cache: false,
+                success: function (e) {
+                    $('#cboRSH').empty();
+                    $('#cboRSH').append($("<option></option>").val('').html('Seleccione.'));
+                    $.each(e, function (i, P) {
+                        //console.log(i);
+                        //console.log(P);
+                        $('#cboRSH').append($("<option></option>").val(P.rshid).html(P.nombre));
+                    });
+                },
+                error: function (ex) {
+                    alert("Error al cargar los programas");
+                }
+            });
+        };
+
+        function CargarTramos() {
+            $('#cboRSH').change(function () {
+                const RSHID = $(this).val();
+                console.log(RSHID);
+                $('#cboTramo').prop('disabled', false);
+                if (!isNaN(RSHID)) {
+                    $.ajax({
+                        type: 'Get',
+                        url: '../Clientes/GetTramos',
+                        dataType: 'Json',
+                        data: { RSHID: RSHID },
+                        contentType: 'application/json; charset=uft-8',
+                        cache: false,
+                        success: function (e) {
+                            $('#cboTramo').empty();
+                            $.each(e, function (i, C) {
+                                //console.log(i);
+                                //console.log(C);
+                                $('#cboTramo').append($("<option></option>").val(C.tramoID).html(C.nombre));
+                            });
+                        },
+                        error: function (ex) {
+                            alert("Error al cargar las cantidades");
+                        }
+                    });
+                }
+            });
+        };
+    </script>
+    <script>
+        function validarGASTOS(event) {
+            const input = event.target;
+            const valor = input.value.trim();
+
+            if (/^[0-9]\d*$/.test(valor)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Ingrese únicamente valores enteros. Ejemplo: 0123');
+            }
+            input.reportValidity();
+        }
+    </script>
+}

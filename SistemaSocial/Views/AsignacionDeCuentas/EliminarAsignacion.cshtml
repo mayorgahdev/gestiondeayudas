@@ -1,0 +1,82 @@
+﻿@model SistemaSocial.Models.AsignacionDeCuenta
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Eliminar Asignación de Cuenta. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            <h3 style="font-size: 21px; font-family: Arial; text-align: center;">
+                Eliminar Asignación de Cuenta del Usuario: <br />
+                @Html.ViewData.Model.Clientes.Nombres
+                @Html.ViewData.Model.Clientes.ApellidoPaterno
+                @Html.ViewData.Model.Clientes.ApellidoMaterno
+            </h3>
+            <br />
+            <h3 style="font-size: 18px; font-family: Arial; text-align: left;">
+                Para poder hacer de forma efectiva la eliminación de la siguiente Asignación de Cuenta,
+                debe verificar que el o los informes sociales correspondientes también hayan sido eliminado.
+                De lo contrario, saldrá un error al intentar eliminarla.
+            </h3>
+        </div>
+        <section class="formulario-registro">
+            <form asp-action="EliminarAsignacion" readonly onmousedown="return false;">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AsignacionDeCuentaID" />
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select class="rutEdit"
+                                asp-for="ClientesID" asp-items="ViewBag.ClientesID"
+                                readonly onmousedown="return false;">
+                        </select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="AreaGestionID" class="control-label"></label>
+                        <select asp-for="AreaGestionID" asp-items="ViewBag.AreaGestionID" id="CboAreaGestion">
+                            <option> Seleccione. </option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="ProgramaID" class="control-label"></label>
+                        <select asp-for="ProgramaID" asp-items="ViewBag.ProgramaID" id="CboPrograma">
+                            <option> Seleccione. </option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="CuentaID" class="control-label"></label>
+                        <select asp-for="CuentaID" asp-items="ViewBag.CuentaID" id="CboCuenta">
+                            <option> Seleccione. </option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="PresupuestoID" class="control-label"></label>
+                        <select asp-for="PresupuestoID" asp-items="ViewBag.PresupuestoID" id="CboPresupuesto">
+                            <option> Seleccione. </option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="PresEntregado" class="control-label"></label>
+                        <input asp-for="PresEntregado" id="PresEntregado" />
+                        <span asp-validation-for="PresEntregado" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" id="Submit" value="Eliminar Asignación de Cuenta" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-action="IndexAsignacion">
+                        Volver al Listado...
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

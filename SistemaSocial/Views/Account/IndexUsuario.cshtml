@@ -1,0 +1,125 @@
+﻿@model SistemaSocial.ViewModel.UsuarioView
+@using Microsoft.AspNetCore.Identity
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Listado de Datos de Usuarios </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="course">
+            <div class="course-info">
+                <h2 class="text-center"> Listado de Profesionales. </h2>
+            </div>
+        </div>
+        <div style=" overflow-x: auto;">
+            <div class="table-container-user">
+                @{ var Permisos = User.Claims.Where(x => x.Type == "Admin" && x.Value == "10").FirstOrDefault(); }
+                @foreach (var C in Model.listaUsuario) {
+                    <div class="card-user">
+                        <div class="separador">
+                            <ul class="list-group1">
+                                <li class="imagen">
+                                    <img src="~/Images/@C.Imagen" />
+                                </li>
+                                @if (Permisos != null) {
+                                    <li class="modificar">
+                                        <a class="modificar"
+                                           asp-action="EditarUsuario"
+                                           asp-controller="Account"
+                                           asp-route-UsuarioID="@C.Id">
+                                            Modificar Datos
+                                        </a>
+                                    </li>
+                                }
+                                else {
+                                    <li class="modificar2">
+                                        <a class="modificar2"></a>
+                                    </li>
+                                }
+                            </ul>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <h3>
+                                        <i class="fa-solid fa-user" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                        Nombre:
+                                    </h3>
+                                    @Html.DisplayFor(modelItem => C.Nombre)
+                                    @Html.DisplayFor(modelItem => C.Apellido)
+                                </li>
+                                <li class="list-group-item">
+                                    <h3>
+                                        <i class="fa-solid fa-phone" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                        Teléfono
+                                    </h3>
+                                    @Html.DisplayFor(modelItem => C.PhoneNumber)
+                                </li>
+                                <li class="list-group-item">
+                                    <h3>
+                                        <i class="fa-solid fa-envelope" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                        Correo Electrónico:
+                                    </h3>
+                                    @Html.DisplayFor(modelItem => C.Email)
+                                </li>
+                                <li class="list-group-item">
+                                    <h3>
+                                        <i class="fa-solid fa-user-doctor" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                        Profesión:
+                                    </h3>
+                                    @Html.DisplayFor(modelItem => C.Profesion.Nombre)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center pagination-circle mt-2">
+                @{
+                    if (Model.Paginas != 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="IndexUsuario" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="IndexUsuario" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a>
+                        </li>
+                    }
+
+                    for (int i = 1; i <= Model.CantidadPaginas; i++)
+                    {
+                        if (i == Model.Paginas)
+                        {
+                            <li class="page-item" aria-current="page">
+                                <a class="page-link" asp-action="IndexUsuario" asp-route-Pagina="@i">@i</a>
+                            </li>
+                        }
+                    }
+
+                    if (Model.Paginas != Model.CantidadPaginas)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="IndexUsuario" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="IndexUsuario" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>
+

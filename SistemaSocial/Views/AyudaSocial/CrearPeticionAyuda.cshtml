@@ -1,0 +1,45 @@
+﻿@model SistemaSocial.Models.PeticionAyuda
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Añadir Petición. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Añadir Petición. </div>
+        <section class="formulario-registro">
+            <form asp-action="CrearPeticionAyuda">
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID"></select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <input name="GrupoFamiliar" class="GruposFamiliares" value="@ViewBag.GrupoP" />
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="NumInforme" class="control-label"></label>
+                        <input name="NumInforme" class="GruposFamiliares" value="@ViewBag.NumInforme" />
+                        <span asp-validation-for="NumInforme" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="PeticionTexto" class="control-label"></label>
+                        <textarea class="PeticionTexto" name="PeticionTexto">@ViewBag.PeticionTexto</textarea>
+                        <span asp-validation-for="PeticionTexto" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" id="Submit" value="Guardar" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

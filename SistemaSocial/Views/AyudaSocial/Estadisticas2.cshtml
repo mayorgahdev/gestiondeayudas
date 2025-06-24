@@ -1,0 +1,215 @@
+﻿@model SistemaSocial.ViewModel.AyudaSocialView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Listado Por Tipo de Ayuda. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/font-awesome/" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+</head>
+<body>
+    @{
+        var FechaInicio = Html.ValueFor(a => a.FechaInicio.Date);
+        var FechaFin = Html.ValueFor(a => a.FechaFin.Date);
+
+        ViewBag.FechaInicio_1 = FechaInicio ;
+        ViewBag.FechaFin_1 = FechaFin;
+    }
+    <div class="container">
+        <div class="FiltroFecha">
+            <div class="course-info">
+                <h2 style="font-size: 23px; text-align:center">
+                    Estadísticas por Filtrado
+                </h2>
+                <div class="input-info2">
+                    <h6 class="desde">
+                        Desde:
+                        <input type="date" asp-for="FechaInicio" class="result" readonly onmousedown="return false;" id="resultado1" />
+                    </h6>
+                    <h6 class="hasta">
+                        Hasta:
+                        <input type="date" asp-for="FechaFin" class="result" readonly onmousedown="return false;" id="resultado2" />
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="Estadisticas_Anual">
+            <div class="bar">
+                <div class="card-header">
+                    <h4>
+                        Total de Ayudas Entregadas.
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="AyudaAnual"></canvas>
+                </div>
+            </div>
+
+            <div class="polarArea">
+                <div class="card-header">
+                    <h4>
+                        Mayores 5 Prestaciones Entregadas.
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="PrestacionesAnual"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const FechaFin = document.getElementById('resultado2').value;
+        const FechaInicio = document.getElementById('resultado1').value;
+
+        var data = {
+            FechaFin: FechaFin,
+            FechaInicio: FechaInicio
+        };
+
+        jQuery.ajax({
+            url: "@Url.Action("EstadisticasAyudas", "AyudaSocial")",
+            type: "Get",
+            dataType: "Json",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var fechas = [];
+                var totalAyudas = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    fechas.push(data[i].fecha)
+                    totalAyudas.push(data[i].totalAyudas)
+                }
+
+                /* REPORTE AYUDAS */
+                var controlPie = document.getElementById('AyudaAnual')
+                var graficoPie = new Chart(controlPie, {
+                    type: 'bar',
+                    data: {
+                        labels: fechas,
+                        datasets: [{
+                            label: 'Total de Ayudas',
+                            data: totalAyudas,
+                            borderWidth: "1",
+                            backgroundColor: [
+                                'rgb(187, 34, 34, 0.4)',
+                                'rgb(187, 34, 92, 0.4)',
+                                'rgb(173, 34, 187, 0.4)',
+                                'rgb(113, 34, 187, 0.4)',
+                                'rgb(34, 113, 187, 0.4)',
+                                'rgb(34, 173, 187, 0.4)',
+                                'rgb(34, 187, 157, 0.4)',
+                                'rgb(34, 187, 99, 0.4)',
+                                'rgb(52, 187, 34, 0.4)',
+                                'rgb(171, 187, 34, 0.4)',
+                                'rgb(187, 162, 34, 0.4)',
+                                'rgb(187, 129, 34, 0.4)'
+                            ],
+                            borderColor: [
+                                'rgb(187, 34, 34)',
+                                'rgb(187, 34, 92)',
+                                'rgb(173, 34, 187)',
+                                'rgb(113, 34, 187)',
+                                'rgb(34, 113, 187)',
+                                'rgb(34, 173, 187)',
+                                'rgb(34, 187, 157)',
+                                'rgb(34, 187, 99)',
+                                'rgb(52, 187, 34)',
+                                'rgb(171, 187, 34)',
+                                'rgb(187, 162, 34)',
+                                'rgb(187, 129, 34)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                })
+            },
+            error: function (error) {
+                //console.log(error)
+            }
+        });
+
+
+
+
+
+
+
+        jQuery.ajax({
+            url: "@Url.Action("EstadisticasPres", "AyudaSocial")",
+            type: "GET",
+            dataType: "Json",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var nombre = [];
+                var cantidad = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    nombre.push(data[i].nombre)
+                    cantidad.push(data[i].cantidad)
+                }
+
+                 /* REPORTE AYUDAS */
+                 var controlBar = document.getElementById('PrestacionesAnual');
+                 var graficoBar = new Chart(controlBar, {
+                     type: 'pie',
+                     data: {
+                         labels: nombre,
+                         datasets: [{
+                             data: cantidad,
+                             borderWidth: "1",
+                             backgroundColor: [
+                                 'rgba(187, 34, 34, 0.3)',
+                                 'rgba(113, 34, 187, 0.3)',
+                                 'rgba(34, 113, 187, 0.3)',
+                                 'rgba(34, 187, 99, 0.3)',
+                                 'rgb(187, 162, 34, 0.3)'
+                             ],
+                             borderColor: [
+                                 'rgb(187, 34, 34)',
+                                 'rgb(113, 34, 187)',
+                                 'rgb(34, 113, 187)',
+                                 'rgb(34, 187, 99)',
+                                 'rgb(187, 162, 34)'
+                             ],
+                             borderWidth: 1
+                         }]
+                     },
+                     options: {
+                         scales: {
+                             y: {
+                                 beginAtZero: true
+                             }
+                         }
+                     }
+                 })
+
+            },
+            error: function (error) {
+                //console.log(error)
+            }
+        });
+    </script>
+}

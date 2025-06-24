@@ -1,0 +1,44 @@
+﻿@model SistemaSocial.Models.Presupuesto
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Editar Presupuesto </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            Modificar Presupuesto
+        </div>
+        <section class="formulario-registro">
+            <form asp-action="EditarPresupuesto">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PresupuestoID" />
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="PresInicial" class="control-label"></label>
+                        <input asp-for="PresInicial" id="PresEntregado" />
+                        <span asp-validation-for="PresInicial" class="text-danger"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="PresVigente" class="control-label"></label>
+                        <input asp-for="PresVigente" id="PresEntregado" />
+                        <span asp-validation-for="PresVigente" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" id="Submit" value="Guardar Cambios" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-action="IndexPresupuesto">
+                        Volver al Listado...
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

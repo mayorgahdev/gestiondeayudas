@@ -1,0 +1,147 @@
+﻿@model SistemaSocial.Models.Salud
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Modificar Datos de Salud </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            Modificar Datos de Salud de: <br />
+            @Html.ViewData.Model.Clientes.Nombres
+            @Html.ViewData.Model.Clientes.ApellidoPaterno
+            @Html.ViewData.Model.Clientes.ApellidoMaterno
+        </div>
+        <section class="formulario-registro">
+            <div>
+                <partial name="_DatosEditarPartial(1)" />
+            </div>
+            <form asp-action="EditarSalud">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="SaludID" />
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select class="rutEdit"
+                                asp-for="ClientesID" asp-items="ViewBag.ClientesID"
+                                readonly onmousedown="return false;">
+                        </select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <input asp-for="GrupoFamiliar" type="number" />
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                        <h6 style="text-align:left; font-size: 13.5px;" font-family="Arial">
+                            Para poder cambiar el vínculo de un grupo a otro, ingrese el número del grupo al cual será vinculado
+                            (Este se visualiza al ingresar al apartado de grupos del Usuario)
+                        </h6>
+                    </div>
+
+                    <div class="input-box">
+                        <label asp-for="ProcedenciaID" class="control-label"></label>
+                        <select asp-for="ProcedenciaID" asp-items="ViewBag.ProcedenciaID">
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="ProcedenciaID" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Diagnostico" class="control-label"></label>
+                        <textarea rows="4" asp-for="Diagnostico"> </textarea>
+                        <span asp-validation-for="Diagnostico" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="DiscapacidadID" class="control-label"></label>
+                        <select asp-for="DiscapacidadID" asp-items="ViewBag.DiscapacidadID" id="cboDiscapacidad" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="DiscapacidadID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="AcreditacionID" class="control-label"></label>
+                        <select asp-for="AcreditacionID" asp-items="ViewBag.AcreditacionID" id="cboAcreditacion" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="AcreditacionID" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Observacion" class="control-label"></label>
+                        <textarea rows="4" asp-for="Observacion"> </textarea>
+                        <span asp-validation-for="Observacion" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar Cambios" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-controller="Clientes"
+                       asp-action="IndexGrupoFamiliar">
+                        Volver al Listado.
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            CargarAcreditacion();
+
+            $("#Submit").click(function () {
+                var Acreditacion = parseInt($("#cboAcreditacion").val());
+                var data = {
+                    Acreditacion: Acreditacion,
+                };
+
+                $.ajax({
+                    url: '../Salud/EditarSalud',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (d) {
+                        /* - */
+                    },
+                    error: function () {
+                        /* - */
+                    }
+                });
+            });
+        });
+
+        function CargarAcreditacion() {
+            $('#cboDiscapacidad').change(function () {
+                const DiscapacidadID = $(this).val();
+                //console.log(DiscapacidadID);
+                $('#cboAcreditacion').prop('disabled', false);
+                if (!isNaN(DiscapacidadID)) {
+                    $.ajax({
+                        type: 'Get',
+                        url: '../Salud/GetAcreditacion',
+                        dataType: 'Json',
+                        data: { DiscapacidadID: DiscapacidadID },
+                        contentType: 'application/json; charset=uft-8',
+                        cache: false,
+                        success: function (e) {
+                            $('#cboAcreditacion').empty();
+                            $.each(e, function (i, C) {
+                                //console.log(i);
+                                //console.log(C);
+                                $('#cboAcreditacion').append($("<option></option>").val(C.discapacidadID).html(C.nombre));
+                            });
+                        },
+                        error: function (ex) {
+                            alert("Error al cargar las cantidades");
+                        }
+                    });
+                }
+            });
+        };
+    </script>
+}

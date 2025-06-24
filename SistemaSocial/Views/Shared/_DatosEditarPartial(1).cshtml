@@ -1,0 +1,25 @@
+﻿<div class="controlador-btn-index" style="border:1px">
+    <!-- CLIENTES -->
+    <a class="Clientes" 
+       asp-action="EditarClientes" 
+       asp-controller="Clientes"
+       asp-route-ClientesID="@Html.ViewData.Model.ClientesID"> 
+        1.- Modificar Datos de Usuarios 
+    </a>
+
+    <!-- SALUD -->
+    <a class="Salud" 
+       asp-action="EditarSalud" 
+       asp-controller="Salud"
+       asp-route-ClientesID="@Html.ViewData.Model.ClientesID">
+        2.- Modificar Datos de Salud
+    </a>
+
+    <!-- ECONOMICOS SOCIAL -->
+    <a class="Socioeconomico" 
+       asp-action="EditarSocioeconomico"
+       asp-controller="Socioeconomico"
+       asp-route-ClientesID="@Html.ViewData.Model.ClientesID"> 
+        3.- Modificar Datos Socioeconómicos 
+    </a>
+</div>

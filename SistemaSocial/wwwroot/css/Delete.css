@@ -1,0 +1,109 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: #000;
+    font-family: Yu Gothic UI;
+    padding: 0, 1em;
+    background-color: #f4fff6;
+}
+
+.delete {
+    max-width: 1000px;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2em;
+}
+
+    .delete h4 {
+        text-align: center;
+    }
+
+.formulario-eliminar,
+.formulario-eliminar1 {
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 30%);
+}
+
+    .formulario-eliminar a,
+    .formulario-eliminar1 a {
+        color: #000;
+    }
+
+    .formulario-eliminar form {
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        background-color: #aaa2a238;
+    }
+
+    .formulario-eliminar1 form {
+        margin: 0;
+    }
+
+    .formulario-eliminar > *,
+    .formulario-eliminar1 {
+        padding: 1.5em;
+        background-color: #aaa2a238;
+    }
+
+    .formulario-eliminar form .block {
+        grid-column: 1 / 4;
+    }
+
+    .formulario-eliminar .texto {
+        text-align: center;
+        background-color: #aaa2a238;
+    }
+
+.form-eliminar {
+    box-shadow: 0 0 20px 0 rgba(255, 255, 255, .3);
+}
+
+    .form-eliminar > * {
+        padding: 1.5em;
+    }
+
+
+@media (max-width: 991px) {
+    .container {
+        max-width: 100%;
+    }
+
+    .formulario-eliminar form {
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .form-eliminar1 form {
+        margin: 0;
+    }
+}
+
+@media (max-width: 554px) {
+    .container {
+        max-width: 100%;
+    }
+
+    .formulario-eliminar form {
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 403px) {
+    .container {
+        max-width: 100%;
+    }
+
+    .formulario-eliminar form {
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}

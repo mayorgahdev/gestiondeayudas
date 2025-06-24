@@ -1,0 +1,87 @@
+﻿@model SistemaSocial.Models.Usuario
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Modificar Datos del Profesional </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            Modificar Datos de: <br />
+            @Html.ViewData.Model.Nombre
+            @Html.ViewData.Model.Apellido
+        </div>
+        <section class="formulario-registro">
+            <form asp-action="EditarUsuario">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="Rut" class="control-label"></label>
+                        <input type="text" asp-for="Rut" />
+                        <span asp-validation-for="Rut" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input type="text" asp-for="Nombre" />
+                        <span asp-validation-for="Nombre" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Apellido" class="control-label"></label>
+                        <input type="text" asp-for="Apellido" />
+                        <span asp-validation-for="Apellido" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label class="control-label">Correo Electrónico</label>
+                        <input type="email" asp-for="Email" />
+                        <span asp-validation-for="Email" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label class="control-label">Nombre de Usuario.</label>
+                        <input type="text" asp-for="UserName" />
+                        <span asp-validation-for="UserName" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="ProfesionID" class="control-label"></label>
+                        <select asp-for="ProfesionID" asp-items="ViewBag.ProfesionID">
+                            <option> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="ProfesionID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label class="control-label">Teléfono.</label>
+                        <input type="text" asp-for="PhoneNumber" />
+                        <span asp-validation-for="PhoneNumber" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Marca" class="control-label"></label>
+                        <input type="text" asp-for="Marca" />
+                        <span asp-validation-for="Marca" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Firma" class="control-label"></label>
+                        <select asp-for="Firma">
+                            <option> Si </option>
+                            <option> No </option>
+                        </select>
+                        <span asp-validation-for="Firma" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" id="Submit" value="Guardar Cambios" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-controller="Clientes"
+                       asp-action="IndexClientes">
+                        Volver al Listado.
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

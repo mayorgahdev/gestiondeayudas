@@ -1,0 +1,162 @@
+﻿@model SistemaSocial.Models.AyudaSocial
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Modificar Ayuda Social </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            Modificar Ayuda Social de: <br />
+            @Html.ViewData.Model.Clientes.Nombres
+            @Html.ViewData.Model.Clientes.ApellidoPaterno
+            @Html.ViewData.Model.Clientes.ApellidoMaterno
+        </div>
+        <section class="formulario-registro">
+            <form asp-action="EditarAyudaSocial">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AyudaSocialID" />
+                <div class="user-details">
+                    <div class="input-box">
+                        <label class="control-label"> Seleccione Run o Pasaporte del Usuario a Entregar la Ayuda Social. </label><br />
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID"></select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <input asp-for="GrupoFamiliar" type="number" />
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+                    <h6 class="text-center" style="font-size:13.5px" font-family="Arial">
+                        Para poder cambiar el vínculo de un grupo a otro, ingrese el número del grupo al cual será vinculado
+                        (Este se puede ver al ingresar al apartado de grupos del Usuario)
+                    </h6>
+                    <div class="input-box">
+                        <label asp-for="TipoPeticionID" class="control-label"></label>
+                        <select asp-for="TipoPeticionID" asp-items="ViewBag.TipoPeticionID">
+                            <option> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TipoPeticionID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="FechaElaboracion" class="control-label"></label>
+                        <input asp-for="FechaElaboracion" />
+                        <span asp-validation-for="FechaElaboracion" class="details"></span>
+                    </div>
+                    <div class="block-a">
+                        <label asp-for="DetalleRequerimiento" class="control-label"></label>
+                        <textarea autocomplete="on" rows="2" asp-for="DetalleRequerimiento"> </textarea>
+                        <span asp-validation-for="DetalleRequerimiento" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="PrestacionesID" class="control-label"></label>
+                        <select asp-for="PrestacionesID" asp-items="ViewBag.PrestacionesID" id="cboPrestaciones">
+                            <option> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="PrestacionesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="CantidadEntregada" class="control-label"></label>
+                        <input asp-for="CantidadEntregada" min="0" id="gastosID" oninput="validarGASTOS(event)" />
+                        <span asp-validation-for="CantidadEntregada" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <div class="stock">
+                            <div class="form-check-inline">
+                                <label asp-for="StockBodega" class="control-label"></label>
+                                <input type="checkbox" asp-for="StockBodega" />
+                                <span asp-validation-for="StockBodega" class="details"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar Cambios" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-action="TipoDeAyuda">
+                        Volver al Listado.
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //CargarPrestaciones();
+            CargarCantidades();
+        });
+
+        //function CargarPrestaciones() {
+        //    $.ajax({
+        //        type: 'Get',
+        //        url: '../AyudaSocial/LoadPrestaciones',
+        //        dataType: 'Json',
+        //        contentType: 'application/json; charset=uft-8',
+        //        cache: false,
+        //        success: function (e) {
+        //            $('#cboPrestaciones').empty();
+        //            $('#cboPrestaciones').append($("<option></option>").val('').html('Seleccione.'));
+        //            $.each(e, function (i, P) {
+        //                //console.log(i);
+        //                //console.log(P);
+        //                $('#cboPrestaciones').append($("<option></option>").val(P.prestacionesID).html(P.nombre));
+        //            });
+        //        },
+        //        error: function (ex) {
+        //            alert("Error al cargar los programas");
+        //        }
+        //    });
+        //};
+        function CargarCantidades() {
+            $('#cboPrestaciones').change(function () {
+                const PrestacionesID = $(this).val();
+                //console.log(PrestacionesID);
+                $('#cboCantidad').prop('disabled', false);
+                if (!isNaN(PrestacionesID)) {
+                    $.ajax({
+                        type: 'Get',
+                        url: '../AyudaSocial/GetPrestaciones',
+                        dataType: 'Json',
+                        data: { PrestacionesID: PrestacionesID },
+                        contentType: 'application/json; charset=uft-8',
+                        cache: false,
+                        success: function (e) {
+                            $('#cboCantidad').empty();
+                            $.each(e, function (i, C) {
+                                //console.log(i);
+                                //console.log(C);
+                                $('#cboCantidad').append($("<option></option>").val(C.prestacionesID).html(C.cantidad));
+                            });
+                        },
+                        error: function (ex) {
+                            alert("Error al cargar las cantidades");
+                        }
+                    });
+                }
+            });
+        };
+    </script>
+    <script>
+        function validarGASTOS(event) {
+            const input = event.target;
+            const valor = input.value.trim();
+
+            if (/^[0-9]\d*$/.test(valor)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Ingrese únicamente valores enteros. Ejemplo: 0123');
+            }
+            input.reportValidity();
+        }
+    </script>
+}

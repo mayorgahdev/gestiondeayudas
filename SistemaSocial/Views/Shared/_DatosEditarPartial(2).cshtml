@@ -1,0 +1,39 @@
+﻿<div class="controlador-btn-index" style="border:1px">
+    <!-- HABITACIONALES -->
+    <a class="Habitacional"
+       asp-action="EditarHabitacionales"
+       asp-controller="Habitacionales"
+       asp-route-Grupo="@Html.ViewData.Model.GrupoFamiliar">
+        1.- Modificar Datos Habitacionales
+    </a>
+
+    <!-- SITUACIÓN ACTUAL -->
+    <a class="Habitacional"
+       asp-action="EditarSituacion"
+       asp-controller="Habitacionales"
+       asp-route-Grupo="@Html.ViewData.Model.GrupoFamiliar">
+        2.- Modificar Situación Actual.
+    </a>
+
+    <!-- GASTOS FAMILIARES -->
+    <a class="GastosFamiliares"
+       asp-action="EditarGastosFamiliares"
+       asp-controller="GastosFamiliares"
+       asp-route-Grupo="@Html.ViewData.Model.GrupoFamiliar">
+        3.- Modificar Gastos Familiares
+    </a>
+
+    <a class="GastosFamiliares"
+       asp-action="EditarIngresos"
+       asp-controller="GastosFamiliares"
+       asp-route-Grupo="@Html.ViewData.Model.GrupoFamiliar">
+        4.- Modificar Declaración de Ingresos
+    </a>
+
+    <a class="Clientes"
+       asp-action="EditarCronicos"
+       asp-controller="Clientes"
+       asp-route-Grupo="@Html.ViewData.Model.GrupoFamiliar">
+        5.- Modificar Cartola Hogar - R.S.H.
+    </a>
+</div>

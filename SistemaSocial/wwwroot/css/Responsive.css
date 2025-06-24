@@ -1,0 +1,496 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: #000;
+    font-family: Yu Gothic UI;
+    padding: 0, 1em;
+    background-color: #f4fff6;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.formulario-registro > * {
+    box-shadow: 4px 4px 10px 0px rgb(43 41 41 / 30%);
+    margin: 20px 10px 15px 10px;
+    background: #fff;
+    background-color: #aaa2a238;
+    padding: 1em;
+    border: 0.1px solid #e2e2e2;
+    border-radius: 10px;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1em;
+}
+
+    .container .title {
+        margin-top: 30px;
+        font-size: 25px;
+        font-weight: 500;
+        position: relative;
+    }
+
+        .container .title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+        }
+
+    .container form .user-details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 10px 0 10px 0;
+    }
+
+form .user-details .input-box {
+    margin-bottom: 12px;
+    width: calc(100% / 2 - 20px);
+}
+
+.user-details .input-box .control-label {
+    margin-bottom: 0em;
+}
+
+.user-details .input-box input .details {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.field-validation-error {
+    color: #e13232;
+    font-weight: 400;
+}
+
+.user-details .input-box textarea.GruposFamiliares {
+    height: 35px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    background-color: #F4FFF6;
+}
+
+.user-details .input-box input,
+.user-details .input-box select,
+.user-details .block textarea,
+.user-details .block-a textarea,
+.user-details .block-a1 textarea {
+    background-color: #f4fff6;
+}
+
+.user-details input#GrupoFamiliar,
+.user-details input#NoGrupoFamiliar {
+    background-color: #f4fff6;
+}
+
+.user-details .input-box span {
+    height: 35px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    color: #e13232;
+}
+
+.container form .user-details-usuario {
+    display: block;
+    justify-content: space-between;
+    margin: 20px 0 15px 0;
+}
+
+form .user-details-usuario .input-box {
+    margin-bottom: 12px;
+}
+
+.user-details-usuario .input-box span {
+    height: 35px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    color: #e13232;
+}
+
+
+.block {
+    margin-top: 9px;
+}
+
+.block-a {
+    margin-top: 9px;
+}
+
+
+.block-a1 {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+    .block-a1 textarea {
+        width: 100%;
+        height: 140px;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding-left: 10px;
+        font-size: 16px;
+        border-bottom-width: 2px;
+        transition: all 0.3s ease;
+    }
+
+        .block-a1 textarea:focus {
+            border-color: #71b7e6;
+        }
+
+.block,
+.block-a,
+.block-h {
+    width: 100%;
+}
+
+.user-details .block textarea,
+.user-details .block-a textarea,
+.user-details .block-a select,
+.user-details .block-h fieldset {
+    height: 100px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    background-color: #F4FFF6;
+}
+    .user-details .block-a select {
+        margin-bottom: 15px;
+        height: 195px;
+    }
+
+.user-details .block textarea#SituacionActual {
+    height: 250px;
+}
+
+.user-details .block-a textarea,
+.user-details .block-a1 textarea,
+.user-details .block-a select {
+    margin-top: -7px
+}
+
+    .user-details .block textarea:focus,
+    .user-details .block-a textarea:focus,
+    .user-details .block-a select:focus,
+    .user-details .block-h fieldset:focus {
+        border-color: #71b7e6;
+    }
+
+.user-details .input-box select,
+.user-details .input-box input,
+.user-details-usuario .input-box select,
+.user-details-usuario .input-box input {
+    height: 35px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+    .user-details .input-box select:focus,
+    .user-details .input-box input:focus,
+    .user-details-usuario .input-box select:focus,
+    .user-details-usuario .input-box input:focus {
+        border-color: #71b7e6;
+    }
+
+.user-details .input-box #cboCantidad,
+.user-details .input-box .rutEdit {
+    background-color: #E0E5E7;
+}
+
+.input-box-sexo,
+.input-box-tipo {
+    margin-bottom: 12px;
+    width: calc(100% / 2 - 20px);
+    font-size: 16.5px;
+}
+
+    .input-box-sexo div {
+        margin-top: -5px;
+    }
+
+    .user-details .input-box-tipo input,
+    .user-details .input-box-sexo input,
+    .user-details .input-box-casa input,
+    .input-box-tipo input {
+        width: 14px !important;
+        height: 14px !important;
+        margin: 2px;
+        accent-color: #2492BB;
+    }
+
+.user-details .input-box .stock .form-check-inline label {
+    width: 300px;
+}
+
+.user-details .input-box .stock .form-check-inline input {
+    width: 35px !important;
+    height: 75px !important;
+    margin-left: -20px;
+    accent-color: #2492BB;
+}
+
+.user-details .textInforme {
+    font-size: 16px;
+    font-family: Arial;
+    margin: auto;
+    margin-bottom: 13px;
+}
+
+    .user-details .textInforme h6 {
+        font-style: italic;
+    }
+
+.input-box-casa {
+    margin-bottom: 12px;
+    margin-right: 12px;
+}
+
+form .boton {
+    height: 45px;
+    width: 45px 0;
+}
+
+    form .boton input {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        color: #fff;
+        border: none;
+        font-size: 18px;
+        font-weight: 500;
+        border-radius: 5px;
+        letter-spacing: 1.3px;
+        background: linear-gradient(165deg, #0f421d, #3c7e21);
+    }
+
+        form .boton input:hover {
+            background: linear-gradient(165deg, #3c7e21, #0f421d);
+        }
+
+form .boton1 {
+    height: 35px;
+    width: 35px 0;
+    margin-bottom: 30px;
+}
+
+    form .boton1 input {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        color: #fff;
+        border: none;
+        font-size: 17px;
+        font-weight: 400;
+        border-radius: 5px;
+        background: linear-gradient(165deg, #0f421d, #3c7e21);
+    }
+
+        form .boton1 input:hover {
+            background: linear-gradient(165deg, #3c7e21, #0f421d);
+        }
+
+
+form .volver a {
+    color: #000;
+    width: 150px;
+    height: 5px;
+    text-decoration: none;
+}
+
+
+.Asignacion {
+    align-content: center;
+    width: 100%;
+    margin-left: auto;
+}
+
+    .Asignacion a.Cuentas {
+        padding: 4px;
+        margin: 2.5px;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 10px;
+        background-color: #286223;
+        text-decoration: none;
+    }
+
+        .Asignacion a.Cuentas:hover {
+            background-color: #3b822c;
+        }
+
+.user-details .block textarea.PeticionTexto {
+    height: 135px;
+}
+
+.Asignacion1 {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    width: 100%;
+    margin-left: auto;
+}
+
+    .Asignacion1 .Cuentas1 {
+        padding: 4px;
+        margin: 2.5px;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 10px;
+        background-color: #286223;
+        text-decoration: none;
+        margin-left: auto;
+    }
+        .Asignacion1 a.Cuentas1:hover {
+            background-color: #3b822c;
+        }
+
+
+
+i.fa.fa-caret-left {
+    color: #fff;
+    margin-right: 6px;
+}
+
+/*
+form .user-details-ingresos {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px -35px 15px -10px;
+}
+    form .user-details-ingresos .input-box {
+        margin-bottom: 12px;
+        width: calc(100% / 4 - 20px);
+    }
+    form .user-details-ingresos .input-box {
+        margin-left: 10px;
+    }
+*/
+.d .input-box-tipo {
+    margin-bottom: 2px;
+}
+
+.d .ad {
+    margin-bottom: 25px;
+    display: flex;
+    position: relative;
+}
+
+    .d .ad .run,
+    .d .ad .pasaporte {
+        width: calc(100% / 2 - 20px);
+    }
+
+    .d .ad .run {
+        position: absolute;
+    }
+
+        .d .ad .run input,
+        .d .ad .pasaporte input {
+            height: 35px;
+            width: 100%;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding-left: 10px;
+            font-size: 16px;
+            border-bottom-width: 2px;
+            background-color: #f4fff6;
+        }
+
+            .d .ad .run input:focus,
+            .d .ad .pasaporte input:focus {
+                border-color: #71b7e6;
+            }
+
+@media (max-width: 1199px) {
+    .user-details .block textarea.PeticionTexto {
+        height: 175px;
+    }
+}
+
+@media (max-width: 991px) {
+    .container {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 769px) {
+    .container {
+        max-width: 100%;
+    }
+    form .user-details .input-box {
+        margin-bottom: 12px;
+        width: 100%;
+    }
+        form .user-details-usuario .input-box {
+            margin-bottom: 12px;
+            width: 100%;
+        }
+    .input-box-sexo,
+    .input-box-tipo,
+    .input-box .stock {
+        margin-bottom: 12px;
+        width: calc(100% / 1 - 20px);
+    }
+    .input-box .stock {
+        max-width: 100%;
+        width: calc(100% / 1 - 20px);
+        display: contents;
+    }
+        .input-box .stock label.control-label {
+            height: 20px;
+            font-size: 14.5px;
+            margin-bottom: 10px;
+        }
+        .input-box .stock input#StockBodega {
+            margin-top: 15px;
+            margin-left: -180px;
+            width: 20px !important;
+            height: 20px !important;
+        }
+    .d .ad .run,
+    .d .ad .pasaporte {
+        width: 100%;
+    }
+
+    .form-check-inline,
+    .input-box-casa {
+        max-width: 100%;
+        width: calc(100% / 1 - 20px);
+        display: contents;
+    }
+}

@@ -1,0 +1,819 @@
+﻿@model SistemaSocial.ModelPDF.Informe
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+@{
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title> Imprimir Informe Social (reducido) </title>
+    <link href="~/css/Impresiones.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="arriba_informe" style="display: -webkit-box;">
+        <div class="izquierda">
+            <a class="navbar-brand text-white"
+               asp-area=""
+               asp-controller="Home"
+               asp-action="Index">
+                <img src="/Images/navbar-logo.png"
+                     alt="Municipalidad Chimbarongo"
+                     width="220"
+                     height="80" />
+            </a>
+            <h6>
+                I. MUNICIPALIDAD DE CHIMBARONGO <br />
+                DEPARTAMENTO SOCIAL COMUNAL.
+            </h6>
+        </div>
+        <div class="centro" style="margin-top: 45px;">
+            <h1>Informe Social</h1>
+        </div>
+        <div class="derecha" style="margin-top: 10px;">
+            @{
+                var validar3 = true;
+                foreach (var A in Model.ListaInformeSocial) {
+                    if (validar3) {
+                        if (A.NumInforme != 0) {
+                            <h1 class="fecha">
+                                <b>
+                                    INF. SOCIAL N°
+                                    <strong style="font-size: 16px;">@Html.DisplayFor(modelItem => A.NumInforme)</strong>
+                                </b>
+                                <br />
+                                <b>
+                                    Chimbarongo,
+                                    <strong>@A.FechaElaboracion.ToString("dd 'de' MMMM 'de' yyyy")</strong>
+                                </b>
+                            </h1>
+                        }
+                        validar3 = false;
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="abajo">
+        <p style="margin-top: -10px;">
+           @foreach (var C in Model.ListaInformeSocial) {
+                <b>
+                    @Html.DisplayFor(modelItem => C.Usuario.Nombre)
+                    @Html.DisplayFor(modelItem => C.Usuario.Apellido),
+                </b>
+                @Html.DisplayFor(modelItem => C.Usuario.Profesion.Nombre)
+                break;
+            }
+            del Departamento Social de la I. Municipalidad de Chimbarongo, que suscribe, tiene a bien informar a usted,
+            Respecto a la situación Socioeconómica del grupo familiar que a continuación se identifica.
+        </p>
+        <br />
+
+        @* 1 DATOS CLIENTES*@
+       @foreach (var C in Model.ListaClientesGrupo
+            .Where(x => x.TipoDeCliente.Equals("Solicitante") ||
+            x.TipoDeCliente.Equals("Requirente") ||
+            x.TipoDeCliente.Equals("Ambos") &&
+            !x.TipoDeCliente.Equals("Solicitante"))) {
+            <div class="">
+                <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                    <mark>Identificación del Usuario.</mark>
+                </h6>
+                <table class="tabla-general">
+                    <tr>
+                        <th>NOMBRE</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            <b style="margin-right: 20px; text-transform: capitalize">
+                                @Html.DisplayFor(modelItem => C.Nombres)
+                                @Html.DisplayFor(modelItem => C.ApellidoPaterno)
+                                @Html.DisplayFor(modelItem => C.ApellidoMaterno)
+                            </b>
+                        </td>
+                        <th>RUN</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Rut)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>FECHA DE NACIMIENTO</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @C.FechaNacimiento.ToString("dd/MM/yyyy")
+                        </td>
+                        <th>EDAD</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Edad)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>NACIONALIDAD</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Nacionalidad.Nombre)
+                        </td>
+                        <th>OCUPACIÓN</th>
+                        <td colspan="4">
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Ocupacion)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>PREVISIÓN SOCIAL</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.PrevisionSocial.Nombre)
+                        </td>
+                        <th>PREVISIÓN SALUD</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.PrevisionSalud.Nombre)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>ESTADO CIVIL</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.EstadoCivil.Nombre)
+                        </td>
+                        <th style="width:150px;">INDICE ESCOLARIDAD</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.IndiceEscolaridad.Nombre)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>TELÉFONO</th>
+                        <td>
+                           @if (C.Telefono != null) {
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => C.Telefono)
+                            }
+                            else {
+                                <p> - </p>
+                            }
+                        </td>
+                        <th>CORREO</th>
+                        <td style="pointer-events: none;">
+                           @if (C.Correo != null) {
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => C.Correo)
+                            }
+                            else {
+                                <p> - </p>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>DIRECCIÓN</th>
+                        <td colspan="4">
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Direccion)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>TIPO DE USUARIO</th>
+                        <td colspan="3">
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.TipoDeCliente)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            break;
+        }
+
+
+        @* 2 GRUPO FAMILIAR Y ANTECEDENTES SOCIOECONOMICOS DEL GRUPO*@
+        <div class="">
+            @{
+                int Grupo = 0;
+                int Total = 0;
+                <div class="GrupoFamiliarSE">
+                    <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                        <mark>
+                            Identificación del Grupo Familiar
+                            <b style="font-size: 16px; font-weight: 300">(Quienes comparten presupuesto de alimentación).</b>
+                        </mark>
+                    </h6>
+                    <table class="tbl">
+                        <thead style="background-color: #f1f1f1">
+                            <tr>
+                                <th style="width: 200px;">
+                                    <b>Nombre.</b>
+                                </th>
+                                <th style="width: 30px;">
+                                    <b>Edad.</b>
+                                </th>
+                                <th style="width: 120px;">
+                                    <b>Parentesco.</b>
+                                </th>
+                                <th style="width: 450px; ">
+                                    <b>Antecedentes de Salud</b>
+                                </th>
+                                <th style="width: 300px;">
+                                    <b>Actividad</b>
+                                </th>
+                                <th style="width: 100px;">
+                                    <b>Ingresos.</b>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @foreach (var GrupoF in Model.ListaGrupo.OrderBy(x => x.ClientesID)) {
+                                if (GrupoF.ClientesID == Model.ID &&
+                                    GrupoF.TipoDeCliente.Equals("Requirente")) {
+                                    <tr>
+                                        <td style="width: 270px; vertical-align: text-top;">
+                                            <b style="font-size: 16px;">
+                                                @Html.DisplayFor(modelItem => GrupoF.Nombres)
+                                                @Html.DisplayFor(modelItem => GrupoF.ApellidoPaterno)
+                                                @Html.DisplayFor(modelItem => GrupoF.ApellidoMaterno)
+                                            </b>
+                                        </td>
+                                        <td style="width: 30px; vertical-align: text-top;">
+                                            <p>@Html.DisplayFor(modelItem => GrupoF.Edad)</p>
+                                        </td>
+                                        <td style="vertical-align: text-top;">
+                                            <p>@Html.DisplayFor(modelItem => GrupoF.Parentesco.Nombre)</p>
+                                        </td>
+                                        <td style="width: 300px; vertical-align: text-top;">
+                                           @foreach (var Salud in Model.ListaSaludGrupo
+                                                .Where(s => s.ClientesID == GrupoF.ClientesID)) {
+                                                <p>@Html.DisplayFor(modelItem => Salud.Diagnostico)</p>
+                                            }
+                                        </td>
+                                        <td style="vertical-align: text-top;">
+                                            <p>@Html.DisplayFor(modelItem => GrupoF.Ocupacion)</p>
+                                        </td>
+                                        <td style="vertical-align: text-top;">
+                                           @foreach (var SEGrupo in Model.ListaSocioeconomicoGrupo
+                                                .Where(s => s.ClientesID == GrupoF.ClientesID)) {
+                                                <b>@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", SEGrupo.TotalIngresos)</b>
+                                                Grupo = Grupo + SEGrupo.TotalIngresos;
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                                else {
+                                    <tr>
+                                        <td style="width: 270px; vertical-align: text-top;">
+                                            <b style="font-size: 16px;">
+                                                @Html.DisplayFor(modelItem => GrupoF.Nombres)
+                                                @Html.DisplayFor(modelItem => GrupoF.ApellidoPaterno)
+                                                @Html.DisplayFor(modelItem => GrupoF.ApellidoMaterno)
+                                            </b>
+                                        </td>
+                                        <td style="width: 30px; vertical-align: text-top;">
+                                            <p>@Html.DisplayFor(modelItem => GrupoF.Edad)</p>
+                                        </td>
+                                        <td style="vertical-align: text-top;">
+                                            <p>@Html.DisplayFor(modelItem => GrupoF.Parentesco.Nombre)</p>
+                                        </td>
+                                        <td style="width: 300px; vertical-align: text-top;">
+                                           @foreach (var Salud in Model.ListaSaludGrupo
+                                                .Where(s => s.ClientesID == GrupoF.ClientesID)) {
+                                                <p>@Html.DisplayFor(modelItem => Salud.Diagnostico)</p>
+                                            }
+                                        </td>
+                                        <td style="vertical-align: text-top;">
+                                            <p>@Html.DisplayFor(modelItem => GrupoF.Ocupacion)</p>
+                                        </td>
+                                        <td style="vertical-align: text-top;">
+                                           @foreach (var SEGrupo in Model.ListaSocioeconomicoGrupo
+                                               .Where(s => s.ClientesID == GrupoF.ClientesID)) {
+                                               <b>@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", SEGrupo.TotalIngresos)</b>
+                                               Grupo = Grupo + SEGrupo.TotalIngresos;
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+               @foreach (var Cro in Model.ListaCronicos) {
+                    <table class="tbl">
+                        <tr>
+                            <th style="width: 94px; border-right: 1px solid #d7d1d1; vertical-align: text-top;">
+                                N° Cronicos.
+                                <h3 style="font-weight: 400; text-align: center;">
+                                    @Html.DisplayFor(modelItem => Cro.NCronicos)
+                                </h3>
+                            </th>
+                            <th style="width: 130px; border-right: 1px solid #d7d1d1; vertical-align: text-top;">
+                                N° Embarazadas.
+                                <h3 style="font-weight: 400; text-align: center;">
+                                    @Html.DisplayFor(modelItem => Cro.NEmbarazadas)
+                                </h3>
+                            </th>
+                            <th style="width: 680px; vertical-align: text-top;">
+                                Observación.
+                                <p style="font-weight: 400">
+                                    @Html.DisplayFor(modelItem => Cro.ObservacionGrupo)
+                                </p>
+                            </th>
+                        </tr>
+                    </table>
+                    break;
+                }
+                Total = Grupo;
+            }
+            <div style="margin-bottom: 15px;"></div>
+        </div>
+
+        @* 3 DATOS SOCIOECONOMICOS *@
+        @{
+            bool validaSE = true;
+            foreach (var E in Model.ListaSocioeconomicoGrupo) {
+                <div class="">
+                   @if (validaSE) {
+                        <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                            <mark>Antecedentes Socioeconómicos. </mark>
+                        </h6>
+                        validaSE = false;
+                    }
+                    <table class="tabla-general">
+                        <tr>
+                            <th style="vertical-align: text-top;">
+                                OBSERVACIONES :
+                            </th>
+                            <td colspan="4">
+                                <p style="font-size: 16px; margin-left: -95px;">
+                                    @Html.DisplayFor(modelItem => E.Observacion)
+                                </p>
+                            </td>
+                        </tr>
+                        <tr><th><p style="margin-bottom: 10px;"></p></th></tr>
+                       @foreach (var Cro in Model.ListaCronicos) {
+                            <tr>
+                                <th style="width: 223px;">
+                                    REGISTRO SOCIAL DE HOGARES :
+                                </th>
+                                <td style="width: 200px;">
+                                    <p style="font-size: 16px;">
+                                        @Html.DisplayFor(modelItem => Cro.RSH.Nombre)
+                                    </p>
+                                </td>
+                                <th style="margin-left: -50px; ">
+                                    TRAMO :
+                                </th>
+                                <td>
+                                    <p style="font-size: 16px; margin-left: -90px;">
+                                        @Html.DisplayFor(modelItem => Cro.Tramo.Nombre)
+                                    </p>
+                                </td>
+                            </tr>
+                            break;
+                        }
+                    </table>
+                </div>
+            }
+        }
+
+        @* 4 DATOS GASTOS FAMILIARES*@
+        @{
+            foreach (var G in Model.ListaGastosFamiliaresGrupo) {
+                <div class="" style="margin-top: -27px;">
+                    <table class="tabla-general">
+                        <tr>
+                            <th style="font-size: 17px; width: 307px;">
+                                <strong>Total de Ingresos Mensuales Familiares</strong>
+                            </th>
+                            <td>
+                                <p>
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    <b>@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", Total)</b>
+                                </p>
+                            </td>
+                        </tr>
+                       @if (G.TotalGastosMensuales != 0) {
+                            <tr>
+                                <th style="font-size: 17px; width: 307px;">
+                                    <strong>Total de Gastos Mensuales</strong>
+                                </th>
+                                <td>
+                                    <p>
+                                        <b style="width: 1px; margin-left: -5px;">:</b>
+                                        <b>@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.TotalGastosMensuales)</b>
+                                    </p>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                break;
+            }
+        }
+
+        @* 5 DATOS HABITACIONALES*@
+        @{
+            foreach (var H in Model.ListaHabitacionalesGrupo) {
+                <div class="">
+                    <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                        <mark>Antecedentes Habitacionales.</mark>
+                    </h6>
+                    <table class="tabla-general">
+                        <tr>
+                            <th style="width: 110px; vertical-align: text-top;">ELECTRICIDAD </th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                               @if (bool.Parse(H.RedPublica) == true) {
+                                    <label>Red Pública. </label>
+                                }
+                                else { }
+                               @if (bool.Parse(H.Luzirregular) == true) {
+                                    <label>Conexión Electrica Irregular. </label>
+                                }
+                                else { }
+                               @if (bool.Parse(H.SinLuz) == true) {
+                                    <label>Sin Electricidad. </label>
+                                }
+                                else { }
+                            </td>
+                            <th style="width: 50px; vertical-align: text-top;">AGUA </th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                               @if (bool.Parse(H.Agua) == true) {
+                                    <label>Red Pública.</label>
+                                }
+                                else { }
+                               @if (bool.Parse(H.AguaCamion) == true) {
+                                    <label>Camión Aljibe. </label>
+                                }
+                                else { }
+                               @if (bool.Parse(H.AguaNoria) == true) {
+                                    <label>Noria. </label>
+                                }
+                                else { }
+                               @if (bool.Parse(H.AguaVertiente) == true) {
+                                    <label>Vertiente. </label>
+                                }
+                                else { }
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 200px; vertical-align: text-top;">ELIMINACIÓN DE EXCRETAS </th>
+                            <td colspan="4">
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                               @if (bool.Parse(H.Alcantarillado) == true) {
+                                    <label>Alcantarillado. </label>
+                                }
+                                else { }
+                               @if (bool.Parse(H.Fosa) == true) {
+                                    <label>Fosa Septica. </label>
+                                }
+                                else { }
+                               @if (bool.Parse(H.Pozo) == true) {
+                                    <label>Pozo Negro. </label>
+                                }
+                                else { }
+                               @if (bool.Parse(H.Otro) == true) {
+                                    <label>Otro. </label>
+                                }
+                                else { }
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 200px;">MATERIAL VIVIENDA</th>
+                            <td style="width: 150px;">
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => H.MaterialVivienda.Nombre)
+                            </td>
+                            @if (H.MaterialViviendaID != 4) { }
+                            else {
+                                <th>TIPO DE MATERIAL</th>
+                                <td>
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    @Html.DisplayFor(modelItem => H.Definir)
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <th>TIPO DE VIVIENDA</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => H.TipoVivienda.Nombre)
+                            </td>
+                            <th>TENENCIA DE VIVIENDA</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => H.SituacionCasa.Nombre)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>NÚMERO DE DORMITORIOS</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => H.NumDormitorios)
+                            </td>
+                            <th style="width:190px;">TOTAL DE DEPENDENCIAS</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => H.TotalDependecias)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>HACINAMIENTO</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => H.NivelAsinamiento)
+                            </td>
+                            <th>TENENCIA DEL TERRENO</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => H.TenenciaTerreno.Nombre)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="vertical-align: text-top;">OBSERVACIONES</th>
+                            <td colspan="4">
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => H.Observaciones)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                break;
+            }
+        }
+
+        @* 6 SITUACION ACTUAL*@
+        @{
+            int SituacionConteo = 0;
+            foreach (var SA in Model.listaSituacionGrupo) {
+                SituacionConteo = Model.listaSituacionGrupo.Count();
+                if (SA.SituacionActual != null) {
+                    <div class="">
+                        <table class="tabla-general">
+                            <tr>
+                                <th>
+                                    <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                                        <mark>Situación Actual</mark>
+                                    </h6>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    @Html.DisplayFor(modelItem => SA.SituacionActual)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                }
+                else { }
+                break;
+            }
+
+            if (SituacionConteo != 0) {
+                <div class="page_break"></div>
+            }
+        }
+
+        @* 7 DATOS SALUD *@
+        @{
+            bool tituloS = true;
+            bool SaludConteo = true;
+            foreach (var S in Model.ListaSaludGrupo
+                .Where(x => x.Clientes.TipoDeCliente.Equals("Requirente"))) {
+                if (S.Clientes.GrupoFamiliar == S.GrupoFamiliar) {
+                    <div class="">
+                       @if (tituloS) {
+                            <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                                <mark>Antecedentes de Salud del Requirente.</mark>
+                            </h6>
+                            tituloS = false;
+                        }
+                        <table class="tabla-general">
+                            <tr>
+                                <th>NOMBRE </th>
+                                <td style="width: 380px;">
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    <b style="text-transform: capitalize">
+                                        @Html.DisplayFor(modelItem => S.Clientes.Nombres)
+                                        @Html.DisplayFor(modelItem => S.Clientes.ApellidoPaterno)
+                                        @Html.DisplayFor(modelItem => S.Clientes.ApellidoMaterno)
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align: text-top;">DIAGNOSTICO</th>
+                                <td colspan="4">
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    @Html.DisplayFor(modelItem => S.Diagnostico)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width: 200px;">INSTITUCIÓN DE CONTROL</th>
+                                <td colspan="4">
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    @Html.DisplayFor(modelItem => S.Procedencia.Nombre)
+                                </td>
+                            </tr>
+                            <tr>
+                               @if (S.DiscapacidadID.Equals(1)) {
+                                    <th style="width: 100px;">DISCAPACIDAD</th>
+                                    <td style="width: 100px;">
+                                        <b style="width: 1px; margin-left: -5px;">:</b>
+                                        @Html.DisplayFor(modelItem => S.Discapacidad.Nombre)
+                                    </td>
+                                    <th>ACREDITACIÓN</th>
+                                    <td style="width: 380px;">
+                                        <p style="margin-left: -60px;">
+                                            <b style="width: 1px; margin-left: -5px;">:</b>
+                                            @Html.DisplayFor(modelItem => S.Acreditacion.Nombre)
+                                        </p>
+                                    </td>
+                                }
+                                else {
+                                    <th style="width: 100px;">DISCAPACIDAD</th>
+                                    <td style="width: 100px;">
+                                        <b style="width: 1px; margin-left: -5px;">:</b>
+                                        @Html.DisplayFor(modelItem => S.Discapacidad.Nombre)
+                                    </td>
+                                }
+                            </tr>
+                           @if (S.Observacion != null) {
+                                <tr>
+                                    <th style="vertical-align: text-top;">OBSERVACIONES</th>
+                                    <td colspan="4">
+                                        <p>
+                                            <b style="width: 1px; margin-left: -5px;">:</b>
+                                            @Html.DisplayFor(modelItem => S.Observacion)
+                                        </p>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                        <div style="margin-top: -20px;"></div>
+                    </div>
+                }
+                else { }
+
+                if (SituacionConteo == 0 && SaludConteo) {
+                    <div class="page_break"></div>
+                    SaludConteo = false;
+                }
+            }
+        }
+
+        @* 8 PETICION *@
+        @{
+           @foreach (var Ayuda in Model.ListPeticionAyudasGrupo) {
+                <div class="" style="margin-top: 15px;">
+                    <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                        <mark> Petición. </mark>
+                    </h6>
+                    <table class="tabla-general">
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Ayuda.PeticionTexto)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                break;
+            }
+        }
+
+
+        @* 9 DATOS INFORME SOCIAL*@
+        @{
+            foreach (var I in Model.ListaInformeSocial) {
+                if (I.Sintesis != null) {
+                    <div class="">
+                        <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                            <mark>Síntesis Y Opinión Del Profesional.</mark>
+                        </h6>
+                        <table class="tabla-general">
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => I.Sintesis)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                }
+                else { }
+            }
+        }
+    </div>
+
+    <div class="padre1">
+        <h6>Es todo en cuanto puedo informar. </h6>
+    </div>
+    <div class="padre">
+        @{
+            bool validarFirmas = true;
+            foreach (var A in Model.ListaInformeSocial) {
+                if (validarFirmas) {
+                    if (A.NumInforme != 0) {
+                        if (A.Usuario.Firma.Equals("No")) {
+                            <div class="hijo1" style="display: -webkit-box;">
+                                <h5 class="trabajador"> FIRMA TRABAJADOR/A SOCIAL </h5>
+                                <h5 class="trabajador"> FIRMA TRABAJADOR/A SOCIAL </h5>
+                                <h5 class="dideco"> DIDECO SOLICITA AUTORIZA V°B° </h5>
+                                <h5 class="alcalde"> ALCALDE AUTORIZA DECRETAR V°B° </h5>
+                            </div>
+                            <div class="hijo2">
+                                <h5 class="subhijo1">
+                                    (Quien Emite) <br />
+                                    <b>
+                                        @Html.DisplayFor(modelItem => A.Usuario.Nombre)
+                                        @Html.DisplayFor(modelItem => A.Usuario.Apellido)
+                                    </b> <br />
+                                    @Html.DisplayFor(modelItem => A.Usuario.Profesion.Nombre)
+                                </h5>
+                                <h5 class="subhijo2">
+                                    (Quien Respalda)
+                                </h5>
+                            </div>
+                        }
+                        else {
+                            <div class="hijo3" style="display: -webkit-box;">
+                                <h5 class="trabajador"> FIRMA TRABAJADOR/A SOCIAL </h5>
+                                <h5 class="dideco"> DIDECO SOLICITA AUTORIZA V°B° </h5>
+                                <h5 class="alcalde"> ALCALDE AUTORIZA DECRETAR V°B° </h5>
+                            </div>
+                            <div class="hijo4">
+                                <h5>
+                                    <br />
+                                    <b>
+                                        @Html.DisplayFor(modelItem => A.Usuario.Nombre)
+                                        @Html.DisplayFor(modelItem => A.Usuario.Apellido)
+                                    </b>
+                                    <br />
+                                    @Html.DisplayFor(modelItem => A.Usuario.Profesion.Nombre)
+                                </h5>
+                            </div>
+                        }
+                    }
+                    else {
+                        if (A.Usuario.Firma.Equals("No")) {
+                            <div class="hijo5" style="display: -webkit-box;">
+                                <h5 class="trabajador"> FIRMA TRABAJADOR/A SOCIAL </h5>
+                                <h5 class="trabajador"> FIRMA TRABAJADOR/A SOCIAL </h5>
+                            </div>
+                            <div class="hijo6">
+                                <h5 class="subhijo3">
+                                    (Quien Emite)
+                                    <br />
+                                    <b>
+                                        @Html.DisplayFor(modelItem => A.Usuario.Nombre)
+                                        @Html.DisplayFor(modelItem => A.Usuario.Apellido)
+                                    </b>
+                                    <br />
+                                    @Html.DisplayFor(modelItem => A.Usuario.Profesion.Nombre)
+                                </h5>
+                                <h5 class="subhijo4">
+                                    (Quien Respalda)
+                                </h5>
+                            </div>
+                        }
+                        else {
+                            <div class="hijo7" style="display: -webkit-box;">
+                                <h5 class="trabajador"> FIRMA TRABAJADOR/A SOCIAL </h5>
+                            </div>
+                            <div class="hijo8">
+                                <h6>
+                                    <br />
+                                    <b>
+                                        @Html.DisplayFor(modelItem => A.Usuario.Nombre)
+                                        @Html.DisplayFor(modelItem => A.Usuario.Apellido)
+                                    </b>
+                                    <br />
+                                    @Html.DisplayFor(modelItem => A.Usuario.Profesion.Nombre)
+                                </h6>
+                            </div>
+                        }
+                    }
+                    validarFirmas = false;
+                }
+            }
+        }
+
+        <div class="hijo9">
+            <h6>
+               @foreach (var C in Model.ListaInformeSocial) {
+                    @Html.DisplayFor(modelItem => C.Usuario.Marca)
+                    break;
+                }
+                <br />
+            </h6>
+            <h6>
+                <b> Distribución: </b><br />
+            </h6>
+            <h6>
+                Secretaria Municipal <br />
+                C.c.: Departamento Social
+            </h6>
+        </div>
+    </div>
+</body>
+</html>

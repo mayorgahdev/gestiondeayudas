@@ -1,0 +1,53 @@
+﻿@model SistemaSocial.ViewModel.LoginViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title>Formulario de Acceso</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Login.css" rel="stylesheet" />
+</head>
+<body class="test" id="particles-js">
+    <div class="contenedor">
+        <div class="contenedorcentrado">
+            <div class="login">
+                <form class="loginform" asp-action="Login" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Correo" class="control-label"></label>
+                        <input asp-for="Correo" class="form-control" placeholder="Ingrese su Correo" />
+                        <span asp-validation-for="Correo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Contraseña" class="control-label"></label>
+                        <input asp-for="Contraseña" class="form-control" placeholder="Ingrese su Contraseña" />
+                        <span asp-validation-for="Contraseña" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input class="ingreso" type="submit" value="Ingresar" />
+                        @*<a class="text-center"
+                           asp-action="aOlvidoContraseña"
+                           asp-controller="Account">
+                            ¿Olvidó su Contraseña?
+                        </a>*@
+                    </div>
+                </form>
+            </div>
+            <div class="derecho">
+                <hr />
+                <div class="titulo"> Bienvenido al Sistema del Departamento Social de Chimbarongo </div>
+                <hr />
+                <div class="pie-form">
+                    @*<a class="" asp-action="Registro" asp-controller="Account">Registrarse</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/js/particles.js"></script>
+    <script type="text/javascript" src="~/js/app.js"></script>
+</body>
+</html>

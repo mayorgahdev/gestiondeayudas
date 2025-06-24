@@ -1,0 +1,296 @@
+﻿@model SistemaSocial.ModelPDF.Informe
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+@{
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title> Imprimir Ayudas Sociales </title>
+    <link href="~/css/Impresiones.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="arriba" style="display: -webkit-box;">
+        <div class="izquierda">
+            <a class="navbar-brand text-white"
+               asp-area=""
+               asp-controller="Home"
+               asp-action="Index">
+                <img src="/Images/navbar-logo.png"
+                     alt="Municipalidad Chimbarongo"
+                     width="220"
+                     height="80" />
+            </a>
+            <h6>
+                I. MUNICIPALIDAD DE CHIMBARONGO <br />
+                DEPARTAMENTO SOCIAL COMUNAL.
+            </h6>
+        </div>
+        <div class="centro" style="margin-top: 45px;">
+            <h1 style="margin-left: 80px;">Ayudas Sociales</h1>
+        </div>
+    </div>
+
+    <div class="abajo">
+        <p>
+            @{
+                if (SignInManager.IsSignedIn(User))
+                {
+                    foreach (var C in Model.ListaUsuarios)
+                    {
+                        <b>
+                            @Html.DisplayFor(modelItem => C.Nombre)
+                            @Html.DisplayFor(modelItem => C.Apellido),
+                        </b>
+                        @Html.DisplayFor(modelItem => C.Profesion.Nombre)
+                    }
+                }
+            }
+            del Departamento Social de la I. Municipalidad de Chimbarongo, que suscribe, tiene a bien informar a usted,
+            Respecto a las Ayudas Sociales entregadas que a continuación se identifican.
+        </p>
+        <br />
+
+        @* DATOS CLIENTES*@
+       @foreach (var C in Model.ListaClientes) {
+            <div class="">
+                <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                    <mark>Identificación del Usuario.</mark>
+                </h6>
+                <table class="tabla-general">
+                    <tr>
+                        <th>NOMBRE</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            <b style="margin-right: 20px; text-transform: capitalize">
+                                @Html.DisplayFor(modelItem => C.Nombres)
+                                @Html.DisplayFor(modelItem => C.ApellidoPaterno)
+                                @Html.DisplayFor(modelItem => C.ApellidoMaterno)
+                            </b>
+                        </td>
+                        <th>RUN</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Rut)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>FECHA DE NACIMIENTO</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @C.FechaNacimiento.ToString("dd/MM/yyyy")
+                        </td>
+                        <th>EDAD</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Edad)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>NACIONALIDAD</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Nacionalidad.Nombre)
+                        </td>
+                        <th>OCUPACIÓN</th>
+                        <td colspan="4">
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Ocupacion)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>PREVISIÓN SOCIAL</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.PrevisionSocial.Nombre)
+                        </td>
+                        <th>PREVISIÓN SALUD</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.PrevisionSalud.Nombre)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>ESTADO CIVIL</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.EstadoCivil.Nombre)
+                        </td>
+                        <th style="width:150px;">INDICE ESCOLARIDAD</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.IndiceEscolaridad.Nombre)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>TELÉFONO</th>
+                        <td>
+                           @if (C.Telefono != null) {
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => C.Telefono)
+                            }
+                            else {
+                                <p> - </p>
+                            }
+                        </td>
+                        <th>CORREO</th>
+                        <td style="pointer-events: none;">
+                           @if (C.Correo != null) {
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => C.Correo)
+                            }
+                            else {
+                                <p> - </p>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>DIRECCIÓN</th>
+                        <td colspan="4">
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Direccion)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>TIPO DE USUARIO</th>
+                        <td colspan="3">
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.TipoDeCliente)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+
+        @* DATOS AYUDAS SOCIALES ENTREGADAS *@
+        @{
+            var validar = true;
+            var i = 0;
+            var a = 5;
+            foreach (var A in Model.ListaAyudaSocial) {
+                <div class="">
+                   @if (validar) {
+                        <h3 style="display: -webkit-box; font-size: 18px;">
+                            Total de Ayudas Entregadas: <b>@Model.Cantidad</b>
+                        </h3>
+                        <br />
+                        <h4 style="display: -webkit-box; font-family: Arial; font-size: 17px; font-weight: 700">
+                            <mark>Ayudas Sociales Entregadas.</mark>
+                        </h4>
+                        validar = false;
+                    }
+                    <div class="Ayudas" style="border: 1px solid #4b4a4a;">
+                        <table class="tabla-general" style="margin-bottom: 0px;">
+                            <tr>
+                                <th>TIPO PETICIÓN</th>
+                                <td>
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    @Html.DisplayFor(modelItem => A.TipoPeticion.Nombre)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>PRESTACIÓN</th>
+                                <td>
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    @Html.DisplayFor(modelItem => A.Prestaciones.Nombre)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width: 190px; vertical-align: text-top;">DETALLE REQUERIMIENTO</th>
+                                <td>
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    @Html.DisplayFor(modelItem => A.DetalleRequerimiento)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>FECHA DE ELABORACIÓN</th>
+                                <td colspan="2">
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    @A.FechaElaboracion.ToString("F")
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br />
+                </div>
+                i++;
+                if (i == 2) {
+                    <div style="page-break-after: always;"></div>
+                }
+                else if (i == a) {
+                    <div style="page-break-after: always;"></div>
+                    a = a + 3;
+                }
+            }
+        }
+    </div>
+
+    <div class="padre1">
+        <h6>Es todo en cuanto puedo informar. </h6>
+    </div>
+    <div class="padre">
+        @{
+            if (SignInManager.IsSignedIn(User)) {
+                foreach (var A in Model.ListaUsuarios) {
+                    if (A.Firma.Equals("No")) {
+                        <div class="hijo5" style="display: -webkit-box;">
+                            <h5 class="trabajador"> FIRMA TRABAJADOR/A SOCIAL </h5>
+                            <h5 class="trabajador"> FIRMA TRABAJADOR/A SOCIAL </h5>
+                        </div>
+                        <div class="hijo6">
+                            <h6>
+                                (Quien Emite)
+                                <br />
+                                <b>
+                                    @Html.DisplayFor(modelItem => A.Nombre)
+                                    @Html.DisplayFor(modelItem => A.Apellido)
+                                </b>
+                                <br />
+                                @Html.DisplayFor(modelItem => A.Profesion.Nombre)
+                            </h6>
+                            <h5>
+                                (Quien Respalda)
+                            </h5>
+                        </div>
+                    }
+                    else {
+                        <div class="hijo7" style="display: -webkit-box;">
+                            <h5 class="trabajador"> FIRMA TRABAJADOR/A SOCIAL </h5>
+                        </div>
+                        <div class="hijo8">
+                            <h6>
+                                <br />
+                                <b>
+                                    @Html.DisplayFor(modelItem => A.Nombre)
+                                    @Html.DisplayFor(modelItem => A.Apellido)
+                                </b>
+                                <br />
+                                @Html.DisplayFor(modelItem => A.Profesion.Nombre)
+                            </h6>
+                        </div>
+                    }
+                }
+            }
+        }
+        
+        <div class="hijo9">
+            <h6>
+               @foreach (var C in Model.ListaInformeSocial) {
+                    @Html.DisplayFor(modelItem => C.Usuario.Marca)
+                    break;
+                }
+                <br />
+            </h6>
+            <h6><b> Distribución: </b><br /></h6>
+            <h6>
+                Secretaria Municipal <br />
+                C.c.: Departamento Social
+            </h6>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿@model SistemaSocial.Models.Prestaciones
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Crear Una Nueva Prestación </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Crear Prestación </div>
+        <section class="formulario-registro">
+            <form asp-action="CrearPrestaciones">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input type="text" asp-for="Nombre" />
+                        <span asp-validation-for="Nombre" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Cantidad" class="control-label"></label>
+                        <input type="number" asp-for="Cantidad" value="0" />
+                        <span asp-validation-for="Cantidad" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Crear Prestación" class="btn btn-success btn-block" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

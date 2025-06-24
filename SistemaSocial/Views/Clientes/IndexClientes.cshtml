@@ -1,0 +1,151 @@
+﻿@model SistemaSocial.ViewModel.ClientesView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Datos de Usuario </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link href="~/font-awesome/" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="course">
+            <div class="course-preview">
+                <a asp-action="CrearClientes"><i class="fa fa-user-plus"></i> Agregar Nuevo Usuario </a>
+            </div>
+            <div class="course-info">
+                <h2> Datos de Usuarios. </h2>
+                <form asp-controller="Clientes" asp-action="IndexClientes" method="get">
+                    <h7>Buscar Usuario por Run o Pasaporte, Nombre o Apellido: </h7>
+                    <div class="input-info">
+                        <input type="text" asp-for="Busqueda" class="details-info1" />
+                        <input type="submit" value="Buscar" class="details-info2" />
+                    </div>
+                </form>
+                <a asp-controller="Clientes" asp-action="ListadoUsuarios"> Listado de Usuarios </a>
+            </div>
+        </div>
+        @{ 
+            if (SignInManager.IsSignedIn(User)) {
+                var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                if (Claims != null) {
+                    <div>
+                        <partial name="_DatosIndexPartial" />
+                    </div>
+                }
+            }
+        }
+        <div style="overflow-x: auto;">
+            <div class="table-container">
+                @{
+                    foreach (var C in Model.listaClientes) {
+                        <div class="card">
+                            <ul class="card-header">
+                                <li>
+                                    <h3 style="font-size: 17px;">
+                                        <i class="fa-solid fa-user" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                        Nombre:
+                                    </h3>
+                                    <span style="font-size:17px;">
+                                        @Html.DisplayFor(modelItem => C.Nombres)
+                                        @Html.DisplayFor(modelItem => C.ApellidoPaterno)
+                                        @Html.DisplayFor(modelItem => C.ApellidoMaterno)
+                                    </span>
+                                </li>
+                            </ul>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <h3 style="font-size: 17px;">
+                                        <i class="fa-solid fa-phone" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                        Teléfono:
+                                    </h3>
+                                   @if (C.Telefono != null) {
+                                        <span style="font-size:16px;">
+                                            @Html.DisplayFor(modelItem => C.Telefono)
+                                        </span>
+                                    }
+                                    else {
+                                        <span style="font-size:16px;"> No Asignado. </span>
+                                    }
+                                </li>
+                                <li class="list-group-item">
+                                    <h3 style="font-size: 17px;">
+                                        <i class="fa fa-envelope" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                        Tipo de Usuario:
+                                    </h3>
+                                    <span style="font-size:16px;">
+                                        @Html.DisplayFor(modelItem => C.TipoDeCliente)
+                                    </span>
+                                </li>
+                            </ul>
+                           @if (SignInManager.IsSignedIn(User)) {
+                                var Claims = User.Claims.Where(x => x.Type == "Admin" || x.Type == "Editor").FirstOrDefault();
+                                if (Claims != null) {
+                                    <div class="Drop1">
+                                        <a class="Drop123"
+                                           asp-controller="Clientes"
+                                           asp-action="IndexGrupoFamiliar"
+                                           asp-route-GrupoFamiliar="@C.GrupoFamiliar">
+                                            Grupo Familiar del Requirente.
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center pagination-circle mt-2">
+                @{
+                    if (Model.Paginas != 1) {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="IndexClientes" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a>
+                        </li>
+                    }
+                    else {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="IndexClientes" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a>
+                        </li>
+                    }
+
+                    for (int i = 1; i <= Model.CantidadPaginas; i++) {
+                        if (i == Model.Paginas) {
+                            <li class="page-item" aria-current="page">
+                                <a class="page-link" asp-action="IndexClientes" asp-route-Pagina="@i">@i</a>
+                            </li>
+                        }
+                    }
+
+                    if (Model.Paginas != Model.CantidadPaginas) {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="IndexClientes" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a>
+                        </li>
+                    }
+                    else {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="IndexClientes" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

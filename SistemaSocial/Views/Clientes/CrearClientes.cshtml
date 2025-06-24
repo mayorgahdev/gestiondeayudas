@@ -1,0 +1,221 @@
+﻿@model SistemaSocial.Models.Clientes
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Crear Un Nuevo Usuario </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <p class="title text-center"> Registrar un Nuevo Usuario. </p>
+        <section class="formulario-registro">
+            <form asp-action="CrearClientes">
+                <div class="user-details">
+                    <div class="input-box-tipo">
+                        <label asp-for="TipoDeCliente" class="control-label"></label>
+                        <div>
+                            <input type="radio" asp-for="TipoDeCliente" value="Requirente" id="Requirente" /> Requirente.
+                            <input type="radio" asp-for="TipoDeCliente" value="Solicitante" id="Solicitante" /> Solicitante.
+                            <input type="radio" asp-for="TipoDeCliente" value="Ambos" id="Ambos" /> Ambos.
+                            <input type="radio" asp-for="TipoDeCliente" value="Otro" id="Otro" /> Otro.
+                        </div>
+                        <span asp-validation-for="TipoDeCliente" class="details"></span>
+                    </div>
+                </div>
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="Rut" class="control-label"></label>
+                        <input type="text" asp-for="Rut" placeholder="Ingrese su Run" id="rut" oninput="checkRut(this)" />
+                        <span asp-validation-for="Rut" class="details"></span>
+                    </div>
+                </div>
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="Nombres" class="control-label"></label>
+                        <input type="text" asp-for="Nombres" />
+                        <span asp-validation-for="Nombres" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="ApellidoPaterno" class="control-label"></label>
+                        <input type="text" asp-for="ApellidoPaterno" />
+                        <span asp-validation-for="ApellidoPaterno" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="ApellidoMaterno" class="control-label"></label>
+                        <input type="text" asp-for="ApellidoMaterno" />
+                        <span asp-validation-for="ApellidoMaterno" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="FechaNacimiento" class="control-label"></label>
+                        <input type="date" asp-for="FechaNacimiento" id="FechaNacimiento" />
+                        <span asp-validation-for="FechaNacimiento" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Edad" class="control-label"></label>
+                        <label class="control-label"><b id="Edad"></b></label>
+                        <input type="number" asp-for="Edad" step="1" id="edad" />
+                        <span asp-validation-for="Edad" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="NacionalidadID" class="control-label"></label>
+                        <select asp-for="NacionalidadID" asp-items="ViewBag.NacionalidadID"></select>
+                        <span asp-validation-for="NacionalidadID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Direccion" class="control-label"></label>
+                        <input type="text" asp-for="Direccion" />
+                        <span asp-validation-for="Direccion" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Telefono" class="control-label"></label>
+                        <input type="text" asp-for="Telefono" />
+                        <span asp-validation-for="Telefono" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Correo" class="control-label"></label>
+                        <input type="email" asp-for="Correo" />
+                        <span asp-validation-for="Correo" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="EstadoCivilID" class="control-label"></label>
+                        <select asp-for="EstadoCivilID" asp-items="ViewBag.EstadoCivilID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="EstadoCivilID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="PrevisionSocialID" class="control-label"></label>
+                        <select asp-for="PrevisionSocialID" asp-items="ViewBag.PrevisionSocialID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="PrevisionSocialID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="PrevisionSaludID" class="control-label"></label>
+                        <select asp-for="PrevisionSaludID" asp-items="ViewBag.PrevisionSaludID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="PrevisionSaludID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="IndiceEscolaridadID" class="control-label"></label>
+                        <select asp-for="IndiceEscolaridadID" asp-items="ViewBag.IndiceEscolaridadID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="IndiceEscolaridadID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="ParentescoID" class="control-label"></label>
+                        <select asp-for="ParentescoID" asp-items="ViewBag.ParentescoID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="ParentescoID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Ocupacion" class="control-label"></label>
+                        <input type="text" asp-for="Ocupacion" />
+                        <span asp-validation-for="Ocupacion" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Registrar Usuario" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+
+@section scripts{
+    <script>
+        document.getElementById('Requirente').checked = true;
+    </script>
+    <script>
+        const FechaNacimiento = document.getElementById("FechaNacimiento");
+        const Edad = document.getElementById("Edad");
+
+        const CalcularEdad = (FechaNacimiento) => {
+            const FechaActual = new Date();
+            const AñoActual = parseInt(FechaActual.getFullYear());
+            const MesActual = parseInt(FechaActual.getMonth()) + 1;
+            const DiaActual = parseInt(FechaActual.getDate());
+
+            //Fecha input
+            const AñoNacimiento = parseInt(String(FechaNacimiento).substring(0, 4));
+            const MesNacimiento = parseInt(String(FechaNacimiento).substring(5, 7));
+            const DiaNacimiento = parseInt(String(FechaNacimiento).substring(8, 10));
+
+            let edad = AñoActual - AñoNacimiento;
+            if (MesActual < MesNacimiento) {
+                edad--;
+            } else if (MesActual == MesNacimiento) {
+                if (DiaActual < DiaNacimiento) {
+                    edad--;
+                }
+            }
+            return edad;
+        }
+
+        window.addEventListener('load', function () {
+            FechaNacimiento.addEventListener('change', function () {
+                if (this.value) {
+                    Edad.innerText = `: ${CalcularEdad(this.value)} Años`;
+                }
+            });
+        });
+    </script>
+    <script>
+        const EdadValidar = document.getElementById('edad');
+        EdadValidar.addEventListener('input', () => {
+            const valor = EdadValidar.value.trim();
+
+            if (/^\d+$/.test(valor) && valor >= 0) {
+                EdadValidar.setCustomValidity('');
+            } else {
+                EdadValidar.setCustomValidity('Ingrese únicamente valores enteros. Ejemplo: 0123')
+            }
+            EdadValidar.reportValidity();
+        });
+    </script>
+    <script>
+        function checkRut(rut) {
+            var valor = rut.value.replace('.', '');
+            valor = valor.replace('-', '');
+            cuerpo = valor.slice(0, -1);
+            dv = valor.slice(-1).toUpperCase();
+            rut.value = cuerpo + '-' + dv
+
+            if (cuerpo.length < 7) {
+                rut.setCustomValidity("RUN Incompleto");
+                return false;
+            }
+
+            suma = 0;
+            multiplo = 2;
+
+            for (i = 1; i <= cuerpo.length; i++) {
+                index = multiplo * valor.charAt(cuerpo.length - i);
+                suma = suma + index;
+                if (multiplo < 7) {
+                    multiplo = multiplo + 1;
+                } else {
+                    multiplo = 2;
+                }
+            }
+
+            dvEsperado = 11 - (suma % 11);
+            dv = (dv == 'K') ? 10 : dv;
+            dv = (dv == 0) ? 11 : dv;
+
+            if (dvEsperado != dv) {
+                rut.setCustomValidity("RUN Inválido");
+                return false;
+            }
+            rut.setCustomValidity('');
+        }
+    </script>
+}

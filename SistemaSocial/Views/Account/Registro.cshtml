@@ -1,0 +1,153 @@
+﻿@model SistemaSocial.ViewModel.RegistroView
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Registro de Profesionales </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Usuario.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Formulario de Registro de Profesionales. </div>
+        <section class="formulario-registro-usuario">
+            <form class="" asp-action="Registro" method="post" enctype="multipart/form-data">
+                <div class="user-details-usuario">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="input-box">
+                        <label asp-for="Rut" class="control-label"></label>
+                        <input type="text" asp-for="Rut" id="rut" oninput="checkRut(this)" />
+                        <span asp-validation-for="Rut" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input type="text" asp-for="Nombre" />
+                        <span asp-validation-for="Nombre" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Apellido" class="control-label"></label>
+                        <input type="text" asp-for="Apellido" />
+                        <span asp-validation-for="Apellido" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="TipoUsuarioID" class="control-label"></label>
+                        <select asp-for="TipoUsuarioID" asp-items="ViewBag.TipoUsuarioID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TipoUsuarioID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Correo" class="control-label"></label>
+                        <input type="email" asp-for="Correo" />
+                        <span asp-validation-for="Correo" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Usuario" class="control-label"></label>
+                        <input type="text" asp-for="Usuario" />
+                        <span asp-validation-for="Usuario" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Contraseña" class="control-label"></label>
+                        <input type="password" asp-for="Contraseña" />
+                        <span asp-validation-for="Contraseña" class="details"></span>
+                        <h6 style="font-size:12px" font-family="Arial">
+                            La contraseña debe incluir: <b>6 Caracteres como mínimo.</b>
+                        </h6>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="ProfesionID" class="control-label"></label>
+                        <select asp-for="ProfesionID" asp-items="ViewBag.ProfesionID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="ProfesionID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Telefono" class="control-label"></label>
+                        <input type="text" asp-for="Telefono" />
+                        <span asp-validation-for="Telefono" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Marca" class="control-label"></label>
+                        <input type="text" asp-for="Marca" />
+                        <span asp-validation-for="Marca" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Firma" class="control-label"></label>
+                        <select asp-for="Firma">
+                            <option> Si </option>
+                            <option> No </option>
+                        </select>
+                        <span asp-validation-for="Firma" class="details"></span>
+                    </div>
+                    <div class="input-box1">
+                        <label asp-for="archivoImagen" class="control-label"></label>
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input id="input" type="file" asp-for="archivoImagen" />
+                            </div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Registrar Profesional" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        let img = document.getElementById('img');
+        let input = document.getElementById('inputGroupFileAddon01')
+
+        input.onchange = (e) => {
+            if (input.files[0]) {
+                img.scr = URL.createObjectURL(input.files[0]);
+            }
+        }
+    </script>
+    <script>
+        function checkRut(rut) {
+            var valor = rut.value.replace('.', '');
+            valor = valor.replace('-', '');
+            cuerpo = valor.slice(0, -1);
+            dv = valor.slice(-1).toUpperCase();
+            rut.value = cuerpo + '-' + dv
+
+            if (cuerpo.length < 7) {
+                rut.setCustomValidity("RUN Incompleto");
+                return false;
+            }
+
+            suma = 0;
+            multiplo = 2;
+
+            for (i = 1; i <= cuerpo.length; i++) {
+                index = multiplo * valor.charAt(cuerpo.length - i);
+                suma = suma + index;
+                if (multiplo < 7) {
+                    multiplo = multiplo + 1;
+                } else {
+                    multiplo = 2;
+                }
+            }
+
+            dvEsperado = 11 - (suma % 11);
+            dv = (dv == 'K') ? 10 : dv;
+            dv = (dv == 0) ? 11 : dv;
+
+            if (dvEsperado != dv) {
+                rut.setCustomValidity("RUN Inválido");
+                return false;
+            }
+            rut.setCustomValidity('');
+        }
+    </script>
+}

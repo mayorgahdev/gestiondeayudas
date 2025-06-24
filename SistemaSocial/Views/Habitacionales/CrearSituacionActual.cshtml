@@ -1,0 +1,48 @@
+﻿@model SistemaSocial.Models.Situacion
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Añadir Datos Habitacionales </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Añadir Situación Actual de Datos Habitacionales. </div>
+        <section class="formulario-registro">
+            <div class="controlador-btn-index1" style="border:1px;">
+                <a class="Habitacionales"
+                   asp-action="CrearHabitacionales"
+                   asp-controller="Habitacionales"
+                   asp-route-Grupo="@ViewBag.GrupoS">
+                    Añadir Antecedentes Habitacionales
+                </a>
+            </div>
+            <form asp-action="CrearSituacionActual">
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID"></select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <textarea name="GrupoFamiliar" class="GruposFamiliares">@ViewBag.GrupoS</textarea>
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="SituacionActual" class="control-label"></label>
+                        <textarea rows="5" asp-for="SituacionActual"> </textarea>
+                        <span asp-validation-for="SituacionActual" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

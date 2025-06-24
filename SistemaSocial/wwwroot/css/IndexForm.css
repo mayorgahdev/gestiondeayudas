@@ -1,0 +1,1302 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: Yu Gothic UI;
+    background-color: #f4fff6;
+}
+
+.Ejemplo-Padre {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #f5fae5;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.2);
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+
+.Ejemplo-Hijo {
+    background-color: #f5fae5;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.2);
+    display: flex;
+    margin: -10px;
+    margin-bottom: 20px;
+}
+
+
+.Ejemplo-Padre .a-clientes {
+    background-color: #286223;
+    border-radius: 10px 12px 12px 12px;
+    text-align: center;
+    color: #fff;
+    width: 20%;
+}
+
+    .Ejemplo-Padre .a-clientes:hover {
+        background-color: #3b822c;
+    }
+
+    .Ejemplo-Padre .a-clientes a {
+        color: #fff;
+        display: inline-block;
+        font-size: 18px;
+        margin: 30px;
+        margin-top: 60px;
+        text-decoration: none;
+    }
+
+
+.Ejemplo-Hijo2 {
+    margin-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 80%;
+}
+
+    .Ejemplo-Hijo2 h1,
+    .Ejemplo-Hijo2 h2,
+    .Ejemplo-Hijo2 h3 {
+        font-size: 19px;
+        margin-bottom: 10px;
+    }
+
+    .Ejemplo-Hijo2 h1 {
+        margin-top: 20px;
+        margin-right: 20px;
+    }
+
+    .Ejemplo-Hijo2 h2 {
+        margin-right: 8px;
+    }
+
+    .Ejemplo-Hijo2 h3 {
+        font-weight: 400;
+    }
+
+    .Ejemplo-Hijo2 .grupo {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .Ejemplo-Hijo2 .input-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .Ejemplo-Hijo2 input[type="text"] {
+        width: 70%;
+        margin-right: 10px;
+        background-color: #f4fff6;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 18px;
+        border-bottom-width: 2px;
+    }
+
+    .Ejemplo-Hijo2 input[type="submit"] {
+        width: 20%;
+        background-color: #f4fff6;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 18px;
+        border-bottom-width: 2px;
+    }
+
+    .Ejemplo-Hijo2 h4 b {
+        font-size: 20px;
+    }
+
+    .Ejemplo-Hijo2 h4 {
+        font-size: 18px;
+        color: #000;
+        font-weight: 400;
+    }
+
+.Ejemplo-Hijo3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-content: center;
+    width: 100%;
+}
+
+    .Ejemplo-Hijo3 a {
+        padding: 5px;
+        margin: 3px;
+        color: #fff;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 100px;
+        background-color: #286223;
+        text-decoration: none;
+    }
+
+        .Ejemplo-Hijo3 a:hover {
+            background-color: #3b822c;
+        }
+
+
+@media (max-width: 769px) {
+    .Ejemplo-Hijo3 {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+        .Ejemplo-Hijo3 a {
+            text-align: left;
+        }
+}
+
+
+hr {
+    overflow: visible;
+    height: 30px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+}
+
+    hr:before {
+        display: block;
+        content: "";
+        height: 30px;
+        margin-top: -31px;
+        border-style: solid;
+        border-color: black;
+        border-width: 0 0 1px 0;
+        border-radius: 20px;
+    }
+
+.table-container1 {
+    padding: 0 10px;
+    margin: 30px auto 0;
+}
+
+.table-container,
+.table-container-user {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-content: center;
+    width: 100%;
+    margin-left: auto;
+    margin-bottom: 25px;
+}
+
+.crear {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1em
+}
+
+    .crear a {
+        width: 100%;
+        height: 100%;
+        padding: 5px;
+        text-align: center;
+        color: #fff;
+        font-size: 15px;
+        border-radius: 10px;
+        background-color: #286223;
+        text-decoration: none;
+    }
+
+        .crear a:hover {
+            background-color: #3b822c;
+            color: #fff;
+        }
+
+.table-container3 {
+    margin-top: 13px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1em;
+}
+
+    .table-container3 #table1 {
+        grid-row-start: 1;
+        grid-row-end: span 20;
+    }
+
+    .table-container3 #table2 {
+        grid-row-start: 1;
+        grid-row-end: span;
+    }
+
+.pagination a {
+    color: #000;
+}
+
+    .pagination a:hover {
+        color: #000;
+    }
+
+.pagination li {
+    color: #000;
+}
+
+.card-user,
+.card {
+    margin: 10px;
+    color: #000;
+    text-align: left;
+    font-size: 15px;
+    background-color: #F5FAE5;
+    border-radius: 10px 10px 10px 10px;
+}
+
+    .card ul.list-group {
+        border-radius: 10px;
+    }
+
+    .card .card-header {
+        height: 50px;
+        background-color: #E0E6CF;
+        border-radius: 10px;
+    }
+
+        .card .card-header li {
+            display: flex;
+            margin-left: 10px;
+        }
+
+        .card .card-header h3 {
+            font-size: 16px;
+            margin-right: 10px;
+            margin-top: 1px;
+        }
+
+.card-user {
+    background-color: #1b4f72d1;
+    border-radius: 10px 5px;
+}
+
+    .card-user .separador,
+    .card .separador {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(170px, max-content));
+        background-color: #f5fae5;
+        border: 1px solid #675e5e;
+        border-radius: 3px;
+    }
+
+        .card-user .separador ul.list-group {
+            border-left: 1px solid #675e5e;
+            border-radius: 3px;
+        }
+
+        .card-user .separador li {
+            list-style: none;
+            background-color: #f5fae5;
+        }
+
+        .card-user .separador img {
+            margin-top: 25%;
+            margin-left: 7%;
+            width: 150px;
+            height: 150px;
+            border-radius: 150px;
+            border: 1px solid #000;
+        }
+
+        .card-user .separador li.modificar {
+            margin-top: 20px;
+        }
+
+            .card-user .separador li.modificar a {
+                padding: 6px;
+                margin: 30px;
+                color: #fff;
+                text-align: center;
+                font-size: 15px;
+                border-radius: 10px;
+                background-color: #286223;
+                text-decoration: none;
+            }
+
+                .card-user .separador li.modificar a:hover {
+                    background-color: #3b822c;
+                }
+
+        .card-user .separador li.modificar2 a {
+            padding: 6px;
+            margin: 30px;
+        }
+
+
+.card .list-group-item {
+    display: flex;
+    background-color: #f5fae5;
+}
+
+.card-user .list-group-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+    .card .list-group-item li,
+    .card-user .list-group-item li {
+        margin-right: 10px;
+    }
+
+.card .list-group-item h3 {
+    display: flex;
+    font-size: 16px;
+    align-self: center;
+    margin: 10px;
+}
+
+.card-user .list-group-item h3 {
+    font-size: 16px;
+    align-self: center;
+}
+
+.card .list-group-item a {
+    text-decoration: none;
+    pointer-events: none;
+    color: #000;
+}
+
+.card .list-group-item span,
+.card-user .list-group-item span {
+    margin-top: 8.3px;
+}
+
+.card .list-group-item h4,
+.card-user .list-group-item h4 {
+    font-size: 18px;
+    align-self: center;
+}
+
+.GrupoFamiliar {
+    margin-top: 35px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table .rut {
+        width: 140px;
+    }
+
+    .table thead tr th {
+        font-size: 16px;
+        font-weight: normal;
+        color: #fff;
+        padding: 9px;
+        vertical-align: inherit;
+        text-align: left;
+        border: 1px solid #000;
+        background-color: #286223;
+    }
+
+    .table tbody tr td {
+        font-size: 16px;
+        font-weight: normal;
+        color: #000;
+        padding: 8px;
+        vertical-align: inherit;
+        text-align: left;
+        border: 1px solid #808080;
+        background-color: #f5fae5;
+    }
+
+
+.btn-group {
+    margin-left: 6px;
+    display: grid;
+    grid-gap: 3px;
+    border-radius: 10px;
+}
+
+    .btn-group a {
+        width: 100%;
+        height: 100%;
+        margin-right: 4px;
+        padding: 5px;
+        text-align: center;
+        outline: none;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 6px;
+        background-color: #1B4F72;
+    }
+
+        .btn-group a:hover {
+            background-color: #46799c;
+        }
+
+.familia {
+    margin-left: 6px;
+    display: grid;
+    grid-gap: 3px;
+    border-radius: 10px;
+}
+
+    .familia a {
+        width: 100%;
+        height: 100%;
+        margin-right: 6px;
+        text-align: center;
+        padding: 5px;
+        outline: none;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 6px;
+        background-color: #1B4F72;
+    }
+
+        .familia a:hover {
+            background-color: #46799c;
+        }
+
+.course {
+    background-color: #f5fae5;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.2);
+    display: flex;
+    margin: 10px;
+    margin-top: 30px;
+}
+
+    .course h2 {
+        margin: 0;
+        letter-spacing: 1px;
+    }
+
+    .course .course-preview1 {
+        background-color: #286223;
+        border-radius: 10px 12px 12px 12px;
+        text-align: center;
+        color: #fff;
+        width: 20%;
+    }
+
+        .course .course-preview1:hover {
+            background-color: #3b822c;
+        }
+
+        .course .course-preview1 a {
+            color: #fff;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px;
+            margin-top: 60px;
+            text-decoration: none;
+        }
+
+            .course .course-preview1 a.grupo12 {
+                margin-top: 70px;
+            }
+
+.course-preview {
+    background-color: #286223;
+    border-radius: 10px 12px 12px 12px;
+    text-align: center;
+    color: #fff;
+    width: 28%;
+}
+
+    .course-preview:hover {
+        background-color: #3b822c;
+    }
+
+    .course-preview a {
+        color: #fff;
+        display: inline-block;
+        font-size: 18px;
+        margin: 30px;
+        margin-top: 60px;
+        text-decoration: none;
+    }
+
+        .course-preview a.grupo12 {
+            margin-top: 80px;
+        }
+
+.course-info {
+    padding: 20px;
+    position: relative;
+    width: 100%;
+    margin: 5px;
+    margin-bottom: 12px;
+}
+
+
+.course_abajo {
+    background-color: #f5fae5;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.2);
+    display: flex;
+    margin: 10px;
+    margin-top: -15px;
+}
+
+    .course_abajo .course-info_abajo {
+        padding: 20px;
+        position: relative;
+        width: 100%;
+        margin: 5px;
+    }
+
+
+.course-info form {
+    margin-top: 10px;
+    align-content: center;
+}
+
+.course-info .input-info {
+    margin-left: 30px;
+}
+
+.course-info h2 {
+    margin-top: 4px;
+    margin-left: 30px;
+}
+
+.course-info h7 {
+    margin-left: 30px;
+}
+
+.course-info form .details-info1 {
+    width: 64%;
+    background-color: #f4fff6;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+}
+
+.course-info form .details-info2 {
+    width: 20%;
+    background-color: #f4fff6;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+}
+
+.course-info a {
+    position: absolute;
+    color: #000;
+    right: 30px;
+    text-align: right;
+    width: 150px;
+    height: 5px;
+    text-decoration: none;
+    margin-top: 5px;
+    margin-right: -27px;
+}
+
+
+.FiltroFecha {
+    background-color: #f5fae5;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.2);
+    margin: 10px;
+    padding: 10px;
+    margin-top: 30px;
+    position: relative;
+}
+
+    .FiltroFecha form {
+        width: 100%;
+        text-align: center;
+    }
+
+        .FiltroFecha form h7 {
+            font-size: 20px;
+        }
+
+
+
+    .FiltroFecha .impresiones_btn {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .FiltroFecha .impresiones_btn .Impresiones1 {
+            margin-bottom: 15px;
+        }
+
+        .FiltroFecha .impresiones_btn a.imprimir {
+            width: 150px;
+            padding: 4px;
+            color: #fff;
+            border-radius: 10px;
+            background-color: #286223;
+            text-decoration: none;
+            margin: 4px;
+        }
+
+            .FiltroFecha .impresiones_btn a.imprimir:hover {
+                background-color: #3b822c;
+            }
+
+        .FiltroFecha .impresiones_btn a.imprimir2 {
+            width: 150px;
+            padding: 4px;
+            color: #fff;
+            border-radius: 10px;
+            background-color: #286223;
+            text-decoration: none;
+            margin: 4px;
+        }
+
+            .FiltroFecha .impresiones_btn a.imprimir2:hover {
+                background-color: #3b822c;
+            }
+
+
+
+    .FiltroFecha form input.details-info1 {
+        margin-top: 12px;
+        margin-left: 10px;
+        width: 240px;
+        background-color: #f4fff6;
+        border: 1px solid;
+    }
+
+    .FiltroFecha form input.details-info2 {
+        width: 100px;
+        padding: 2px;
+        color: #fff;
+        right: 15px;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #286223;
+        text-decoration: none;
+        border: 1px solid #286223;
+    }
+
+        .FiltroFecha form input.details-info2:hover {
+            background-color: #3b822c;
+        }
+
+    .FiltroFecha .input-info2 {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .FiltroFecha .input-info2 h6,
+        .FiltroFecha .input-info h6 input {
+            display: inline-block;
+            font-size: 17px;
+            text-align: center;
+        }
+
+        .FiltroFecha .input-info2 h6 {
+            margin-left: -30px;
+        }
+
+            .FiltroFecha .input-info2 h6.desde {
+                margin-left: 40px;
+            }
+
+        .FiltroFecha .input-info2 .result {
+            width: 130px;
+            background-color: #f5fae5;
+            border: 0;
+            color: #000;
+            font-weight: bold;
+        }
+
+
+
+.EstadisticasMes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px;
+}
+
+    .EstadisticasMes h4 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .EstadisticasMes .barra1 {
+        margin-right: 30px;
+        background-color: #f5fae5;
+        border: 1px solid #aaa2a238;
+        border-radius: 5px;
+    }
+
+        .EstadisticasMes .barra1 canvas#AyudaMes {
+            max-width: 450px;
+            max-height: 220px;
+        }
+
+        .EstadisticasMes .barra1 div.card-header {
+            background-color: #aaa2a238;
+            border: 1px solid #aaa2a238;
+        }
+
+        .EstadisticasMes .barra1 .card-body {
+            margin-left: 15px;
+        }
+    /*-------------------------------------------------------------*/
+    .EstadisticasMes .pie1 {
+        background-color: #f5fae5;
+        border: 1px solid #aaa2a238;
+        border-radius: 5px;
+    }
+
+        .EstadisticasMes .pie1 canvas#PrestacionesMes {
+            max-width: 400px;
+            max-height: 300px;
+        }
+
+        .EstadisticasMes .pie1 .card-body {
+            margin: auto;
+            margin-left: 55px;
+        }
+
+        .EstadisticasMes .pie1 div.card-header {
+            background-color: #aaa2a238;
+            border: 1px solid #aaa2a238;
+        }
+
+/*-------------------------------------------------------------*/
+
+.Estadisticas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px;
+}
+
+    .Estadisticas h4 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .Estadisticas .circulo {
+        margin-right: 30px;
+        background-color: #f5fae5;
+        border: 1px solid #aaa2a238;
+        border-radius: 5px;
+    }
+
+        .Estadisticas .circulo canvas#Ayudas {
+            max-width: 650px;
+            max-height: 420px;
+        }
+
+        .Estadisticas .circulo div.card-header {
+            background-color: #aaa2a238;
+            border: 1px solid #aaa2a238;
+        }
+
+        .Estadisticas .circulo .card-body {
+            margin-left: 35px;
+        }
+
+    /*-------------------------------------------------------------*/
+
+    .Estadisticas .barra {
+        background-color: #f5fae5;
+        border: 1px solid #aaa2a238;
+        border-radius: 5px;
+    }
+
+        .Estadisticas .barra canvas#Prestaciones {
+            max-width: 600px;
+            max-height: 400px;
+        }
+
+        .Estadisticas .barra .card-body {
+            margin: auto;
+            margin-top: 45px;
+        }
+
+        .Estadisticas .barra div.card-header {
+            background-color: #aaa2a238;
+            border: 1px solid #aaa2a238;
+        }
+
+
+
+
+.Estadisticas_Anual {
+    display: block;
+    padding: 10px;
+}
+
+    .Estadisticas_Anual h4 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .Estadisticas_Anual .bar {
+        background-color: #f5fae5;
+        border: 1px solid #aaa2a238;
+        border-radius: 5px;
+        height: 450px;
+    }
+
+        .Estadisticas_Anual .bar canvas#AyudaAnual {
+            max-width: 100%;
+            max-height: 300px;
+        }
+
+        .Estadisticas_Anual .bar .card-body {
+            margin: auto;
+        }
+
+        .Estadisticas_Anual .bar div.card-header {
+            background-color: #aaa2a238;
+            border: 1px solid #aaa2a238;
+        }
+
+    /*-------------------------------------------------------------*/
+
+    .Estadisticas_Anual .polarArea {
+        background-color: #f5fae5;
+        border: 1px solid #aaa2a238;
+        border-radius: 5px;
+        margin-top: 30px;
+        height: 600px;
+    }
+
+        .Estadisticas_Anual .polarArea canvas#PrestacionesAnual {
+            max-width: 610px;
+            max-height: 500px;
+            margin-left: 120px;
+        }
+
+        .Estadisticas_Anual .polarArea div.card-header {
+            background-color: #aaa2a238;
+            border: 1px solid #aaa2a238;
+        }
+
+        .Estadisticas_Anual .polarArea .card-body {
+            margin-left: 100px;
+        }
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 55px;
+    height: 26px;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 7px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+
+/* ICONOS */
+nav a#navbarDropdown.dropdown-toggle::after,
+nav i.fas.fa-user-alt::before,
+nav i.fa.fa-cog::before {
+    color: #fff;
+}
+
+i.fas.fa-user-friends::before,
+i.fas.fa-unlock-alt::before {
+    color: #fff;
+}
+
+i.fas,
+i.fa,
+i.fa-solid {
+    color: #0e2b16;
+}
+
+    i.fas.fa-chart-bar::before {
+        color: #fff;
+    }
+
+    i.fas.fa-file-pdf::before {
+        background-color: #fff;
+        color: #ac2e2e;
+        border-radius: 20px;
+    }
+
+button.dropdown-toggle::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f107";
+    display: contents;
+    font-weight: 700;
+    color: #fff;
+}
+
+i.fa.fa-user-plus::before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f234";
+    display: contents;
+    font-weight: 700;
+    color: #fff;
+}
+
+i.fas.fa-user-alt::before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f2bd";
+    display: contents;
+    font-weight: 800;
+    color: #0e2b16;
+}
+
+a#navbarDropdown.dropdown-toggle::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f107";
+    display: contents;
+    font-weight: 700;
+    color: #0e2b16;
+}
+
+button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f039";
+    display: contents;
+    font-weight: 900;
+    color: #fff;
+}
+
+button#dropdownMenuButton2.btn.btn-secondary.dropdown-toggle::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f078";
+    display: contents;
+    font-weight: 700;
+    color: #fff;
+}
+
+
+
+@media (max-width: 1200px) {
+    .Estadisticas {
+        display: block;
+    }
+        .Estadisticas .circulo {
+            margin-right: 0;
+            margin-bottom: 30px;
+        }
+            .Estadisticas .circulo .card-body {
+                margin-left: 120px;
+            }
+        .Estadisticas .barra .card-body {
+            margin-left: 120px;
+        }
+    .Estadisticas_Anual .polarArea .card-body {
+        margin-left: 40px;
+    }
+    .Estadisticas_Anual .polarArea canvas#PrestacionesAnual {
+        margin-left: 100px;
+    }
+}
+
+@media (max-width: 991px) {
+    .container {
+        max-width: 100%;
+    }
+    .table-container-user {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+        .table-container-user .card-user {
+            width: 550px;
+        }
+    .table-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+        .table-container .card-user {
+            width: 550px;
+        }
+    .card .card-header {
+        height: 70px;
+    }
+    .card-user .separador li {
+        list-style: none;
+    }
+    .card-user .separador img {
+        margin-top: 36%;
+        margin-left: -12%;
+        width: 120px;
+        height: 120px;
+        border-radius: 150px;
+    }
+    .FiltroFecha .details-info2 {
+        margin-top: 12px;
+        margin-left: 10px;
+        width: 240px;
+        background-color: #f4fff6;
+        border: 1px solid;
+    }
+    .table thead {
+        display: none;
+    }
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+        .table .rut {
+            width: 100%;
+        }
+        .table tr {
+            margin-bottom: 15px;
+        }
+        .table tbody tr td {
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+        }
+        .table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0;
+            width: 50px;
+            padding-left: 15px;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: left;
+            color: #00ad8e;
+        }
+    .btn-group {
+        display: flex;
+        height: 50px;
+        width: 100%;
+    }
+    .familia {
+        display: flex;
+        width: 100%;
+        height: 30px;
+    }
+    .course-info h2 {
+        margin-left: 0px;
+    }
+    .course-info .input-info {
+        display: grid;
+        margin-left: 0px;
+    }
+        .course-info .input-info .details-info1 {
+            width: 90%;
+        }
+        .course-info .input-info .details-info2 {
+            width: 90%;
+            margin-top: 4px;
+        }
+    .course-info h7 {
+        margin-left: 0px;
+    }
+    .card-user .separador img {
+        margin-top: 25%;
+        margin-left: 7%;
+        width: 150px;
+        height: 150px;
+        border-radius: 150px;
+    }
+    .Estadisticas {
+        display: block;
+    }
+        .Estadisticas .circulo {
+            margin-right: 0;
+            margin-bottom: 30px;
+        }
+            .Estadisticas .circulo .card-body {
+                margin-left: 120px;
+            }
+        .Estadisticas .barra .card-body {
+            margin-left: 50px;
+        }
+    .Estadisticas_Anual .polarArea canvas#PrestacionesAnual {
+        margin-left: 50px;
+    }
+}
+
+@media (max-width: 769px) {
+    .Ejemplo-Hijo3 {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+        .Ejemplo-Hijo3 a {
+            text-align: left;
+        }
+    .FiltroFecha {
+        height: 265px;
+    }
+        .FiltroFecha .input-info .details-info2 {
+            display: grid;
+            width: 40%;
+            margin-left: 148px;
+        }
+    .table-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (max-width: 740px) {
+    .table-container .card-user,
+    .table-container-user .card-user {
+        width: auto;
+    }
+    .course {
+        display: flex;
+    }
+    .course-preview a {
+        display: grid;
+        margin-top: 50%;
+    }
+    .course-info a {
+        position: absolute;
+        right: 30px;
+        text-align: right;
+        width: 100%;
+        height: 5px;
+    }
+    .course-info .input-info {
+        margin-left: 0px;
+    }
+    .course-info h7 {
+        margin-left: 0px;
+    }
+    .course-info h2 {
+        margin-top: 4px;
+        margin-left: 0px;
+    }
+    .FiltroFecha .input-info {
+        display: grid;
+        margin-left: 85px;
+    }
+        .FiltroFecha .input-info .details-info2 {
+            display: grid;
+            width: 40%;
+            margin-left: 12px;
+        }
+    .FiltroFecha .input-info2 h6.desde {
+        margin-left: 40px;
+    }
+    .Estadisticas .circulo .card-body {
+        margin-left: 60px;
+    }
+    .Estadisticas .barra .card-body {
+        margin-left: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .course-preview a {
+        margin-top: 50%;
+        margin-left: 30px;
+    }
+    .course-info a {
+        position: absolute;
+        right: 30px;
+        text-align: right;
+        width: 150px;
+        height: 5px;
+    }
+    .course-info .input-info {
+        display: grid;
+        margin-left: 0px;
+    }
+        .course-info .input-info .details-info1 {
+            width: 90%;
+        }
+        .course-info .input-info .details-info2 {
+            width: 90%;
+        }
+    .course-info h7 {
+        margin-left: 0px;
+    }
+    .FiltroFecha {
+        height: 295px;
+    }
+        .FiltroFecha .input-info {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 0;
+        }
+        .FiltroFecha .input-info2 h6.desde {
+            margin-left: -27px;
+        }
+        .FiltroFecha .input-info2 h6.desde,
+        .FiltroFecha .input-info2 h6.hasta {
+            margin-left: 40px;
+        }
+}
+
+@media (max-width: 437px) {
+    .FiltroFecha {
+        height: 325px;
+    }
+        .FiltroFecha .input-info2 h7 {
+            font-size: 16px;
+        }
+        .FiltroFecha .input-info2 h6 {
+            font-size: 15px;
+        }
+}
+
+@media (max-width: 320px) {
+    .FiltroFecha {
+        height: 338px;
+    }
+    .course-preview a {
+        margin-top: 100%;
+        margin-left: 7px;
+    }
+}

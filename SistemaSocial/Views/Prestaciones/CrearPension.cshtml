@@ -1,0 +1,31 @@
+﻿@model SistemaSocial.Models.TipoPension
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Crear Nueva Pensión </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Crear Nueva Pensión. </div>
+        <section class="formulario-registro">
+            <form asp-action="CrearPension">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input type="text" asp-for="Nombre" />
+                        <span asp-validation-for="Nombre" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Crear Pensión" class="btn btn-success btn-block" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

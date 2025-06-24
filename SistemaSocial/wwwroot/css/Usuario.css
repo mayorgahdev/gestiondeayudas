@@ -1,0 +1,160 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: #000;
+    font-family: Yu Gothic UI;
+    padding: 0, 1em;
+    background-color: #f4fff6;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1em;
+}
+
+    .container .title {
+        margin-top: 30px;
+        font-size: 25px;
+        font-weight: 500;
+        position: relative;
+    }
+
+        .container .title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+        }
+
+.formulario-registro-usuario {
+    box-shadow: 4px 4px 10px 0px rgb(43 41 41 / 30%);
+    margin: 20px 10px 15px 10px;
+    background: #fff;
+    background-color: #aaa2a238;
+    padding: 1em;
+    border: 0.1px solid #e2e2e2;
+    border-radius: 10px;
+}
+
+.user-details-usuario {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 20px 0;
+}
+
+    .user-details-usuario .input-box {
+        margin-bottom: 12px;
+        width: calc(100% / 2 - 20px);
+    }
+
+        .user-details-usuario .input-box select,
+        .user-details-usuario .input-box input {
+            height: 35px;
+            width: 100%;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding-left: 10px;
+            font-size: 16px;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .user-details-usuario .input-box label::after {
+            display: none;
+        }
+
+        .user-details-usuario .input-box span {
+            height: 35px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            color: #e13232;
+        }
+
+
+    .user-details-usuario .input-box1 {
+        margin-bottom: 12px;
+        width: calc(100% / 2 - 20px);
+    }
+
+        .user-details-usuario .input-box1 select,
+        .user-details-usuario .input-box1 input {
+            height: 33px;
+            width: 100%;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding-left: 10px;
+            font-size: 16px;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+
+        .user-details-usuario .input-box1 label::after {
+            display: none;
+        }
+
+form .boton {
+    height: 45px;
+    width: 45px 0;
+}
+
+    form .boton input {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        color: #fff;
+        border: none;
+        font-size: 18px;
+        font-weight: 700;
+        border-radius: 5px;
+        letter-spacing: 1.3px;
+        background: linear-gradient(165deg, #0f421d, #3c7e21);
+    }
+
+        form .boton input:hover {
+            background: linear-gradient(165deg, #3c7e21, #0f421d);
+        }
+
+@media (max-width: 992px) {
+    .container {
+        max-width: 100%;
+    }
+
+    form .user-details .input-box {
+        margin-bottom: 12px;
+        width: 100%;
+    }
+
+    form .user-details-usuario .input-box {
+        margin-bottom: 12px;
+        width: 100%;
+    }
+
+    .input-box-sexo,
+    .input-box-tipo {
+        margin-bottom: 12px;
+        width: calc(100% / 1 - 20px);
+    }
+
+    .form-check-inline,
+    .input-box-casa {
+        max-width: 100%;
+        width: calc(100% / 1 - 20px);
+        display: contents;
+    }
+
+    .user-details-usuario .input-box1 {
+        width: calc(100% / 1 - 20px);
+    }
+}

@@ -1,0 +1,146 @@
+﻿@model SistemaSocial.ViewModel.AsignacionView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Asignación de Cuentas </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="course">
+            <div class="course-info">
+                <h2> Asignación de Cuentas. </h2>
+                <form asp-controller="AsignacionDeCuentas" asp-action="IndexAsignacion" method="get">
+                    <h7>Buscar Asignación de Cuenta por Run o Pasaporte, Programa o Cuenta: </h7>
+                    <div class="input-info">
+                        <input type="text" asp-for="Busqueda" class="details-info1" />
+                        <input type="submit" value="Buscar" class="details-info2" />
+                    </div>
+                </form>
+                <a asp-action="IndexAsignacion"> Listado de Datos </a>
+            </div>
+        </div>
+
+        <div style=" overflow-x: auto;">
+            @{
+                if (SignInManager.IsSignedIn(User)) {
+                    var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                    if (Claims != null) {
+                        <div>
+                            <partial name="_DatosIndexPartial" />
+                        </div>
+                    }
+                }
+            }
+            <div class="table-container1">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"> Run o Pasaporte. </th>
+                            <th scope="col"> N° Cuenta</th>
+                            <th scope="col"> Programa. </th>
+                            <th scope="col"> Cuenta. </th>
+                            <th scope="col"> Presupuesto Entregado. </th>
+                           @if (SignInManager.IsSignedIn(User)) {
+                                var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                if (Claims != null) {
+                                    <th scope="col"></th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                       @foreach (var S in Model.listaAsignacion) {
+                            <tr>
+                                <td data-label="CI"> @Html.DisplayFor(modelItem => S.Clientes.Rut) </td>
+                                <td data-label="N°"> @Html.DisplayFor(modelItem => S.NumCuenta) </td>
+                                <td data-label="Programa"> @Html.DisplayFor(modelItem => S.Programa.Nombre) </td>
+                                <td data-label="Cuenta"> @Html.DisplayFor(modelItem => S.Cuenta.Codigo) </td>
+                                <td data-label="Pres.Entregado"> @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", S.PresEntregado) </td>
+                               @if (SignInManager.IsSignedIn(User)) {
+                                    var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                    var Permiso = User.Claims.Where(C => C.Type == "Admin" && C.Value == "10" || C.Type == "Editor").FirstOrDefault();
+                                    if (Claims != null) {
+                                        <td data-label="">
+                                            <div class="Drop">
+                                                <div class="dropdown">
+                                                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Administración.
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item"
+                                                           asp-controller="AsignacionDeCuentas"
+                                                           asp-action="EditarAsignacion"
+                                                           asp-route-ClientesID="@S.ClientesID">
+                                                            Modificar
+                                                        </a>
+
+                                                       @if (Permiso != null) {
+                                                            <a class="dropdown-item"
+                                                               asp-controller="AsignacionDeCuentas"
+                                                               asp-action="EliminarAsignacion"
+                                                               asp-route-ClientesID="@S.AsignacionDeCuentaID">
+                                                                Eliminar
+                                                            </a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center pagination-circle mt-2">
+                @{
+                    if (Model.Paginas != 1) {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="IndexAsignacion" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a>
+                        </li>
+                    }
+                    else {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="IndexAsignacion" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a>
+                        </li>
+                    }
+
+                    for (int i = 1; i <= Model.CantidadPaginas; i++) {
+                        if (i == Model.Paginas) {
+                            <li class="page-item" aria-current="page">
+                                <a class="page-link" asp-action="IndexAsignacion" asp-route-Pagina="@i">@i</a>
+                            </li>
+                        }
+                    }
+
+                    if (Model.Paginas != Model.CantidadPaginas) {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="IndexAsignacion" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a>
+                        </li>
+                    }
+                    else {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="IndexAsignacion" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>
+
+

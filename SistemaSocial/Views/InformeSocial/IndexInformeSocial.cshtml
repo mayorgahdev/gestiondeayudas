@@ -1,0 +1,177 @@
+﻿@model SistemaSocial.ViewModel.InformeSocialView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Informes Sociales. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="course">
+            <div class="course-info">
+                <h2> Informes Sociales Realizados. </h2>
+                <form asp-controller="InformeSocial" asp-action="IndexInformeSocial" method="get">
+                    <h7>Buscar Informe por Run o Pasaporte o N° de Informe: </h7>
+                    <div class="input-info">
+                        <input type="text" asp-for="Busqueda" class="details-info1" />
+                        <input type="submit" value="Buscar" class="details-info2" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div style=" overflow-x: auto;">
+            @{
+                if (SignInManager.IsSignedIn(User)) {
+                    var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                    if (Claims != null) {
+                        <div>
+                            <partial name="_DatosIndexPartial" />
+                        </div>
+                    }
+                }
+            }
+            <div class="table-container1">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"> N° Informe </th>
+                            <th scope="col"> Nombre Usuario </th>
+                            <th scope="col"> Fecha </th>
+                            @if (SignInManager.IsSignedIn(User)) {
+                                var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                if (Claims != null) {
+                                    <th scope="col">Profesional</th>
+                                    <th scope="col"> </th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var C in Model.ListaInformeSocial) {
+                            <tr>
+                                <td data-label="N°">
+                                    <i class="fa-thin fa-hashtag"></i>
+                                    @Html.DisplayFor(modelItem => C.NumInforme)
+                                </td>
+                                <td data-label="Nombre">
+                                    @Html.DisplayFor(modelItem => C.Clientes.Nombres)
+                                    @Html.DisplayFor(modelItem => C.Clientes.ApellidoPaterno)
+                                    @Html.DisplayFor(modelItem => C.Clientes.ApellidoMaterno)
+                                </td>
+                                <td data-label="Fecha"> @C.FechaElaboracion.ToString("dd/MM/yyyy") </td>
+                                @if (SignInManager.IsSignedIn(User)) {
+                                    var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                    var Permiso = User.Claims.Where(C => C.Type == "Admin" && C.Value == "10").FirstOrDefault();
+                                    if (Claims != null) {
+                                        <td>
+                                            @Html.DisplayFor(modelItem => C.Usuario.Nombre)
+                                            @Html.DisplayFor(modelItem => C.Usuario.Apellido)
+                                        </td>
+                                        <td data-label="">
+                                            <div class="Drop dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                                    Administración.
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <div class="dropdown">
+                                                        <div class="drop-2">
+                                                            @*IMPRESIONES*@
+                                                            <li class="dropdown dropdown-submenu">
+                                                                <div class="dropdown" aria-labelledby="dropdownMenuButton2">
+                                                                    <a class="dropdown-item"
+                                                                       target="_blank"
+                                                                       asp-controller="InformeSocial"
+                                                                       asp-action="Imprimir_Informe"
+                                                                       asp-route-ClientesID="@C.ClientesID"
+                                                                       asp-route-Grupo="@C.Clientes.GrupoFamiliar"
+                                                                       asp-route-InformeID="@C.InformeSocialID"
+                                                                       asp-route-NumInforme="@C.NumInforme"
+                                                                       asp-route-User="@UserManager.GetUserName(User)">
+                                                                        <i class="fas fa-file-pdf"></i>
+                                                                        Informe Social. (Completo)
+                                                                    </a>
+                                                                    <a class="dropdown-item"
+                                                                       target="_blank"
+                                                                       asp-controller="CrearPDF"
+                                                                       asp-action="Informe_Socialx2"
+                                                                       asp-route-ClientesID="@C.ClientesID"
+                                                                       asp-route-Grupo="@C.Clientes.GrupoFamiliar"
+                                                                       asp-route-InformeID="@C.InformeSocialID"
+                                                                       asp-route-NumInforme="@C.NumInforme"
+                                                                       asp-route-User="@UserManager.GetUserName(User)">
+                                                                        <i class="fas fa-file-pdf"></i> 
+                                                                        Informe Social. (Reducido)
+                                                                    </a>
+                                                                </div>
+                                                            </li>
+                                                        </div>
+                                                        <div class="drop-1">
+                                                            @*AGREGAR DATOS GENERALES*@
+                                                            <li class="dropdown dropdown-submenu">
+                                                                <div class="dropdown" aria-labelledby="dropdownMenuButton2">
+                                                                    <a class="dropdown-item"
+                                                                       asp-controller="InformeSocial"
+                                                                       asp-action="EditarInformeSocial"
+                                                                       asp-route-ClientesID="@C.ClientesID"
+                                                                       asp-route-InformeID="@C.InformeSocialID"
+                                                                       asp-route-NumInforme="@C.NumInforme">
+                                                                        Modificar
+                                                                    </a>
+                                                                </div>
+                                                            </li>
+                                                            <li class="dropdown dropdown-submenu">
+                                                                <div class="dropdown" aria-labelledby="dropdownMenuButton2">
+                                                                    @if (Permiso != null) {
+                                                                        <a class="dropdown-item"
+                                                                           asp-controller="InformeSocial"
+                                                                           asp-action="EliminarInformeSocial"
+                                                                           asp-route-InformeSocialID="@C.InformeSocialID">
+                                                                            Eliminar
+                                                                        </a>
+                                                                    }
+                                                                </div>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                $(document).ready(function () {
+                                                $('.dropdown-submenu button.test').on("click", function (e) {
+                                                    $(this).next('div.dropdown-menu').toggle();
+                                                    e.stopPropagation();
+                                                    e.preventDefault();
+                                                });
+                                            });
+                                            </script>
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center pagination-circle mt-2">
+                @for (int i = 1; i <= Model.CantidadPaginas; i++) {
+                    <li class="page-item" aria-current="page">
+                        <a class="page-link" asp-action="IndexInformeSocial" asp-route-Pagina="@i">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

@@ -1,0 +1,270 @@
+﻿@model SistemaSocial.ViewModel.ClientesView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Grupo Familiar del Usuario. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/font-awesome/" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="Ejemplo-Padre">
+           @foreach (var C in Model.listaClientes) {
+                <div class="Ejemplo-Hijo">
+                    <div class="a-clientes">
+                        <a asp-action="CrearGrupoFamiliar"
+                           asp-controller="Clientes"
+                           asp-route-GrupoFamiliar="@C.GrupoFamiliar">
+                            Agregar Nuevo Integrante.
+                        </a>
+                    </div>
+                    <div class="Ejemplo-Hijo2">
+                        <h1>Grupo Familiar</h1>
+                        <div class="grupo">
+                            <h2>N° Grupo Familiar: </h2>
+                            <h3>@Html.DisplayFor(modelItem => C.GrupoFamiliar)</h3>
+                        </div>
+                        <form asp-controller="Clientes" asp-action="IndexGrupoFamiliar" method="get">
+                            <div class="input-info">
+                                <input type="text" asp-for="Busqueda" placeholder="Buscar Usuario por Nombre o Apellido" class="details-info1" />
+                                <input type="submit" value="Buscar" class="details-info2" />
+                            </div>
+                        </form>
+                        <h4>
+                            <b>Dirección: </b> @Html.DisplayFor(modelItem => C.Direccion)
+                        </h4>
+                    </div>
+                </div>
+                <div class="Ejemplo-Hijo3">
+                    <a class="Cronicos"
+                       asp-action="CrearCronicos"
+                       asp-controller="Clientes"
+                       asp-route-Grupo="@C.GrupoFamiliar">
+                        Cartola Hogar - Registro Social de Hogares.
+                    </a>
+                    <a class="Habitacionales"
+                       asp-action="CrearHabitacionales"
+                       asp-controller="Habitacionales"
+                       asp-route-Grupo="@C.GrupoFamiliar">
+                        Añadir Antecedentes Habitacionales.
+                    </a>
+                    <a class="GastosFamiliares"
+                       asp-action="CrearGastosFamiliares"
+                       asp-controller="GastosFamiliares"
+                       asp-route-Grupo="@C.GrupoFamiliar">
+                        Añadir Declaración de Gastos Mensuales.
+                    </a>
+                    <a class="Habitacionales1"
+                       asp-action="EditarHabitacionales"
+                       asp-controller="Habitacionales"
+                       asp-route-Grupo="@C.GrupoFamiliar">
+                        Modificar Antecedentes Habitacionales.
+                    </a>
+                </div>
+                break;
+           }
+        </div>
+
+        <div style="overflow-x: auto;">
+            <div class="table-container">
+               @foreach (var C in Model.listaClientes) {
+                    <div class="card">
+                        <ul class="card-header">
+                            <li>
+                                <h3 style="font-size: 17px;">
+                                    <i class="fa-solid fa-user" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                    Nombre:
+                                </h3>
+                                <span style="font-size:17px;">
+                                    @Html.DisplayFor(modelItem => C.Nombres)
+                                    @Html.DisplayFor(modelItem => C.ApellidoPaterno)
+                                    @Html.DisplayFor(modelItem => C.ApellidoMaterno)
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <h3>
+                                    <i class="fa-solid fa-phone" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                    Teléfono:
+                                </h3>
+                               @if (C.Telefono != null) {
+                                    <span style="font-size:16px;">
+                                        @Html.DisplayFor(modelItem => C.Telefono)
+                                    </span>
+                                }
+                                else {
+                                    <span style="font-size:16px;"> No Asignado. </span>
+                                }
+                            </li>
+                            <li class="list-group-item">
+                                <h3>
+                                    <i class="fa fa-envelope" style="margin-right: 10px; margin-top: 2.5px;"></i>
+                                    Tipo de Usuario:
+                                </h3>
+                                <span style="font-size:16px;">
+                                    @Html.DisplayFor(modelItem => C.TipoDeCliente)
+                                </span>
+                            </li>
+                        </ul>
+                       @if (SignInManager.IsSignedIn(User)) {
+                            var Claims = User.Claims.Where(x => x.Type == "Admin" || x.Type == "Editor").FirstOrDefault();
+                            var Permisos = User.Claims.Where(x => x.Type == "Admin" && x.Value == "10").FirstOrDefault();
+                            if (Claims != null) {
+                                <div class="Drop4">
+                                    <div class="Drop dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                            Añadir Datos.
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown">
+                                                <ul class="drop-3">
+                                                    @*CREAR SALUD*@
+                                                    <li class="dropdown dropdown-submenu">
+                                                        <div class="dropdown" aria-labelledby="dropdownMenuButton2">
+                                                            <a class="dropdown-item"
+                                                               asp-action="CrearSalud"
+                                                               asp-controller="Salud"
+                                                               asp-route-ClientesID="@C.ClientesID"
+                                                               asp-route-Grupo="@C.GrupoFamiliar"
+                                                               asp-route-Tipo="@C.TipoDeCliente">
+                                                                Añadir Datos <br />
+                                                                de Salud.
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    @*CREAR SOCIOECONÓMICO*@
+                                                    <li class="dropdown dropdown-submenu">
+                                                        <div class="dropdown" aria-labelledby="dropdownMenuButton2">
+                                                            <a class="dropdown-item"
+                                                               asp-action="CrearSocioeconomico"
+                                                               asp-controller="Socioeconomico"
+                                                               asp-route-ClientesID="@C.ClientesID"
+                                                               asp-route-Grupo="@C.GrupoFamiliar"
+                                                               asp-route-Tipo="@C.TipoDeCliente">
+                                                                Añadir Datos <br />
+                                                                Socioeconómicos.
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    @*ENTREGAR AYUDA SOCIAL*@
+                                                    <li class="dropdown dropdown-submenu full-width">
+                                                        <div class="dropdown" aria-labelledby="dropdownMenuButton2">
+                                                            <a class="dropdown-item"
+                                                               asp-action="CrearAyudaSocial"
+                                                               asp-controller="AyudaSocial"
+                                                               asp-route-ClientesID="@C.ClientesID"
+                                                               asp-route-Grupo="@C.GrupoFamiliar"
+                                                               asp-route-Tipo="@C.TipoDeCliente">
+                                                                Entregar Ayuda Social.
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="Drop dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-expanded="false">
+                                            Administración.
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                            <div class="dropdown">
+                                                <ul class="drop-2">
+                                                    @*IMPRESIONES*@
+                                                    <li class="dropdown dropdown-submenu">
+                                                        <div class="dropdown" aria-labelledby="dropdownMenu3">
+                                                            <a class="dropdown-item"
+                                                               target="_blank"
+                                                               asp-controller="CrearPDF"
+                                                               asp-action="ImprimirAyudaSociales"
+                                                               asp-route-ClientesID="@C.ClientesID"
+                                                               asp-route-User="@UserManager.GetUserName(User)">
+                                                                Ayudas Sociales.
+                                                                <i class="fas fa-file-pdf"></i>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <li class="dropdown dropdown-submenu">
+                                                        <div class="dropdown" aria-labelledby="dropdownMenu3">
+                                                            <a class="dropdown-item"
+                                                               target="_blank"
+                                                               asp-controller="CrearPDF"
+                                                               asp-action="ImprimirGastos"
+                                                               asp-route-ClientesID="@C.ClientesID"
+                                                               asp-route-Grupo="@C.GrupoFamiliar"
+                                                               asp-route-User="@UserManager.GetUserName(User)">
+                                                                Gastos Familiares.
+                                                                <i class="fas fa-file-pdf"></i>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                   @if (Permisos != null) {
+                                                        <li class="dropdown dropdown-submenu">
+                                                            <div class="dropdown" aria-labelledby="dropdownMenu3">
+                                                                <a class="dropdown-item"
+                                                                   asp-controller="Clientes"
+                                                                   asp-action="EditarClientes"
+                                                                   asp-route-ClientesID="@C.ClientesID">
+                                                                    Modificar Datos.
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                        <li class="dropdown dropdown-submenu">
+                                                            <div class="dropdown" aria-labelledby="dropdownMenu3">
+                                                                <a class="dropdown-item"
+                                                                   asp-controller="Clientes"
+                                                                   asp-action="EliminarClientes"
+                                                                   asp-route-ClientesID="@C.ClientesID">
+                                                                    Eliminar Usuario.
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                    else {
+                                                        <li class="dropdown dropdown-submenu full-width">
+                                                            <div class="dropdown" aria-labelledby="dropdownMenu3">
+                                                                <a class="dropdown-item"
+                                                                   asp-controller="Clientes"
+                                                                   asp-action="EditarClientes"
+                                                                   asp-route-ClientesID="@C.ClientesID">
+                                                                    Modificar Datos.
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-submenu button.test').on("click", function (e) {
+                $(this).next('div.dropdown-menu').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+    </script>
+}

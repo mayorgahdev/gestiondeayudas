@@ -1,0 +1,319 @@
+﻿@model SistemaSocial.Models.Socioeconomico
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Modificar Datos Socioeconómicos </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            Modificar Datos Socioeconómicos de: <br />
+            @Html.ViewData.Model.Clientes.Nombres
+            @Html.ViewData.Model.Clientes.ApellidoPaterno
+            @Html.ViewData.Model.Clientes.ApellidoMaterno
+        </div>
+        <section class="formulario-registro">
+            <div>
+                <partial name="_DatosEditarPartial(1)" />
+            </div>
+            <form asp-action="EditarSocioeconomico">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="SocioeconomicoID" />
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select class="rutEdit"
+                                asp-for="ClientesID" asp-items="ViewBag.ClientesID"
+                                readonly onmousedown="return false;">
+                        </select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <input asp-for="GrupoFamiliar" type="number" />
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                        <h6 style="text-align:left; font-size: 13.5px;" font-family="Arial">
+                            Para poder cambiar el vínculo de un grupo a otro, ingrese el número del grupo al cual será vinculado
+                            (Este se visualiza al ingresar al apartado de grupos del Usuario)
+                        </h6>
+                    </div>
+
+                    <div class="input-box">
+                        <label asp-for="Actividad" class="control-label"></label>
+                        <input type="text" asp-for="Actividad" />
+                        <span asp-validation-for="Actividad" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="IngresoActividad" class="control-label"></label>
+                        <input type="number" asp-for="IngresoActividad" id="gastosID" oninput="validarGASTOS(event)"
+                               step="1" min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="IngresoActividad" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="TipoPensionID" class="control-label"></label>
+                        <select asp-for="TipoPensionID" asp-items="ViewBag.TipoPensionID">
+                            <option> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TipoPensionID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="OtrosIngresos1" class="control-label"></label>
+                        <input type="number" asp-for="OtrosIngresos1" id="gastosID" oninput="validarGASTOS(event)"
+                               step="1" min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="OtrosIngresos1" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="TipoSubsidioID" class="control-label"></label>
+                        <select asp-for="TipoSubsidioID" asp-items="ViewBag.TipoSubsidioID">
+                            <option> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TipoSubsidioID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="OtrosIngresos2" class="control-label"></label>
+                        <input type="number" asp-for="OtrosIngresos2" id="gastosID" oninput="validarGASTOS(event)"
+                               step="1" min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="OtrosIngresos2" class="details"></span>
+                    </div>
+                </div>
+
+                <div class="user-details" style="margin-top: -20px;">
+                    <div id="divocultamuestra2" style="display:none;">
+                        <div class="input-box">
+                            <label asp-for="TipoIngreso1" class="control-label"></label>
+                            <input type="text" asp-for="TipoIngreso1" />
+                            <span asp-validation-for="TipoIngreso1" class="details"></span>
+                        </div>
+                        <div class="input-box">
+                            <label asp-for="OtrosIngresos3" class="control-label"></label>
+                            <input type="number" asp-for="OtrosIngresos3" id="gastosID" oninput="validarGASTOS(event)"
+                                   step="1" min="0" class="monto" onkeyup="sumar();" />
+                            <span asp-validation-for="OtrosIngresos3" class="details"></span>
+                        </div>
+                    </div>
+                    <div id="divocultamuestra3" style="display:none;">
+                        <div class="input-box">
+                            <label asp-for="TipoIngreso2" class="control-label"></label>
+                            <input type="text" asp-for="TipoIngreso2" />
+                            <span asp-validation-for="TipoIngreso2" class="details"></span>
+                        </div>
+                        <div class="input-box">
+                            <label asp-for="OtrosIngresos4" class="control-label"></label>
+                            <input type="number" asp-for="OtrosIngresos4" id="gastosID" oninput="validarGASTOS(event)"
+                                   step="1" min="0" class="monto" onkeyup="sumar();" />
+                            <span asp-validation-for="OtrosIngresos4" class="details"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="boton1">
+                    <input type="button"
+                           id="botonocultamuestra"
+                           value="Mostrar Otros Ingresos" />
+                </div>
+
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="TotalIngresos" class="control-label"></label>
+                        <label class="control-label"></label><b id="spTotal"></b>
+                        <input type="number" asp-for="TotalIngresos" id="spTotal" />
+                        <span asp-validation-for="TotalIngresos" class="details"></span>
+                        <h6 style="font-size:13px" font-family="Arial">
+                            Completar recuadro con el resultado mostrado.
+                        </h6>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Observacion" class="control-label"></label>
+                        <textarea rows="4" asp-for="Observacion"></textarea>
+                        <span asp-validation-for="Observacion" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar Cambios" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-controller="Clientes"
+                       asp-action="IndexGrupoFamiliar">
+                        Volver al Listado.
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+
+
+
+@section scripts{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script>
+        function sumar() {
+            var total = 0;
+            $(".monto").each(function () {
+                if (isNaN(parseFloat($(this).val()))) {
+                    total += 0;
+                } else {
+                    total += parseFloat($(this).val());
+                }
+            });
+            document.getElementById('spTotal').innerHTML = total;
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            CargarTramos();
+
+            $("#Submit").click(function () {
+                var tramo = parseInt($("#cboTramo").val());
+
+                var data = {
+                    tramo: tramo,
+                };
+
+                $.ajax({
+                    url: '../Socioeconomico/CrearSocioeconomico',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (d) {
+                        /* - */
+                    },
+                    error: function () {
+                        /* - */
+                    }
+                });
+            });
+        });
+
+        function CargarTramos() {
+            $('#cboRSH').change(function () {
+                const RSHID = $(this).val();
+                console.log(RSHID);
+                $('#cboTramo').prop('disabled', false);
+                if (!isNaN(RSHID)) {
+                    $.ajax({
+                        type: 'Get',
+                        url: '../Socioeconomico/GetTramos',
+                        dataType: 'Json',
+                        data: { RSHID: RSHID },
+                        contentType: 'application/json; charset=uft-8',
+                        cache: false,
+                        success: function (e) {
+                            $('#cboTramo').empty();
+                            $.each(e, function (i, C) {
+                                console.log(i);
+                                console.log(C);
+                                $('#cboTramo').append($("<option></option>").val(C.tramoID).html(C.nombre));
+                            });
+                        },
+                        error: function (ex) {
+                            alert("Error al cargar las cantidades");
+                        }
+                    });
+                }
+            });
+        };
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#botonocultamuestra").click(function () {
+                $("#divocultamuestra").each(function () {
+                    displaying = $(this).css("display");
+                    if (displaying == "flex") {
+                        $(this).fadeOut('slow', function () {
+                            $(this).css("display", "none");
+                        });
+                    } else {
+                        $(this).fadeIn('slow', function () {
+                            $(this).css("display", "flex");
+                            $(this).css("flex-wrap", "wrap");
+                            $(this).css("width", "100%");
+                            $(this).css("justify-content", "space-between");
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#botonocultamuestra").click(function () {
+                $("#divocultamuestra1").each(function () {
+                    displaying = $(this).css("display");
+                    if (displaying == "flex") {
+                        $(this).fadeOut('slow', function () {
+                            $(this).css("display", "none");
+                        });
+                    } else {
+                        $(this).fadeIn('slow', function () {
+                            $(this).css("display", "flex");
+                            $(this).css("flex-wrap", "wrap");
+                            $(this).css("width", "100%");
+                            $(this).css("justify-content", "space-between");
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#botonocultamuestra").click(function () {
+                $("#divocultamuestra2").each(function () {
+                    displaying = $(this).css("display");
+                    if (displaying == "flex") {
+                        $(this).fadeOut('slow', function () {
+                            $(this).css("display", "none");
+                        });
+                    } else {
+                        $(this).fadeIn('slow', function () {
+                            $(this).css("display", "flex");
+                            $(this).css("flex-wrap", "wrap");
+                            $(this).css("width", "100%");
+                            $(this).css("justify-content", "space-between");
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#botonocultamuestra").click(function () {
+                $("#divocultamuestra3").each(function () {
+                    displaying = $(this).css("display");
+                    if (displaying == "flex") {
+                        $(this).fadeOut('slow', function () {
+                            $(this).css("display", "none");
+                        });
+                    } else {
+                        $(this).fadeIn('slow', function () {
+                            $(this).css("display", "flex");
+                            $(this).css("flex-wrap", "wrap");
+                            $(this).css("justify-content", "space-between");
+                            $(this).css("width", "100%");
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        function validarGASTOS(event) {
+            const input = event.target;
+            const valor = input.value.trim();
+
+            if (/^[0-9]\d*$/.test(valor)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Ingrese únicamente valores enteros. Ejemplo: 0123');
+            }
+            input.reportValidity();
+        }
+    </script>
+}

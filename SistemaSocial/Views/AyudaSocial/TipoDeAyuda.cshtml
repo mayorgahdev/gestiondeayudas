@@ -1,0 +1,162 @@
+﻿@model SistemaSocial.ViewModel.AyudaSocialView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Listado Por Tipo de Ayuda. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/font-awesome/" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="course">
+            <div class="course-preview">
+                <a asp-action="CrearAyudaSocial"><i class="fas fa-plus-circle"></i> Agregar Ayuda Social </a>
+            </div>
+            <div class="course-info">
+                <h2> Ayudas Sociales Entregadas. </h2>
+                <form asp-controller="AyudaSocial" asp-action="TipoDeAyuda" method="get">
+                    <h7> Buscar Ayuda por: Prestación y/o Run o Pasaporte </h7>
+                    <div class="input-info">
+                        <input type="text" asp-for="Busqueda" class="details-info1" />
+                        <input type="submit" value="Buscar" class="details-info2" />
+                    </div>
+                </form>
+                <a asp-action="TipoDeAyuda"> Ayudas Entregadas </a>
+            </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+           @if (SignInManager.IsSignedIn(User)) {
+                var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                if (Claims != null) {
+                    <div>
+                        <partial name="_DatosIndexPartial" />
+                    </div>
+                }
+            }
+            <div class="table-container1">
+                <h3 style="font-size: 18px; text-align: center;">
+                    Total de Ayudas Entregadas: <b>@Model.Cantidad</b>
+                </h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"> Nombre Usuario. </th>
+                            <th scope="col"> Nombre Ayuda. </th>
+                            <th scope="col"> Cantidad. </th>
+                            <th scope="col"> Tipo Petición. </th>
+                            <th scope="col"> Fecha Elaboración. </th>
+                            @{
+                                if (SignInManager.IsSignedIn(User)) {
+                                    var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                    if (Claims != null) {
+                                        <th class="text-center" scope="col"></th>
+                                    }
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                       @foreach (var A in Model.listaAyudas) {
+                            <tr>
+                                <td data-label="Nombre">
+                                    @Html.DisplayFor(modelItem => A.Clientes.Nombres)
+                                    @Html.DisplayFor(modelItem => A.Clientes.ApellidoPaterno)
+                                </td>
+                                <td data-label="Prestacion"> @Html.DisplayFor(modelItem => A.Prestaciones.Nombre)</td>
+                                <td data-label="Cantidad">
+                                   @if (A.CantidadEntregada == 0) {
+                                        <p style="margin-top: 15px;">Stock en Bodega. </p>
+                                    }
+                                    else {
+                                        @Html.DisplayFor(modelItem => A.CantidadEntregada)
+                                    }
+                                </td>
+                                <td data-label="Petición"> @Html.DisplayFor(modelItem => A.TipoPeticion.Nombre) </td>
+                                <td data-label="Fecha">@Html.DisplayFor(modelItem => A.FechaElaboracion) </td>
+                                @{
+                                    if (SignInManager.IsSignedIn(User)) {
+                                        var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                        var Permiso = User.Claims.Where(C => C.Type == "Admin" && C.Value == "10").FirstOrDefault();
+                                        if (Claims != null) {
+                                            <td data-label="">
+                                                <div class="Drop">
+                                                    <div class="dropdown">
+                                                        <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Administración.
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item"
+                                                               asp-action="EditarAyudaSocial"
+                                                               asp-controller="AyudaSocial"
+                                                               asp-route-AyudaID="@A.AyudaSocialID">
+                                                                Modificar
+                                                            </a>
+                                                           @if (Permiso != null) {
+                                                                <a class="dropdown-item"
+                                                                   asp-action="EliminarAyudaSocial"
+                                                                   asp-controller="AyudaSocial"
+                                                                   asp-route-AyudaID="@A.AyudaSocialID">
+                                                                    Eliminar
+                                                                </a>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        }
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center pagination-circle mt-2">
+                @{
+                    if (Model.Paginas != 1) {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="TipoDeAyuda" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a>
+                        </li>
+                    }
+                    else {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="TipoDeAyuda" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a>
+                        </li>
+                    }
+
+                    for (int i = 1; i <= Model.CantidadPaginas; i++) {
+                        if (i == Model.Paginas) {
+                            <li class="page-item" aria-current="page">
+                                <a class="page-link" asp-action="TipoDeAyuda" asp-route-Pagina="@i">@i</a>
+                            </li>
+                        }
+                    }
+
+                    if (Model.Paginas != Model.CantidadPaginas) {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="TipoDeAyuda" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a>
+                        </li>
+                    }
+                    else {
+                        <li class="page-item disabled">
+                            <a class="page-link" asp-action="TipoDeAyuda" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

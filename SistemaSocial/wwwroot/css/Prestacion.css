@@ -1,0 +1,131 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: #000;
+    font-family: Yu Gothic UI;
+    padding: 0, 1em;
+    background-color: #f4fff6;
+}
+
+/*-------------------------------------->  CREAR, EDITAR  <---------------------------------------------*/
+
+.formulario-registro > * {
+    box-shadow: 0 0 20px 0 rgb(78 68 68 / 30%);
+    margin: auto;
+    background-color: #f5fae5;
+    padding: 1em;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1em;
+}
+
+    .container .title {
+        margin-top: 30px;
+        font-size: 25px;
+        font-weight: 500;
+        position: relative;
+    }
+
+        .container .title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+        }
+
+form .user-details .input-box {
+    margin-bottom: 12px;
+}
+
+form .boton {
+    height: 45px;
+    width: 45px 0;
+}
+
+    form .boton input {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        color: #fff;
+        border: none;
+        font-size: 18px;
+        font-weight: 500;
+        border-radius: 5px;
+        letter-spacing: 1.3px;
+        background: linear-gradient(165deg, #0f421d, #3c7e21);
+    }
+
+        form .boton input:hover {
+            background: linear-gradient(165deg, #3c7e21, #0f421d);
+        }
+
+
+/*-------------------------------------->  ELIMINAR  <---------------------------------------------*/
+
+
+.delete h4 {
+    text-align: center;
+}
+
+.formulario-eliminar {
+    box-shadow: 0 0 20px 0 rgb(78 68 68 / 30%);
+}
+
+    .formulario-eliminar > * {
+        padding: 1em;
+    }
+
+    .formulario-eliminar form {
+        margin: 0;
+        display: block;
+        background-color: #f5fae5;
+    }
+
+
+    .formulario-eliminar dl, dd, dt {
+        display: flex;
+    }
+
+
+form .listado {
+    height: 45px;
+    width: 45px 0;
+}
+
+    form .listado a {
+        height: 100%;
+        width: 100%;
+        color: #000;
+        align-content: end;
+    }
+
+@media (max-width: 575px) {
+    .container {
+        max-width: 100%;
+    }
+
+    form .user-details .input-box {
+        margin-bottom: 12px;
+        width: 100%;
+    }
+
+    form .user-details-usuario .input-box {
+        margin-bottom: 12px;
+        width: 100%;
+    }
+
+    .input-box-sexo,
+    .input-box-tipo {
+        margin-bottom: 12px;
+        width: calc(100% / 1 - 20px);
+    }
+}

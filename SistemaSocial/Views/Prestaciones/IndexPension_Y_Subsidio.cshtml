@@ -1,0 +1,145 @@
+﻿@model SistemaSocial.ViewModel.Pension_Y_Subsidio
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+@inject AppDbContext _context
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Prestaciones. </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+    <link href="~/css/dark.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div style=" overflow-x: auto;">
+            <div class="crear">
+                <a asp-action="CrearPension"
+                   asp-controller="Prestaciones">
+                    Crear Nueva Pensión.
+                </a>
+                <a asp-action="CrearSubsidio"
+                   asp-controller="Prestaciones">
+                    Crear Nuevo Subsidio.
+                </a>
+            </div>
+            <div class="table-container3">
+                <table class="table" id="table1">
+                    <thead>
+                        <tr>
+                            <th scope="col"> Pensión. </th>
+                           @if (SignInManager.IsSignedIn(User)) {
+                                var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                if (Claims != null) {
+                                    <th scope="col"></th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var P in Model.ListPension) {
+                            <tr>
+                                <td data-label="Nombre"> @P.Nombre </td>
+                                @if (SignInManager.IsSignedIn(User)) {
+                                    var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                    var Permiso = User.Claims.Where(C => C.Type == "Admin" && C.Value == "10" || C.Type == "Editor").FirstOrDefault();
+                                    if (Claims != null) {
+                                        <td data-label="">
+                                            <div class="Drop">
+                                                <div class="dropdown">
+                                                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Administración.
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item"
+                                                           asp-action="EditarPension"
+                                                           asp-controller="Prestaciones"
+                                                           asp-route-TipoPensionID="@P.TipoPensionID">
+                                                            Modificar Pensión.
+                                                        </a>
+                                                       @if (Permiso != null) {
+                                                            <a class="dropdown-item"
+                                                               asp-action="EliminarPension"
+                                                               asp-controller="Prestaciones"
+                                                               asp-route-TipoPensionID="@P.TipoPensionID">
+                                                                Eliminar Pensión.
+                                                            </a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <table class="table" id="table2">
+                    <thead>
+                        <tr>
+                            <th scope="col"> Subsidio. </th>
+                            @if (SignInManager.IsSignedIn(User)) {
+                                var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                if (Claims != null) {
+                                    <th scope="col"></th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var P in Model.ListSubsidio) {
+                            <tr>
+                                <td data-label="Nombre"> @P.Nombre </td>
+                                @if (SignInManager.IsSignedIn(User)) {
+                                    var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                                    var Permiso = User.Claims.Where(C => C.Type == "Admin" && C.Value == "10" || C.Type == "Editor").FirstOrDefault();
+                                    if (Claims != null) {
+                                        <td data-label="">
+                                            <div class="Drop">
+                                                <div class="dropdown">
+                                                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Administración.
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item"
+                                                           asp-action="EditarSubsidio"
+                                                           asp-controller="Prestaciones"
+                                                           asp-route-TipoSubsidioID="@P.TipoSubsidioID">
+                                                            Modificar Subsidio.
+                                                        </a>
+                                                       @if (Permiso != null) {
+                                                            <a class="dropdown-item"
+                                                               asp-action="EliminarSubsidio"
+                                                               asp-controller="Prestaciones"
+                                                               asp-route-TipoSubsidioID="@P.TipoSubsidioID">
+                                                                Eliminar Subsidio.
+                                                            </a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        var numFilasTabla1 = document.getElementById('table1');
+        document.getElementById('table2').style.gridRowStart = numFilasTabla1 + 1;
+    </script>
+}

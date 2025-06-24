@@ -1,0 +1,225 @@
+﻿@model SistemaSocial.Models.AsignacionDeCuenta
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Añadir Asignación de Cuenta </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Añadir Asignación de Cuenta. </div>
+        <section class="formulario-registro">
+            <div class="Asignacion">
+                <a class="Cuentas"
+                   asp-controller="MedioAyuda"
+                   asp-action="CrearMedioAyuda1"
+                   asp-route-ClientesID="@ViewBag.ClientesID1"
+                   asp-route-NumMedio="@ViewBag.NumMedio"
+                   asp-route-Grupo="@ViewBag.Grupo"
+                   asp-route-NumInforme="@ViewBag.NumInforme">
+                    <i class="fa fa-caret-left"></i>
+                    Añadir Nuevo Medio.
+                </a>
+            </div>
+            <form asp-action="CrearAsignacion">
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID" id="CboClientes"></select>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <textarea name="GrupoFamiliar" class="GruposFamiliares">@ViewBag.Grupo</textarea>
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="NumInforme" class="control-label"></label>
+                        <input name="NumInforme" class="GruposFamiliares" value="@ViewBag.NumInforme" />
+                        <span asp-validation-for="NumInforme" class="details"></span>
+                    </div>
+                </div>
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="AreaGestionID" class="control-label"></label>
+                        <select asp-for="AreaGestionID" asp-items="ViewBag.AreaGestionID"
+                                id="CboAreaGestion" required>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="ProgramaID" class="control-label"></label>
+                        <select asp-for="ProgramaID" id="CboPrograma" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="CuentaID" class="control-label"></label>
+                        <select asp-for="CuentaID" id="CboCuenta" disabled="disabled" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="PresupuestoID" class="control-label"></label>
+                        <select asp-for="PresupuestoID" id="CboPresupuesto" 
+                                disabled="disabled" required>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="PresEntregado" class="control-label"></label>
+                        <input asp-for="PresEntregado" value="@ViewBag.PresEntregado"
+                               id="PresEntregado" min="0" oninput="validarGASTOS(event)" />
+                        <span asp-validation-for="PresEntregado" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" id="Submit" value="Guardar" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+
+
+@section scripts{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            CargarProgramas();
+            CargarCuentas();
+            CargarPresupuestos();
+
+            $("#Submit").click(function () {
+                var clientes = parseInt($("#CboClientes").val());
+                var areas = parseInt($("#CboAreaGestion").val());
+                var programas = parseInt($("#CboPrograma").val());
+                var cuentas = parseInt($("#CboCuenta").val());
+                var presupuestos = parseInt($("#CboPresupuesto").val());
+                var presEntregado = parseInt($("#PresEntregado").val());
+
+                var data = {
+                    clientes: clientes,
+                    areas: areas,
+                    programas: programas,
+                    cuentas: cuentas,
+                    presupuestos: presupuestos,
+                    presEntregado: presEntregado
+                };
+
+                $.ajax({
+                    url: '../AsignacionDeCuentas/CrearAsignacion',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (d) {
+                        /* - */
+                    },
+                    error: function () {
+                        /* - */
+                    }
+                });
+            });
+        });
+
+        function CargarProgramas() {
+            $.ajax({
+                type: 'Get',
+                url: '../AsignacionDeCuentas/ProgramasLoad',
+                dataType: 'Json',
+                contentType: 'application/json; charset=uft-8',
+                cache: false,
+                success: function (e) {
+                    $('#CboPrograma').empty();
+                    $('#CboPrograma').append($("<option></option>").val('').html('Seleccione.'));
+                    $.each(e, function (i, P) {
+                        /*console.log(i);
+                        console.log(P);*/
+                        $('#CboPrograma').append($("<option></option>").val(P.programaID).html(P.nombre));
+                    });
+                },
+                error: function (ex) {
+                    alert("Error al cargar los programas");
+                }
+            });
+        };
+        function CargarCuentas() {
+            $('#CboPrograma').change(function () {
+                const ProgramaID = $(this).val();
+                //console.log(ProgramaID);
+                $('#CboCuenta').prop('disabled', false);
+                if (!isNaN(ProgramaID)) {
+                    $.ajax({
+                        type: 'Get',
+                        url: '../AsignacionDeCuentas/GetCuentas',
+                        dataType: 'Json',
+                        data: { ProgramaID: ProgramaID },
+                        contentType: 'application/json; charset=uft-8',
+                        cache: false,
+                        success: function (e) {
+                            $('#CboCuenta').empty();
+                            $('#CboCuenta').append($("<option></option>").val('').html('Seleccione.'));
+                            $.each(e, function (i, cuenta) {
+                                /*console.log(i);
+                                console.log(cuenta);*/
+                                $('#CboCuenta').append($("<option></option>").val(cuenta.cuentaID).html(cuenta.codigo));
+                            });
+                        },
+                        error: function (ex) {
+                            alert("Error al cargar cuentas");
+                        }
+                    });
+                }
+            });
+        };
+        function CargarPresupuestos() {
+            $('#CboPrograma').change(function () {
+                $('#CboPresupuesto').empty();
+                $('#CboPresupuesto').append($("<option></option>").val('').html('Seleccione.'));
+                $('#CboCuenta').change(function () {
+                    const CuentaID = $(this).val();
+                    //console.log(CuentaID);
+                    $('#CboPresupuesto').prop('disabled', false);
+                    if (!isNaN(CuentaID)) {
+                        $.ajax({
+                            type: 'Get',
+                            url: '../AsignacionDeCuentas/GetPresupuestos',
+                            dataType: 'Json',
+                            data: { CuentaID: CuentaID },
+                            contentType: 'application/json; charset=uft-8',
+                            cache: false,
+                            success: function (e) {
+                                $('#CboPresupuesto').empty();
+                                $('#CboPresupuesto').append($("<option></option>").val('').html('Seleccione.'));
+                                $.each(e, function (i, pres) {
+                                    /*console.log(i);
+                                    console.log(pres);*/
+                                    $('#CboPresupuesto').append($("<option></option>").val(pres.presupuestoID).html(pres.presVigente));
+                                });
+                            },
+                            error: function (ex) {
+                                alert("Error al cargar presupuesto");
+                            }
+                        });
+                    }
+                });
+            });
+        };
+    </script>
+    <script>
+        function validarGASTOS(event) {
+            const input = event.target;
+            const valor = input.value.trim();
+
+            if (/^[0-9]\d*$/.test(valor)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Ingrese únicamente valores enteros. Ejemplo: 0123');
+            }
+            input.reportValidity();
+        }
+    </script>
+}

@@ -1,0 +1,279 @@
+﻿@model SistemaSocial.ModelPDF.Informe
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+@{
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title> Imprimir Gastos Familiares </title>
+    <link href="~/css/Impresiones.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="arriba" style="display: -webkit-box;">
+        <div class="izquierda">
+            <a class="navbar-brand text-white"
+               asp-area=""
+               asp-controller="Home"
+               asp-action="Index">
+                <img src="/Images/navbar-logo.png"
+                     alt="Municipalidad Chimbarongo"
+                     width="220"
+                     height="80" />
+            </a>
+            <h6>
+                I. MUNICIPALIDAD DE CHIMBARONGO <br />
+                DEPARTAMENTO SOCIAL COMUNAL.
+            </h6>
+        </div>
+
+        <div class="centro" style="margin-top: 45px;">
+            <h1 style="margin-left: 80px;">
+                Declaración de Gastos
+            </h1>
+        </div>
+    </div>
+
+    <div class="abajo">
+        <br />
+        @* DATOS CLIENTES*@
+       @foreach (var C in Model.ListaClientesGrupo
+               .Where(x => x.TipoDeCliente.Equals("Solicitante") ||
+                           x.TipoDeCliente.Equals("Requirente") ||
+                           x.TipoDeCliente.Equals("Ambos") &&
+                          !x.TipoDeCliente.Equals("Solicitante"))) {
+            <div class="">
+                <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+                    <mark>Identificación del Usuario.</mark>
+                </h6>
+                <table class="tabla-general">
+                    <tr>
+                        <th>NOMBRE</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            <b style="margin-right: 25px; text-transform: uppercase;">
+                                @Html.DisplayFor(modelItem => C.Nombres)
+                                @Html.DisplayFor(modelItem => C.ApellidoPaterno)
+                                @Html.DisplayFor(modelItem => C.ApellidoMaterno)
+                            </b>
+                        </td>
+                        <th>RUN</th>
+                        <td>
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Rut)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>TELÉFONO</th>
+                        <td>
+                           @if (C.Telefono != null) {
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => C.Telefono)
+                            }
+                            else {
+                                <p> - </p>
+                            }
+                        </td>
+                        <th>CORREO</th>
+                        <td style="pointer-events: none;">
+                           @if (C.Correo != null) {
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @Html.DisplayFor(modelItem => C.Correo)
+                            }
+                            else {
+                                <p> - </p>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>DIRECCIÓN</th>
+                        <td colspan="4">
+                            <b style="width: 1px; margin-left: -5px;">:</b>
+                            @Html.DisplayFor(modelItem => C.Direccion)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            break;
+        }
+
+        @* 2 DATOS GASTOS FAMILIARES*@
+        @{
+            var validar = true;
+            foreach (var G in Model.ListaGastosFamiliares
+                .Where(x => x.Clientes.TipoDeCliente.Equals("Solicitante") ||
+                           x.Clientes.TipoDeCliente.Equals("Requirente") ||
+                           x.Clientes.TipoDeCliente.Equals("Ambos") &&
+                          !x.Clientes.TipoDeCliente.Equals("Solicitante"))) {
+                <div class="">
+                   @if (validar) {
+                        <h6 style="font-family: Arial; font-size: 17px;">
+                            <mark>Gastos Familiares.</mark>
+                        </h6>
+                        validar = false;
+                    }
+                    <table class="tabla-general">
+                        <tr>
+                            <th>ALIMENTACIÓN</th>
+                            <td style="width: 150px;">
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Alimentacion)
+                            </td>
+                            <th>ASEO</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Aseo)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>ARRIENDO</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Arriendo)
+                            </td>
+                            <th>DIVIDENDO</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Dividendo)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>SERVICIOS</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Servicios)
+                            </td>
+                            <th>COMBUSTIBLE</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Combustible)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>GASTOS TELEFONICOS</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.GastosTelefono)
+                            </td>
+                            <th>MOVILIZACIÓN</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Movilizacion)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>EDUCACIÓN</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Educacion)
+                            </td>
+                            <th>CREDITOS</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Creditos)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>SALUD</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Salud)
+                            </td>
+                            <th>VARIOS</th>
+                            <td>
+                                <b style="width: 1px; margin-left: -5px;">:</b>
+                                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.Varios)
+                            </td>
+                        </tr>
+                        @*<tr>
+                                <th style="width:200px;">TOTAL GASTOS MENSUALES</th>
+                                <td>
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    <b>@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G.TotalGastosMensuales)</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>OBSERVACIONES</th>
+                                <td colspan="4">
+                                    <b style="width: 1px; margin-left: -5px;">:</b>
+                                    @Html.DisplayFor(modelItem => G.Observaciones)
+                                </td>
+                            </tr>*@
+                    </table>
+                </div>
+                break;
+            }
+        }
+    </div>
+
+    <div class="" style="margin-top: 80px">
+        <div class="centro">
+            <h2 style="text-align:center;">
+                Declaración de Ingresos
+            </h2>
+        </div>
+        <br />
+        @{
+            foreach (var C in Model.ListaClientesGrupo
+               .Where(x => x.TipoDeCliente.Equals("Solicitante") ||
+                           x.TipoDeCliente.Equals("Requirente") ||
+                           x.TipoDeCliente.Equals("Ambos") &&
+                          !x.TipoDeCliente.Equals("Solicitante"))) {
+                <p style="font-size: 17px;">
+                    Yo:
+                    <b style="margin-right: 10px;">
+                        @Html.DisplayFor(modelItem => C.Nombres)
+                        @Html.DisplayFor(modelItem => C.ApellidoPaterno)
+                        @Html.DisplayFor(modelItem => C.ApellidoMaterno)
+                    </b>
+                    <label>Run:</label>
+                    <b style="font-size: 17px;">
+                        @Html.DisplayFor(modelItem => C.Rut)
+                    </b>
+                </p>
+                break;
+            }
+            foreach (var G1 in Model.ListaIngresos
+                .Where(x => x.Clientes.TipoDeCliente.Equals("Solicitante") ||
+                       x.Clientes.TipoDeCliente.Equals("Requirente") ||
+                       x.Clientes.TipoDeCliente.Equals("Ambos") &&
+                      !x.Clientes.TipoDeCliente.Equals("Solicitante"))) {
+                <p style="font-size: 17px;">
+                    Domiciliado/a en: <b>@Html.DisplayFor(modelItem => G1.Clientes.Direccion)</b>. Comuna de Chimbarongo, <br />
+                </p>
+                <p style="font-size: 17px;">
+                    Declaro percibir ingresos mensuales aproximados equivalentes a:
+                    <b>@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", G1.IngresosMensuales)</b>
+                </p>
+                <p style="font-size: 17px;">
+                    Producto de: <b>@Html.DisplayFor(modelItem => G1.Descripcion)</b>
+                </p>
+                break;
+            }
+        }
+        <br />
+        <p style="font-size: 15px; text-align: left; border: 1px solid #d7d1d1">
+            <b>
+                Declaro que la información entregada y plasmada en este documento es fidedigna,
+                facultando al Departamento Social Municipal a solicitar la documentación necesaria
+                para la evaluación socioeconómica del grupo familiar del requirente.
+            </b>
+        </p>
+        <h5 class="trabajador"
+            style="font-size: 16px;
+                   margin-top: 180px;
+                   text-decoration: overline;
+                   text-align: center;">
+            FIRMA DEL SOLICITANTE
+        </h5>
+    </div>
+</body>
+</html>
+
+
+
+

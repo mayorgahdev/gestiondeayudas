@@ -1,0 +1,45 @@
+﻿@model SistemaSocial.Models.Prestaciones
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Modificar Prestación </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            Modificar Prestación: 
+            @Html.ViewData.Model.Nombre
+        </div>
+        <section class="formulario-registro">
+            <form asp-action="EditarPrestaciones">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PrestacionesID" />
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input type="text" asp-for="Nombre" />
+                        <span asp-validation-for="Nombre" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Cantidad" class="control-label"></label>
+                        <input type="text" asp-for="Cantidad" />
+                        <span asp-validation-for="Cantidad" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar Cambios" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-action="IndexPrestaciones">
+                        Volver al Listado.
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

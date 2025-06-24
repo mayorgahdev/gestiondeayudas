@@ -1,0 +1,538 @@
+﻿    #darkmode {
+        display: inline-block;
+        background: url(../Images/dark-mode1.png) left center;
+        width: 100px;
+        height: 40px;
+        font-size: 0;
+        text-decoration: none;
+    }
+
+
+/* INDEX CLIENTES */
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    body.dark #darkmode {
+        background-position: right center;
+    }
+    body.dark {
+        background-color: #181b1f;
+        color: #fff;
+    }
+    body.dark .Ejemplo-Hijo {
+            background-color: #1c2025;
+            color: #fff;
+        }
+    body.dark .Ejemplo-Padre .a-clientes {
+            background-color: #1f2935;
+        }
+         body.dark .Ejemplo-Padre .a-clientes:hover {
+                background-color: #2E445A;
+                border: 1px solid #D9E2EC;
+            }
+    body.dark .Ejemplo-Padre {
+            background-color: #1c2025;
+        }
+         body.dark .Ejemplo-Padre h4 {
+                color: #fff;
+            }
+    body.dark .Ejemplo-Hijo2 input[type="text"] {
+            background-color: #1f2935;
+            color: #fff;
+            border: 1px solid #1f2935;
+        }
+         body.dark .Ejemplo-Hijo2 input[type="text"]:hover {
+                background-color: #2e445a;
+                border: 1px solid #D9E2EC;
+            }
+    body.dark .Ejemplo-Hijo2 input[type="submit"] {
+            background-color: #1f2935;
+            color: #fff;
+            border: 1px solid #1f2935;
+        }
+         body.dark .Ejemplo-Hijo2 input[type="submit"]:hover {
+                background-color: #2e445a;
+                border: 1px solid #D9E2EC;
+            }
+    body.dark .Ejemplo-Padre .Ejemplo-Hijo3 a {
+            background-color: #1f2935;
+            color: #fff;
+        }
+         body.dark .Ejemplo-Padre .Ejemplo-Hijo3 a:hover {
+                background-color: #2e445a;
+                border: 1px solid #D9E2EC;
+            }
+    body.dark hr {
+        border-top: 1px solid #fff;
+    }
+        body.dark hr:before {
+            border-bottom: 1px solid #fff;
+        }
+    body.dark .pagination a {
+        background-color: #1f2935;
+        color: #fff;
+    }
+        body.dark .pagination a:hover {
+            background-color: #2e445a;
+        }
+    body.dark .pagination li {
+        background-color: #181818;
+        color: #fff;
+    }
+    body.dark .card {
+        background-color: #1c2025;
+    }
+        body.dark .card .card-header {
+            background-color: #1a222c;
+            color: #fff;
+        }
+        body.dark .card .list-group-item {
+            background-color: #1c2025;
+            color: #fff;
+        }
+            body.dark .card .list-group-item a {
+                color: #fff;
+                text-decoration: none;
+            }
+        body.dark .card-user .separador,
+        body.dark .card .separador {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(170px, max-content));
+            background-color: #1f2935;
+            border: 1px solid #fff;
+        }
+            body.dark .card-user .separador li {
+                background-color: #1f2935;
+            }
+    body.dark .separador ul.list-group {
+        border-left: 1px solid #fff;
+    }
+    body.dark .card-user .separador img {
+        border: 1px solid #fff;
+    }
+    body.dark .course,
+    body.dark .course_abajo {
+        background-color: #1c2025;
+        color: #fff;
+    }
+        body.dark .course a {
+            color: #fff;
+        }
+    body.dark .course-info a:hover {
+        color: #627D98;
+    }
+    body.dark .course-preview {
+        background-color: #1f2935;
+    }
+        body.dark .course-preview:hover {
+            background-color: #2E445A;
+            border: 1px solid #D9E2EC;
+        }
+        body.dark .course-preview a {
+            color: #fff;
+        }
+    body.dark .course-info form .details-info1 {
+        color: #fff;
+        background-color: #1f2935;
+        border: 1px solid #1f2935
+    }
+        body.dark .course-info form .details-info1:hover {
+            background: #2e445a;
+            border: 1px solid #D9E2EC;
+        }
+    body.dark .course-info form .details-info2 {
+        color: #fff;
+        background-color: #1f2935;
+        border: 1px solid #1f2935
+    }
+        body.dark .course-info form .details-info2:hover {
+            background: #2e445a;
+            border: 1px solid #D9E2EC;
+        }
+    body.dark .FiltroFecha {
+        background: #1c2025;
+    }
+        body.dark .FiltroFecha .input-info2 .result {
+            background-color: #1c2025;
+            color: #fff;
+        }
+    body.dark .Estadisticas .circulo,
+    body.dark .Estadisticas_Anual .bar {
+        background-color: #1c2025;
+        border: 1px solid #1f2935;
+    }
+        body.dark .Estadisticas .circulo div.card-header,
+        body.dark .Estadisticas_Anual .bar div.card-header {
+            background-color: #1f2935;
+        }
+    body.dark .Estadisticas .barra,
+    body.dark .Estadisticas_Anual .polarArea {
+        background-color: #1c2025;
+        border: 1px solid #1f2935;
+    }
+        body.dark .Estadisticas .barra div.card-header,
+        body.dark .Estadisticas_Anual .polarArea div.card-header {
+            background-color: #1f2935;
+        }
+    body.dark .EstadisticasMes .barra1,
+    body.dark .EstadisticasMes .pie1 {
+        background-color: #1c2025;
+        border: 1px solid #1f2935;
+    }
+        body.dark .EstadisticasMes .barra1 div.card-header,
+        body.dark .EstadisticasMes .pie1 div.card-header {
+            background-color: #1f2935;
+        }
+
+
+    /* INDEX FORM - TABLAS */
+    body.dark .grupofamiliar h3 {
+        color: #fff;
+    }
+    body.dark .table thead tr th {
+        background-color: #1f2935;
+        color: #fff;
+    }
+    body.dark .table tbody tr td {
+        border: 1px solid #000;
+        background-color: #1c2025;
+        color: #fff;
+    }
+    body.dark .FiltroFecha .impresiones_btn a.imprimir,
+    body.dark .FiltroFecha .impresiones_btn a.imprimir2 {
+        background: #1f2935;
+        color: #fff;
+    }
+        body.dark .FiltroFecha .impresiones_btn a.imprimir:hover,
+        body.dark .FiltroFecha .impresiones_btn a.imprimir2:hover{
+            background: #2e445a;
+            border: 1px solid #D9E2EC;
+        }
+    body.dark .FiltroFecha form input.details-info1 {
+        color: #fff;
+        background-color: #1f2935;
+        border: 1px solid #1f2935
+    }
+        body.dark .FiltroFecha form input.details-info1:hover {
+            border: 1px solid #D9E2EC;
+        }
+    body.dark .FiltroFecha form input.details-info2 {
+        background-color: #1f2935;
+        border: 1px solid #1f2935;
+    }
+        body.dark .FiltroFecha form input.details-info2:hover {
+            background-color: #2e445a;
+            border: 1px solid #D9E2EC;
+        }
+    body.dark .table td::before {
+        color: #fff;
+    }
+
+
+    /* FORMULARIOS REGISTROS */
+    body.dark .formulario-registro-usuario {
+        box-shadow: 1px 1px 0px 0px rgb(136 136 136 / 30%);
+        background-color: #1c2025;
+        color: #fff;
+        border: 0.1px solid #1f2935;
+    }
+    body.dark form .boton input {
+        color: #fff;
+    }
+    body.dark .container .title {
+        color: #fff;
+    }
+    body.dark h2 {
+        color: #fff;
+    }
+    body.dark .Asignacion a.Cuentas,
+    body.dark .Asignacion1 a.Cuentas1{
+        background-color: #1f2935;
+        color: #fff;
+    }
+    body.dark .Asignacion a.Cuentas:hover,
+    body.dark .Asignacion1 a.Cuentas1:hover {
+            background-color: #2e445a;
+            border: 1px solid #D9E2EC;
+        }
+
+
+    /* CSS RESPONSIVE (FORMULARIOS) */
+    body.dark .d .ad .run input,
+    body.dark .d .ad .pasaporte input {
+            border: 1px solid #1f2935;
+            color: #fff;
+            background-color: #1f2935;
+        }
+        body.dark .d .ad .run input:focus,
+        body.dark .d .ad .pasaporte input:focus {
+            border: 1px solid #D9E2EC
+        }
+    body.dark .formulario-registro > * {
+    box-shadow: 1px 1px 0px 0px rgb(136 136 136 / 30%);
+    background-color: #1c2025;
+    color: #fff;
+    border: 0.1px solid #1f2935;
+}
+    body.dark form .boton input {
+        color: #fff;
+    }
+    body.dark form .volver a {
+        color: #fff;
+    }
+        body.dark form .volver a:hover {
+            color: #627D98;
+        }
+    body.dark .user-details .input-box select,
+    body.dark .user-details .input-box input,
+    body.dark .user-details-usuario .input-box select,
+    body.dark .user-details-usuario .input-box input,
+    body.dark .user-details-usuario .input-box1 span,
+    body.dark .user-details-usuario .input-box1 input {
+        border: 0.1px solid #1f2935;
+        color: #fff;
+        background-color: #1f2935;
+    }
+        body.dark .user-details input#GrupoFamiliar,
+        body.dark .user-details input#NoGrupoFamiliar {
+            background-color: #1f2935;
+            color: #fff;
+        }
+    body.dark .user-details-usuario .input-box1 span {
+        border-left: 1px solid #354b5b;
+    }
+    body.dark .user-details .input-box select:focus,
+    body.dark .user-details .input-box input:focus,
+    body.dark .user-details-usuario .input-box select:focus,
+    body.dark .user-details-usuario .input-box input:focus,
+    body.dark .user-details-usuario .input-box1 input:focus {
+        border-color: #fff;
+    }
+    body.dark .user-details .input-box-casa input,
+    body.dark .user-details .input-box-tipo input,
+    body.dark .user-details .input-box-sexo input {
+        width: 14px !important;
+        height: 14px !important;
+        margin: 2px;
+        /*accent-color: #263c57;*/
+    }
+        body.dark .user-details .block textarea,
+        body.dark .user-details .block-a textarea,
+        body.dark .user-details .block-a select,
+        body.dark .user-details .block-a1 textarea,
+        body.dark .user-details .block-h fieldset,
+        body.dark .user-details .input-box textarea.GruposFamiliares {
+            border: 0.1px solid #102a43;
+            color: #fff;
+            background-color: #1f2935;
+        }
+            body.dark .user-details .block textarea:focus,
+            body.dark .user-details .block-a textarea:focus,
+            body.dark .user-details .block-a select:focus,
+            body.dark .block-a1 textarea:focus,
+            body.dark .user-details .block-h fieldset:focus,
+            body.dark .user-details .input-box textarea.GruposFamiliares:focus {
+                border-color: #fff;
+            }
+    body.dark .user-details .input-box #cboCantidad,
+    body.dark .user-details .input-box .rutEdit {
+        background-color: #0e131a;
+    }
+
+    body.dark .crear a{
+        background-color: #1f2935;
+    }
+        body.dark .crear a:hover {
+            background-color: #2e445a;
+            border: 1px solid #D9E2EC;
+        }
+
+    /* DELETE */
+    body.dark .formulario-eliminar,
+    body.dark .formulario-eliminar1 {
+        background: #1c2025;
+        box-shadow: 0 0 5px 0 rgb(255, 255, 255, .3);
+    }
+        body.dark .formulario-eliminar a,
+        body.dark .formulario-eliminar1 a {
+            text-decoration: none;
+            color: #fff;
+        }
+            body.dark .formulario-eliminar a:hover,
+            body.dark .formulario-eliminar1 a:hover {
+                color: #627D98;
+            }
+
+
+    /* BOTONES */
+    body.dark .controlador-btn a,
+    body.dark .controlador-btn-index a,
+    body.dark .controlador-btn-index1 a{
+        background-color: #1f2935;
+    }
+        body.dark .controlador-btn a:hover,
+        body.dark .controlador-btn-index a:hover,
+        body.dark .controlador-btn-index1 a:hover {
+            background-color: #2e445a;
+            border: 1px solid #D9E2EC;
+        }
+    body.dark .card-user .separador li.modificar a {
+        background-color: #27374a;
+    }
+        body.dark .card-user .separador li.modificar a:hover {
+            background-color: #2e445a;
+            border: 1px solid #D9E2EC;
+
+        }
+    body.dark .Drop button {
+        background-color: #1f2935;
+    }
+        body.dark .Drop button:hover {
+            background-color: #2e445a;
+            border: 1px solid #D9E2EC;
+        }
+        body.dark .Drop a,
+        body.dark .Drop1 a{
+            background-color: #1f2935;
+        }
+            body.dark .Drop a:hover,
+            body.dark .Drop1 a:hover {
+                background-color: #2e445a;
+                border: 1px solid #D9E2EC;
+            }
+    body.dark .Drop .dropdown-menu {
+        background-color: #243B53;
+        border: 1px solid #D9E2EC;
+    }
+    body.dark .dropdown-submenu:hover > .dropdown-menu a.dropdown-item {
+        background-color: #1f2935;
+    }
+        body.dark .dropdown-submenu:hover > .dropdown-menu a.dropdown-item:hover {
+            background-color: #243B53;
+        }
+    body.dark button#dropdownMenu3.btn.btn-secondary.dropdown-toggle {
+            background-color: #1f2935;
+        }
+        body.dark button#dropdownMenu3.btn.btn-secondary.dropdown-toggle:hover {
+                background-color: #243B53;
+                border: 1px solid #D9E2EC;
+            }
+    body.dark button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle {
+            background-color: #1f2935;
+        }
+        body.dark button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle:hover {
+                background-color: #243B53;
+                border: 1px solid #D9E2EC;
+            }
+
+
+    /* NAVBAR */
+    body.dark .navbar {
+        background: linear-gradient(135deg, #181b1f, #181b1f);
+        border-bottom: 1px solid #30373e;
+    }
+    body.dark .header {
+        background: #181b1f;
+    }
+    body.dark .navbar li a#navbarDropdown {
+        color: #fff;
+    }
+    body.dark .navbar li a {
+        color: #fff;
+    }
+    body.dark .navbar table a.dropdown-item {
+        background-color: #1f2935;
+        border: 1px solid #1f2935;
+    }
+        body.dark .navbar table a.dropdown-item:hover {
+            background-color: #2e445a;
+            border: 1px solid #D9E2EC;
+        }
+    body.dark .navbar .navbar-collapse .dropdown-menu {
+        background: #243B53;
+        border: 1px solid #D9E2EC;
+    }
+    body.dark .card-user .separador .list-group-item {
+        background: #1f2935;
+        color: #fff;
+        border: 1px solid #1c2025;
+    }
+    body.dark form .boton input,
+    body.dark form .boton1 input{
+        background: linear-gradient(135deg, #1f2935, #1f2935);
+    }
+        body.dark form .boton input:hover,
+        body.dark form .boton1 input:hover {
+            background: linear-gradient(135deg, #2e445a, #2e445a);
+            border: 1px solid #D9E2EC;
+        }
+    body.dark .navbar .navbar-toggler {
+        background: linear-gradient(135deg, #1f2935, #1f2935);
+        border: 1px solid #2e445a;
+    }
+
+
+    /* ICONOS */
+    body.dark nav a#navbarDropdown.dropdown-toggle::after,
+    body.dark nav i.fas.fa-user-alt::before,
+    body.dark nav i.fa.fa-cog::before {
+        color: #fff;
+    }
+    body.dark i.fas {
+        color: #70a8d3;
+    }
+    body.dark i.fa {
+        color: #70a8d3;
+    }
+    body.dark i.fa-solid {
+        color: #70a8d3;
+    }
+    body.dark i.fas.fa-chart-bar::before {
+        color: #70a8d3;
+    }
+    body.dark button.dropdown-toggle::after {
+        font-family: "Font Awesome 5 Free";
+        content: "\f107";
+        display: contents;
+        font-weight: 700;
+        color: #70a8d3;
+    }
+    body.dark i.fa.fa-user-plus::before {
+        font-family: "Font Awesome 5 Free";
+        content: "\f234";
+        display: contents;
+        font-weight: 700;
+        color: #70a8d3;
+    }
+    body.dark i.fas.fa-user-alt::before {
+        font-family: "Font Awesome 5 Free";
+        content: "\f2bd";
+        display: contents;
+        font-weight: 800;
+        color: #70a8d3;
+    }
+    body.dark a#navbarDropdown.dropdown-toggle::after {
+        font-family: "Font Awesome 5 Free";
+        content: "\f107";
+        display: contents;
+        font-weight: 700;
+        color: #70a8d3;
+    }
+    body.dark button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle::after {
+        font-family: "Font Awesome 5 Free";
+        content: "\f039";
+        display: contents;
+        font-weight: 900;
+        color: #70a8d3;
+    }
+    body.dark button#dropdownMenuButton2.btn.btn-secondary.dropdown-toggle::after {
+        font-family: "Font Awesome 5 Free";
+        content: "\f078";
+        display: contents;
+        font-weight: 700;
+        color: #70a8d3;
+    }
+    body.dark ::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }

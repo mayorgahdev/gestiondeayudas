@@ -1,0 +1,87 @@
+﻿@model SistemaSocial.Models.InformeSocial
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Añadir Informe Social </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center"> Añadir Informe Social. </div>
+        <section class="formulario-registro">
+            <div class="controlador-btn-index1" style="border:1px;">
+                <div class="Asignacion">
+                    <a class="Cuentas"
+                       asp-controller="AsignacionDeCuentas"
+                       asp-action="CrearAsignacion1"
+                       asp-route-ClientesID="@ViewBag.ClientesID1"
+                       asp-route-NumCuenta="@ViewBag.NumCuenta"
+                       asp-route-Grupo="@ViewBag.Grupo"
+                       asp-route-NumInforme="@ViewBag.NumInforme">
+                        <i class="fa fa-caret-left"></i>
+                        Añadir Nueva Cuenta
+                    </a>
+                </div>
+            </div>
+            <form asp-action="CrearInformeSocial">
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID"></select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <textarea name="GrupoFamiliar" class="GruposFamiliares">@ViewBag.Grupo</textarea>
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="NumInforme" class="control-label"></label>
+                        <input name="NumInforme" class="GruposFamiliares" value="@ViewBag.NumInforme" />
+                        <span asp-validation-for="NumInforme" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="FechaElaboracion" class="control-label"></label>
+                        <input type="date" asp-for="FechaElaboracion" />
+                        <span asp-validation-for="FechaElaboracion" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Sintesis" class="control-label"></label>
+                        <textarea rows="5" asp-for="Sintesis"> </textarea>
+                        <span asp-validation-for="Sintesis" class="details"></span>
+                    </div>
+                </div>
+                <div class="user-details" hidden="hidden">
+                   @if (SignInManager.IsSignedIn(User)) {
+                        <div class="input-box">
+                            <div class="textInforme">
+                                <h6> Ingrese en el campo el nombre de usuario que se muestra acontinuación.</h6>
+                            </div>
+                            <label>
+                                Usuario a Ingresar:
+                                <b>@User.Identity.Name</b>
+                            </label>
+
+                            <div class="input-box">
+                                <label asp-for="UsuarioID" class="control-label"></label>
+                                <textarea name="UsuarioID" class="GruposFamiliares">@UserManager.GetUserId(User)</textarea>
+                                <span asp-validation-for="UsuarioID" class="details"></span>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

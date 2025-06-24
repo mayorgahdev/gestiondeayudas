@@ -1,0 +1,222 @@
+﻿@model SistemaSocial.Models.Habitacionales
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Modificar Datos Habitacionales </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            Modificar Datos Habitacionales de: <br />
+            @Html.ViewData.Model.Clientes.Nombres
+            @Html.ViewData.Model.Clientes.ApellidoPaterno
+            @Html.ViewData.Model.Clientes.ApellidoMaterno
+        </div>
+        <section class="formulario-registro">
+            <div>
+                <partial name="_DatosEditarPartial(2)" />
+            </div>
+            <form asp-action="EditarHabitacionales">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="HabitacionalesID" />
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select class="rutEdit"
+                                asp-for="ClientesID" asp-items="ViewBag.ClientesID"
+                                readonly onmousedown="return false;">
+                        </select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <input asp-for="GrupoFamiliar" type="number" />
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                        <h6 style="text-align:left; font-size: 13.5px;" font-family="Arial">
+                            Para poder cambiar el vínculo de un grupo a otro, ingrese el número del grupo al cual será vinculado
+                            (Este se visualiza al ingresar al apartado de grupos del Usuario)
+                        </h6>
+                    </div>
+                    <div class="vivienda">
+                        <fieldset class="block-h">
+                            <!-- Check Box Antecedentes Casa -->
+                            <label class="control-label"> Antecedentes de la Vivienda </label>
+                            <br />
+                            <div class="form-check-inline">
+                                <!-- LUZ -->
+                                <div class="input-box-casa">
+                                    <label>
+                                        <b>Electricidad:</b>
+                                    </label>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="RedPublica" class="control-label"></label>
+                                    <input type="checkbox" asp-for="RedPublica" />
+                                    <span asp-validation-for="RedPublica" class="details"></span>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="Luzirregular" class="control-label"></label>
+                                    <input type="checkbox" asp-for="Luzirregular" />
+                                    <span asp-validation-for="Luzirregular" class="details"></span>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="SinLuz" class="control-label"></label>
+                                    <input type="checkbox" asp-for="SinLuz" />
+                                    <span asp-validation-for="SinLuz" class="details"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="block-h">
+                            <div class="form-check-inline">
+                                <!-- AGUA -->
+                                <div class="input-box-casa">
+                                    <label>
+                                        <b>Agua: </b>
+                                    </label>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="Agua" class="control-label"></label>
+                                    <input type="checkbox" asp-for="Agua" />
+                                    <span asp-validation-for="Agua" class="details"></span>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="AguaCamion" class="control-label"></label>
+                                    <input type="checkbox" asp-for="AguaCamion" />
+                                    <span asp-validation-for="AguaCamion" class="details"></span>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="AguaNoria" class="control-label"></label>
+                                    <input type="checkbox" asp-for="AguaNoria" />
+                                    <span asp-validation-for="AguaNoria" class="details"></span>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="AguaVertiente" class="control-label"></label>
+                                    <input type="checkbox" asp-for="AguaVertiente" />
+                                    <span asp-validation-for="AguaVertiente" class="details"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="block-h">
+                            <div class="form-check-inline">
+                                <!-- Eliminación de Excretas -->
+                                <div class="input-box-casa">
+                                    <label>
+                                        <b>Eliminación de Excretas: </b>
+                                    </label>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="Alcantarillado" class="control-label"></label>
+                                    <input type="checkbox" asp-for="Alcantarillado" />
+                                    <span asp-validation-for="Alcantarillado" class="details"></span>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="Fosa" class="control-label"></label>
+                                    <input type="checkbox" asp-for="Fosa" />
+                                    <span asp-validation-for="Fosa" class="details"></span>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="Pozo" class="control-label"></label>
+                                    <input type="checkbox" asp-for="Pozo" />
+                                    <span asp-validation-for="Pozo" class="details"></span>
+                                </div>
+                                <div class="input-box-casa">
+                                    <label asp-for="Otro" class="control-label"></label>
+                                    <input type="checkbox" asp-for="Otro" />
+                                    <span asp-validation-for="Otro" class="details"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="input-box">
+                        <label asp-for="TipoViviendaID" class="control-label"></label>
+                        <select asp-for="TipoViviendaID" asp-items="ViewBag.TipoViviendaID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TipoViviendaID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="SituacionCasaID" class="control-label"></label>
+                        <select asp-for="SituacionCasaID" asp-items="ViewBag.SituacionCasaID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="SituacionCasaID" class="details"></span>
+                    </div>
+
+                    <div class="input-box">
+                        <label asp-for="MaterialViviendaID" class="control-label"></label>
+                        <select asp-for="MaterialViviendaID" asp-items="ViewBag.MaterialViviendaID"
+                                id="MaterialViviendaSelect" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="MaterialViviendaID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="Definir" class="control-label"></label>
+                        <input type="text" asp-for="Definir" id="DefinirInput" />
+                        <span asp-validation-for="Definir" class="details"></span>
+                    </div>
+
+
+                    <div class="input-box">
+                        <label asp-for="NumDormitorios" class="control-label"></label>
+                        <input type="number" asp-for="NumDormitorios" id="gastosID" oninput="validarGASTOS(event)" />
+                        <span asp-validation-for="NumDormitorios" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="TotalDependecias" class="control-label"></label>
+                        <input type="number" asp-for="TotalDependecias" id="gastosID" oninput="validarGASTOS(event)" />
+                        <span asp-validation-for="TotalDependecias" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="NivelAsinamiento" class="control-label"></label>
+                        <input type="text" asp-for="NivelAsinamiento" />
+                        <span asp-validation-for="NivelAsinamiento" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="TenenciaTerrenoID" class="control-label"></label>
+                        <select asp-for="TenenciaTerrenoID" asp-items="ViewBag.TenenciaTerrenoID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TipoViviendaID" class="details"></span>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Observaciones" class="control-label"></label>
+                        <textarea rows="4" asp-for="Observaciones"> </textarea>
+                        <span asp-validation-for="Observaciones" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar Cambios" />
+                </div>
+                <div class="volver" style="margin-top:20px;">
+                    <a asp-controller="Clientes"
+                       asp-action="IndexGrupoFamiliar">
+                        Volver al Listado.
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+@section scripts{
+    <script>
+        function validarGASTOS(event) {
+            const input = event.target;
+            const valor = input.value.trim();
+
+            if (/^[0-9]\d*$/.test(valor)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Ingrese únicamente valores enteros. Ejemplo: 0123');
+            }
+            input.reportValidity();
+        }
+    </script>
+}

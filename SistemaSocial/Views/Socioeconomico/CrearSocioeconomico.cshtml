@@ -1,0 +1,239 @@
+﻿@model SistemaSocial.Models.Socioeconomico
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Añadir Datos Socioeconómicos </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/Responsive.css" rel="stylesheet" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="title text-center">
+            Añadir Datos Socioeconómicos.
+        </div>
+        <section class="formulario-registro">
+            <form asp-action="CrearSocioeconomico">
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="ClientesID" class="control-label"></label>
+                        <select asp-for="ClientesID" asp-items="ViewBag.ClientesID"></select>
+                        <span asp-validation-for="ClientesID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="GrupoFamiliar" class="control-label"></label>
+                        <textarea name="GrupoFamiliar" class="GruposFamiliares">@ViewBag.GrupoSE</textarea>
+                        <span asp-validation-for="GrupoFamiliar" class="details"></span>
+                    </div>
+
+                    <div class="input-box">
+                        <label asp-for="Actividad" class="control-label"></label>
+                        <input type="text" asp-for="Actividad" value="@ViewBag.Actividad"/>
+                        <span asp-validation-for="Actividad" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="IngresoActividad" class="control-label"></label>
+                        <input type="number" asp-for="IngresoActividad" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               step="1" min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="IngresoActividad" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="TipoPensionID" class="control-label"></label>
+                        <select asp-for="TipoPensionID" asp-items="ViewBag.TipoPensionID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TipoPensionID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="OtrosIngresos1" class="control-label"></label>
+                        <input type="number" asp-for="OtrosIngresos1" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               step="1" min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="OtrosIngresos1" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="TipoSubsidioID" class="control-label"></label>
+                        <select asp-for="TipoSubsidioID" asp-items="ViewBag.TipoSubsidioID" required>
+                            <option value=""> Seleccione. </option>
+                        </select>
+                        <span asp-validation-for="TipoSubsidioID" class="details"></span>
+                    </div>
+                    <div class="input-box">
+                        <label asp-for="OtrosIngresos2" class="control-label"></label>
+                        <input type="number" asp-for="OtrosIngresos2" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                               step="1" min="0" class="monto" onkeyup="sumar();" />
+                        <span asp-validation-for="OtrosIngresos2" class="details"></span>
+                    </div>
+                </div>
+                <div class="user-details" style="margin-top: -10px;">
+                    <div id="divocultamuestra2" style="display:none;">
+                        <div class="input-box">
+                            <label asp-for="TipoIngreso1" class="control-label"></label>
+                            <input type="text" asp-for="TipoIngreso1" />
+                            <span asp-validation-for="TipoIngreso1" class="details"></span>
+                        </div>
+                        <div class="input-box">
+                            <label asp-for="OtrosIngresos3" class="control-label"></label>
+                            <input type="number" asp-for="OtrosIngresos3" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                                   step="1" min="0" class="monto" onkeyup="sumar();" />
+                            <span asp-validation-for="OtrosIngresos3" class="details"></span>
+                        </div>
+                    </div>
+                    <div id="divocultamuestra3" style="display:none;">
+                        <div class="input-box">
+                            <label asp-for="TipoIngreso2" class="control-label"></label>
+                            <input type="text" asp-for="TipoIngreso2" />
+                            <span asp-validation-for="TipoIngreso2" class="details"></span>
+                        </div>
+                        <div class="input-box">
+                            <label asp-for="OtrosIngresos4" class="control-label"></label>
+                            <input type="number" asp-for="OtrosIngresos4" value="0" id="gastosID" oninput="validarGASTOS(event)"
+                                   step="1" min="0" class="monto" onkeyup="sumar();" />
+                            <span asp-validation-for="OtrosIngresos4" class="details"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="boton1">
+                    <h6 style="font-size: 13px;" font-family="Arial">
+                        En caso de poseer otro tipo de ingreso, presione en el botón para poder ingresarlos.
+                    </h6>
+                    <input type="button" id="botonocultamuestra" value="Desplegar Otros Ingresos" />
+                </div>
+                <div class="user-details">
+                    <div class="input-box">
+                        <label asp-for="TotalIngresos" class="control-label"></label>
+                        <label class="control-label"></label><b id="spTotal"></b>
+                        <input type="number" asp-for="TotalIngresos" value="0" id="spTotal" />
+                        <span asp-validation-for="TotalIngresos" class="details"></span>
+                        <h6 style="font-size:13px" font-family="Arial">
+                            Completar recuadro con el resultado mostrado.
+                        </h6>
+                    </div>
+                    <div class="block">
+                        <label asp-for="Observacion" class="control-label"></label>
+                        <textarea rows="4" asp-for="Observacion"></textarea>
+                        <span asp-validation-for="Observacion" class="details"></span>
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Guardar" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
+
+
+@section scripts{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script>
+        function sumar() {
+            var total = 0;
+            $(".monto").each(function () {
+                if (isNaN(parseFloat($(this).val()))) {
+                    total += 0;
+                } else {
+                    total += parseFloat($(this).val());
+                }
+            });
+            document.getElementById('spTotal').innerHTML = total;
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#botonocultamuestra").click(function () {
+                $("#divocultamuestra").each(function () {
+                    displaying = $(this).css("display");
+                    if (displaying == "flex") {
+                        $(this).fadeOut('slow', function () {
+                            $(this).css("display", "none");
+                        });
+                    } else {
+                        $(this).fadeIn('slow', function () {
+                            $(this).css("display", "flex");
+                            $(this).css("flex-wrap", "wrap");
+                            $(this).css("width", "100%");
+                            $(this).css("justify-content", "space-between");
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#botonocultamuestra").click(function () {
+                $("#divocultamuestra1").each(function () {
+                    displaying = $(this).css("display");
+                    if (displaying == "flex") {
+                        $(this).fadeOut('slow', function () {
+                            $(this).css("display", "none");
+                        });
+                    } else {
+                        $(this).fadeIn('slow', function () {
+                            $(this).css("display", "flex");
+                            $(this).css("flex-wrap", "wrap");
+                            $(this).css("width", "100%");
+                            $(this).css("justify-content", "space-between");
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#botonocultamuestra").click(function () {
+                $("#divocultamuestra2").each(function () {
+                    displaying = $(this).css("display");
+                    if (displaying == "flex") {
+                        $(this).fadeOut('slow', function () {
+                            $(this).css("display", "none");
+                        });
+                    } else {
+                        $(this).fadeIn('slow', function () {
+                            $(this).css("display", "flex");
+                            $(this).css("flex-wrap", "wrap");
+                            $(this).css("width", "100%");
+                            $(this).css("justify-content", "space-between");
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#botonocultamuestra").click(function () {
+                $("#divocultamuestra3").each(function () {
+                    displaying = $(this).css("display");
+                    if (displaying == "flex") {
+                        $(this).fadeOut('slow', function () {
+                            $(this).css("display", "none");
+                        });
+                    } else {
+                        $(this).fadeIn('slow', function () {
+                            $(this).css("display", "flex");
+                            $(this).css("flex-wrap", "wrap");
+                            $(this).css("justify-content", "space-between");
+                            $(this).css("width", "100%");
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        function validarGASTOS(event) {
+            const input = event.target;
+            const valor = input.value.trim();
+
+            if (/^[0-9]\d*$/.test(valor)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Ingrese únicamente valores enteros. Ejemplo: 0123');
+            }
+            input.reportValidity();
+        }
+    </script>
+}

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<SistemaSocial.Models.Presupuesto>
+
+@{
+    ViewData["Title"] = "IndexPresupuesto";
+}
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Presupuestos </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="course">
+            <div class="course-info">
+                <h2 class="text-center"> Listado de Presupuestos. </h2>
+            </div>
+        </div>
+        <div class="table-container1">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"> Programa. </th>
+                        <th scope="col"> Cuenta. </th>
+                        <th scope="col"> Presupuesto Inicial. </th>
+                        <th scope="col"> Presupuesto Vigente. </th>
+                        <th scope="col">  </th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach (var S in Model) {
+                        <tr>
+                            <td data-label="Programa"> @Html.DisplayFor(modelItem => S.Cuenta.Programa.Nombre) </td>
+                            <td data-label="Cuenta"> @Html.DisplayFor(modelItem => S.Cuenta.Codigo) </td>
+                            <td data-label="P.Inicial">@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", S.PresInicial) </td>
+                            <td data-label="P.Vigente">@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", S.PresVigente) </td>
+                            <td data-label="Editar">
+                                <div class="Drop">
+                                    <div class="dropdown">
+                                        <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Administración
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item"
+                                               asp-action="EditarPresupuesto"
+                                               asp-route-PresupuestoID="@S.PresupuestoID">
+                                                Modificar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

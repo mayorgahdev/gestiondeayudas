@@ -1,0 +1,80 @@
+﻿@model SistemaSocial.ViewModel.AyudaSocialView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+@{
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title> Imprimir Filtro de Ayudas Sociales </title>
+    <link href="~/css/Impresiones.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="arriba"
+         style="display: -webkit-box; padding: 1px;">
+        <div class="izquierda">
+            <a class="navbar-brand text-white"
+               asp-area=""
+               asp-controller="Home"
+               asp-action="Index">
+                <img src="/Images/navbar-logo.png"
+                     alt="Municipalidad Chimbarongo"
+                     width="220"
+                     height="80" />
+            </a>
+            <h6>
+                I. MUNICIPALIDAD DE CHIMBARONGO <br />
+                DEPARTAMENTO SOCIAL COMUNAL.
+            </h6>
+        </div>
+        <div class="centro" style="margin-top: 30px;">
+            <h1>
+                Filtro por de Ayudas Sociales.
+            </h1>
+        </div>
+        <div class="derecha" style="margin-top: 28px;">
+            <h1 class="desde">
+                <p> Fechas Seleccionadas.</p>
+                <p> Desde:<mark> @Html.ValueFor(model => model.FechaInicio, "{0:dd/MM/yyyy}") </mark></p>
+                <p> Hasta: <mark>@Html.ValueFor(model => model.FechaFin, "{0:dd/MM/yyyy}") </mark></p>
+            </h1>
+        </div>
+    </div>
+
+    <div class="abajo">
+        <h6 style="font-family: Arial; font-size: 17px; font-weight: 700">
+            <mark>Ayudas Sociales Entregadas.</mark>
+        </h6>
+        <table class="tabla-general">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: auto;"> Nombre del Usuario. </th>
+                    <th scope="col" style="width: auto;"> Prestación Entregada. </th>
+                    <th scope="col" style="width: auto;"> Cantidad. </th>
+                    <th scope="col" style="width: auto;"> Tipo Petición. </th>
+                    <th scope="col" style="width: auto;"> Fecha de Elaboración</th>
+                </tr>
+            </thead>
+            <tbody>
+               @foreach (var A in Model.listaAyudas) {
+                    <tr>
+                        <td data-label="Nombre">
+                            @Html.DisplayFor(modelItem => A.Clientes.Nombres)
+                            @Html.DisplayFor(modelItem => A.Clientes.ApellidoPaterno)
+                            @Html.DisplayFor(modelItem => A.Clientes.ApellidoMaterno)
+                        </td>
+                        <td data-label="Prestacion"> @Html.DisplayFor(modelItem => A.Prestaciones.Nombre)</td>
+                        <td data-label="Cantidad"> @Html.DisplayFor(modelItem => A.CantidadEntregada)</td>
+                        <td data-label="Petición"> @Html.DisplayFor(modelItem => A.TipoPeticion.Nombre)</td>
+                        <td data-label="Fecha"> @Html.DisplayFor(modelItem => A.FechaElaboracion) </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

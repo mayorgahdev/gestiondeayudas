@@ -1,0 +1,31 @@
+﻿@model SistemaSocial.ViewModel.PasswordView
+
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title> Añadir Datos de Salud </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+</head>
+<body>
+    <div class="container">
+        <h3 class="title text-center"> ¿Olvidó su Contraseña? </h3>
+        <section class="formulario-registro">
+            <form asp-action="aOlvidoContraseña">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <h5>
+                        Ingrese su correo para poder recuperar su contraseña.
+                    </h5>
+                    <label asp-for="Correo" class="control-label"></label>
+                    <input asp-for="Correo" class="form-control" />
+                    <span asp-validation-for="Correo" class="text-danger"></span>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Enviar" />
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

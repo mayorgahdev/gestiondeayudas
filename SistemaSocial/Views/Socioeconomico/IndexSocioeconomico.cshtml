@@ -1,0 +1,81 @@
+﻿@model SistemaSocial.ViewModel.SocioeconomicoView
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+
+<!DOCTYPE html>
+<html lang="es-cl">
+<head>
+    <title>  Datos Socioeconómicos </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <link href="~/css/DatosRegistro.css" rel="stylesheet" />
+    <link href="~/css/IndexForm.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="course">
+            <div class="course-preview">
+                <a asp-action="CrearSocioeconomico"><i class="fas fa-plus-circle"></i> Agregar Nuevo Dato Socioeconómico </a>
+            </div>
+            <div class="course-info">
+                <h2> Datos Socioeconómicos. </h2>
+                <form asp-controller="EconomicoSocial" asp-action="IndexEconomicoSocial" method="get">
+                    <h7>Buscar Usuario por Run o Pasaporte: </h7>
+                    <div class="input-info">
+                        <input type="text" asp-for="Busqueda" class="details-info1" />
+                        <input type="submit" value="Buscar" class="details-info2" />
+                    </div>
+                </form>
+                <a asp-action="IndexSocioeconomico"> Listado de Datos  </a>
+            </div>
+        </div>
+
+        <div style=" overflow-x: auto;">
+            @{
+                if (SignInManager.IsSignedIn(User)) {
+                    var Claims = User.Claims.Where(C => C.Type == "Admin" || C.Type == "Editor").FirstOrDefault(); ;
+                    if (Claims != null) {
+                        <div>
+                            <partial name="_DatosIndexPartial" />
+                        </div>
+                    }
+                }
+            }
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"> Run o Pasaporte. </th>
+                            <th scope="col"> Actividad. </th>
+                            <th scope="col"> Observación. </th>
+                            <th scope="col"> Total Ingreso Familiar. </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var C in Model.listaSocioeconomico) {
+                            <tr>
+                                <td data-label="CI"> @Html.DisplayFor(modelItem => C.Clientes.Rut) </td>
+                                <td data-label="Actividad"> @Html.DisplayFor(modelItem => C.Actividad) </td>
+                                <td data-label="Observación"> @Html.DisplayFor(modelItem => C.Observacion) </td>
+                                <td data-label="Total"> @Html.DisplayFor(modelItem => C.TotalIngresos) </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center pagination-circle mt-2">
+                @for (int i = 1; i <= Model.CantidadPaginas; i++) {
+                    <li class="page-item" aria-current="page">
+                        <a class="page-link" asp-action="IndexEconomicoSocial" asp-route-Pagina="@i">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

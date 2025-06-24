@@ -1,0 +1,252 @@
+﻿@using SistemaSocial.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" />
+    <title>@ViewData["Title"] Sistema Social </title>
+    <link rel="shortcut icon" href="~/Images/Escudo_de_Chimbarongo-copia.jpg" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/css/dark.css">
+    <link rel="stylesheet" href="~/css/navbar.css"/>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-toggleable-lg navbar-light box-shadow">
+            <div class="container">
+                <a class="logo"
+                   asp-controller="Clientes"
+                   asp-action="IndexClientes">
+                    <img class="logo"
+                         src="/Images/Logo-Municipal-Blanco-09.png"
+                         alt="Municipalidad Chimbarongo"
+                         width="227"
+                         height="93" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-lg-inline-flex flex-lg-row-reverse text-white">
+                    @*DARK MODE*@
+                    <ul class="navbar-nav flex-grow-2">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle1"
+                               id="navbarDropdown"
+                               data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a id="darkmode"
+                                   href="javascript:void(0)">
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+
+                    @*PROFESIONALES*@
+                    <ul class="navbar-nav flex-grow-2">
+                       @if (SignInManager.IsSignedIn(User)) {
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle"
+                                   id="navbarDropdown"
+                                   data-toggle="dropdown"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
+                                    <i class="fas fa-user-alt"></i>
+                                    Bienvenido @UserManager.GetUserName(User) al sistema
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <table>
+                                       @{ var Permiso = User.Claims.Where(C => C.Type == "Admin" && C.Value == "10" || C.Type == "Editor").FirstOrDefault(); }
+                                       @if (Permiso != null) {
+                                            <tr>
+                                                <th>
+                                                    <a class="dropdown-item"
+                                                       asp-action="Registro"
+                                                       asp-controller="Account">
+                                                        <i class="fas fa-user-friends"></i>
+                                                        Registrar Profesional.
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <th>
+                                                <a class="dropdown-item"
+                                                   asp-action="CerrarSesion"
+                                                   asp-controller="Account">
+                                                    <i class="fas fa-unlock-alt"></i>
+                                                    Cerrar Sesión.
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
+                        }
+                        else {
+                            <li class="nav-item">
+                                <a asp-action="Login"
+                                   asp-controller="Account">
+                                    <i class="fas fa-user-alt"></i>
+                                    Acceso
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                    @*CONTROL SISTEMA*@
+                    <ul class="navbar-nav flex-grow-2">
+                        @if (SignInManager.IsSignedIn(User)) {
+                            var Claims = User.Claims.Where(x => x.Type == ("Admin") || x.Type == ("Editor")).FirstOrDefault();
+                            var Permiso_Ayuda = User.Claims.Where(x => x.Type == "Admin" && x.Value == "10").FirstOrDefault();
+                            var Permiso_Pres = User.Claims.Where(x => x.Type == "Admin" && x.Value == "10").FirstOrDefault();
+                            if (Claims != null) {
+                                <li class="nav-item dropdown">
+                                    <a asp-controller="Clientes"
+                                       asp-action="IndexClientes">
+                                        Inicio
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="dropdown-toggle"
+                                       id="navbarDropdown"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Ayudas Sociales
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <table>
+                                            <tr>
+                                                <th>
+                                                    <a class="dropdown-item"
+                                                       asp-action="TipoDeAyuda"
+                                                       asp-controller="AyudaSocial">
+                                                        Listado de Ayudas.
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <a class="dropdown-item"
+                                                       asp-controller="AyudaSocial"
+                                                       asp-action="ListadoFechas">
+                                                        Filtro de Ayudas por Fechas.
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                           @if (Permiso_Ayuda != null) {
+                                                <tr>
+                                                    <th>
+                                                        <a class="dropdown-item"
+                                                           asp-controller="AyudaSocial"
+                                                           asp-action="Estadisticas">
+                                                            Estadísticas de Ayudas.
+                                                        </a>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <a class="dropdown-item"
+                                                           asp-controller="AyudaSocial"
+                                                           asp-action="EditarPeticion"
+                                                           asp-route-PeticionID="1">
+                                                            Modificar Petición.
+                                                        </a>
+                                                    </th>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="dropdown-toggle"
+                                       id="navbarDropdown"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Listados
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                   @if (Permiso_Pres != null) {
+                                                        <th>
+                                                            <a class="dropdown-item"
+                                                               asp-controller="AsignacionDeCuentas"
+                                                               asp-action="IndexPresupuesto">
+                                                                Listado de Presupuesto.
+                                                            </a>
+                                                        </th>
+                                                    }
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <a class="dropdown-item"
+                                                           asp-controller="Prestaciones"
+                                                           asp-action="IndexPrestaciones">
+                                                            Listado de Prestaciones.
+                                                        </a>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <a class="dropdown-item"
+                                                           asp-controller="Prestaciones"
+                                                           asp-action="IndexPension_Y_Subsidio">
+                                                            Pensión y Subsidios.
+                                                        </a>
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>
+                                                        <a class="dropdown-item"
+                                                           asp-controller="Account"
+                                                           asp-action="IndexUsuario">
+                                                            Listado de Profesionales.
+                                                        </a>
+                                                    </th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <script>
+                function myFunction(x) {
+                    x.classList.dropdown - toggle("fa-minus-circle");
+                }
+            </script>
+        </nav>
+    </header>
+
+    <main role="main"> 
+        @RenderBody()
+    </main>
+
+    <script src="~/js/darkmode.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

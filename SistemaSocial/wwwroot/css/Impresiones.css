@@ -1,0 +1,336 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Yu Gothic UI;
+}
+
+h4 {
+    text-align: left;
+    font-size: 15px;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #D2D9DF;
+}
+
+thead {
+    display: table-header-group
+}
+
+tfoot {
+    display: table-row-group
+}
+
+.arriba {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+    .arriba .izquierda {
+        margin: 0;
+        text-align: left;
+        grid-column: 1 / 3;
+    }
+
+    .arriba .centro h1 {
+        text-align: end;
+        font-size: 30px;
+        grid-column: 1 / 3;
+        margin-left: 50px;
+        margin-top: 50px;
+    }
+
+    .arriba .derecha h1 {
+        display: block;
+        text-align: left;
+        font-size: 15px;
+        margin-left: 100px;
+    }
+        .arriba .derecha .fecha1 {
+            font-size: 15px;
+            text-align: left;
+            color: #000;
+        }
+
+.table-container3 {
+    margin-top: 13px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+    .table-container3 table#table2 {
+        margin-left: 50px;
+    }
+
+.arriba_informe {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+    .arriba_informe .izquierda {
+        margin: 0;
+        text-align: left;
+        grid-column: 1 / 3;
+    }
+
+    .arriba_informe .centro h1 {
+        text-align: end;
+        font-size: 30px;
+        grid-column: 1 / 3;
+        margin-top: 50px;
+        margin-left: 110px;
+    }
+
+    .arriba_informe .derecha h1 {
+        text-align: left;
+        font-size: 15px;
+        grid-column: 1 / 3;
+        margin-left: 150px;
+    }
+
+    .arriba_informe .derecha .fecha1 {
+        font-size: 15px;
+        text-align: left;
+        color: #000;
+    }
+
+
+.abajo {
+    margin: auto;
+    margin-top: 50px;
+}
+    .abajo table {
+        letter-spacing: 0,1px;
+        border-collapse: separate;
+    }
+        .abajo table th {
+            font-size: 15px;
+            width: 170px;
+            text-align: left;
+        }
+            .abajo table th.estadoCivil {
+                width: 12%;
+            }
+
+        .abajo table td {
+            font-size: 15px;
+        }
+
+    .abajo .fecha {
+        text-align: center
+    }
+
+
+
+    .abajo table.tbl {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .abajo .tbl th, .tbl td {
+        padding: 2px;
+        border: 1px solid #d7d1d1;
+    }
+
+
+.abajo2 {
+    text-align: right;
+}
+
+    .abajo2 h3 {
+        text-align: right;
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+.abajo .grupos {
+    margin-left: 20px;
+}
+    .abajo .grupos mark {
+        background-color: #bdffa2;
+    }
+
+
+.abajo .titulosAyudas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.abajo .ayudas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.tabla-general {
+    margin-right: 14px;
+    margin-bottom: 25px;
+    width: auto;
+}
+
+    .tabla-general td a {
+        color: #000;
+        text-decoration: none;
+    }
+    .tabla-general .check {
+        background-color: blue;
+    }
+
+.tabla-grupo {
+    margin-right: 14px;
+    margin-bottom: 35px;
+    width: 100%;
+}
+    .tabla-grupo .nombre {
+        width: 400px;
+    }
+    .tabla-grupo .prevision {
+        width: 300px;
+    }
+
+
+.page_break {
+    page-break-before: always;
+}
+
+
+.tabla-general1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    border: 1px solid #D2D9DF;
+}
+    .tabla-general1 th {
+        font-size: 14px;
+    }
+
+
+.padre1 {
+    margin-top: 50px;
+}
+    .padre1 h6 {
+        font-size: 15px;
+        text-align: center;
+        margin-left: 30px;
+    }
+
+.padre {
+    margin-top: 180px;
+}
+    .padre .hijo1 {
+        margin-left: -20px;
+    }
+        .padre .hijo1 h5 {
+            font-size: 13px;
+            text-decoration: overline;
+            margin-left: 30px;
+            text-align: center;
+        }
+    .padre .hijo2 {
+        margin-top: 0px;
+        margin-left: -80%;
+    }
+        .padre .hijo2 h5.subhijo1 {
+            font-size: 13px;
+            margin-left: 20px;
+            text-align: center;
+        }
+        .padre .hijo2 h5.subhijo2 {
+            font-size: 13px;
+            margin-left: 455px;
+            margin-top: -50px;
+            text-align: center;
+        }
+
+
+
+    .padre .hijo3 {
+        margin-left: 10%;
+    }
+        .padre .hijo3 h5 {
+            font-size: 13px;
+            text-decoration: overline;
+            margin-left: 30px;
+            text-align: center;
+        }
+
+    .padre .hijo4 {
+        margin-left: -104%;
+    }
+        .padre .hijo4 h5 {
+            font-size: 13px;
+            margin-left: 469px;
+            margin-top: -15px;
+            text-align: center;
+        }
+
+
+
+    .padre .hijo5 {
+        margin-left: 25%;
+    }
+        .padre .hijo5 h5 {
+            font-size: 13px;
+            text-decoration: overline;
+            margin-left: 30px;
+            text-align: center;
+        }
+    .padre .hijo6 {
+        margin-top: 20px;
+        margin-left: -29%;
+    }
+        .padre .hijo6 h5.subhijo3 {
+            font-size: 13px;
+            margin-left: 65px;
+            margin-top: -17px;
+            text-align: center;
+        }
+        .padre .hijo6 h5.subhijo4 {
+            font-size: 13px;
+            margin-top: -53px;
+            margin-left: 490px;
+            text-align: center;
+        }
+
+
+
+    .padre .hijo7 {
+        margin-left: 37%;
+    }
+        .padre .hijo7 h5 {
+            font-size: 13px;
+            text-decoration: overline;
+            margin-left: 30px;
+            text-align: center;
+        }
+
+    .padre .hijo8 {
+        margin-top: 20px;
+        margin-left: -5%;
+    }
+        .padre .hijo8 h5 {
+            font-size: 13px;
+            margin-left: 469px;
+            margin-top: -55px;
+            text-align: center;
+        }
+        .padre .hijo8 h6 {
+            font-size: 13px;
+            margin-top: -35px;
+            margin-left: 60px;
+            text-align: center;
+        }
+
+
+
+    .padre .hijo9 {
+        text-align: right;
+        position: sticky;
+        right: 0;
+        bottom: 0;
+        margin-top: 40px;
+    }
+        .padre .hijo9 h6 {
+            font-size: 12.5px;
+        }
+
